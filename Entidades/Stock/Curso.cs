@@ -10,21 +10,22 @@ namespace Entidades.Stock
     public class Curso
     {
         private string nombre;
-        private string codigoUnico;
+        private string codigoUnico; // Identificador especial para cada asignatura
         private int cupoMaximo;
         private static int contador = 1;
         private Instructor instructor;
         private List<Estudiante> estudiantesInscritos;
+        private EstadoCurso estadoCurso;
 
         public Curso(string nombre, string codigoUnico, int cupoMaximo)
         {
             contador++;
             this.nombre = nombre;
-            this.codigoUnico = codigoUnico;
             this.cupoMaximo = cupoMaximo;
             this.estudiantesInscritos = new List<Estudiante>();
-            this.codigoUnico = $"Cur-{contador.ToString("D3")}";
+            this.codigoUnico = codigoUnico.ToLower();
             this.instructor = null!;
+            this.estadoCurso = EstadoCurso.Abierto;
         }
         public string Nombre
         {
@@ -65,6 +66,11 @@ namespace Entidades.Stock
                 this.estudiantesInscritos.Remove(estudiante);
                 return true;
             }
+        }
+        public bool CursoCerrado()
+        {
+            this.estadoCurso = EstadoCurso.Cerrado;
+            return this.estadoCurso == EstadoCurso.Cerrado;
         }
 
     }
