@@ -11,9 +11,8 @@ namespace Datos.Interfaces
     public interface IRepCursos
     {
         void guardarCurso(Curso curso);
-        void eliminarPorCodigo(string codigoUnico);
+        void eliminarCurso(Curso curso);
         List<Curso> obtenerTodos();
         Curso BuscarPorCodigo(string codigoUnico);
-
     }
 }

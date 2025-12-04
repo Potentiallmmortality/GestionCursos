@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace Entidades.Stock
 {
+    // Enum para que representa a los estados del curso:
+    // El curso puede estar abierto o cerrado a matriculas
     public enum EstadoCurso
     {
         Abierto,

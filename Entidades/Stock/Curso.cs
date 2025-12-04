@@ -10,20 +10,21 @@ namespace Entidades.Stock
     public class Curso
     {
         private string nombre;
-        private string codigoUnico; // Identificador especial para cada asignatura
+        private string idUnico;
+        // Identificador de cada asigntura, en este caso se lo conceptualiza como un atributo pensado para su búsqueda
         private int cupoMaximo;
         private static int contador = 1;
         private Instructor instructor;
         private List<Estudiante> estudiantesInscritos;
         private EstadoCurso estadoCurso;
 
-        public Curso(string nombre, string codigoUnico, int cupoMaximo)
+        public Curso(string nombre, string idUnico, int cupoMaximo)
         {
             contador++;
             this.nombre = nombre;
             this.cupoMaximo = cupoMaximo;
             this.estudiantesInscritos = new List<Estudiante>();
-            this.codigoUnico = codigoUnico.ToLower();
+            this.idUnico = idUnico.ToLower();
             this.instructor = null!;
             this.estadoCurso = EstadoCurso.Abierto;
         }
@@ -33,7 +34,7 @@ namespace Entidades.Stock
         }
         public string CodigoUnico
         {
-            get { return codigoUnico; }
+            get { return idUnico; }
         }
         public int CupoMaximo
         {
@@ -46,8 +47,9 @@ namespace Entidades.Stock
         public Instructor Instructor
         {
             get { return instructor; }
-            set { instructor = instructor != null? instructor:value; }
+            set { instructor = instructor != null ? instructor : value; }
         }
+        public EstadoCurso Estado { get { return estadoCurso; } }
         public bool agregarEstudiante(Estudiante estudiante)
         {
             if (estudiante == null) return false;
@@ -63,8 +65,7 @@ namespace Entidades.Stock
             if (estudiante == null) return false;
             else
             {
-                this.estudiantesInscritos.Remove(estudiante);
-                return true;
+                return this.estudiantesInscritos.Remove(estudiante);
             }
         }
         public bool CursoCerrado()

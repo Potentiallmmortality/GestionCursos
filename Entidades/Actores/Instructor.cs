@@ -53,8 +53,7 @@ namespace Entidades.Actores
             if (curso == null) return false;
             else
             {
-                this._cursoList.Remove(curso);
-                return true;
+                return this._cursoList.Remove(curso);
             }
         }
 

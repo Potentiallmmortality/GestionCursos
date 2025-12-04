@@ -9,18 +9,19 @@ using Entidades.Stock;
 
 namespace Entidades.Actores
 {
+    // <Sumary> Las clases de entidad: Persona, Instructor se derivan de una clase principal abstracta persona.
+   
+
     public class Estudiante : Persona
     {
         // multiplicidad muchos a muchos
 
-        // private DateTime _fechaRegistro;
         private List<Curso> _cursoList;
         private string _identifier;
         private static int _contador= 1;
         public Estudiante(string nombre, string dni, string email)
             : base(nombre, dni, email)
         {
-            // this._fechaRegistro = DateTime.Now;
             _contador++;
             this._cursoList = new List<Curso>();
             this._identifier = $"EST-{DateTime.Now:yyyy}-{_contador.ToString("D3")}";
@@ -47,10 +48,10 @@ namespace Entidades.Actores
             if (curso == null) return false;
             else
             {
-                this._cursoList.Remove(curso);
-                return true;
+                return this._cursoList.Remove(curso);
             }
         }
 
     }
 }
+// private DateTime _fechaRegistro;
