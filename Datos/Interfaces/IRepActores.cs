@@ -12,6 +12,6 @@ namespace Datos.Interfaces
         void guardarPersonaje(Persona persona);
         void eliminarPersonaje(Persona persona);
         List<Persona> obtenerTodos();
-        Persona buscarPersona(string id);
+        Persona buscarPersonaje(string id);
     }
 }

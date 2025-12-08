@@ -8,13 +8,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Clases_Repositorio\" />
+    <ProjectReference Include="..\Entidades\Entidades.csproj" />
+    <ProjectReference Include="..\Negocio\Negocio.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CursosTest\CursosTest.csproj" />
-    <ProjectReference Include="..\Entidades\Entidades.csproj" />
-    <ProjectReference Include="..\Negocio\Negocio.csproj" />
+    <Folder Include="Archivos_Repositorio\Estudiantes\" />
+    <Folder Include="Archivos_Repositorio\Instructores\" />
+    <Folder Include="Archivos_Repositorio\Logs\" />
+    <Folder Include="Archivos_Repositorio\Reservas\" />
   </ItemGroup>
 
 </Project>
