@@ -20,7 +20,7 @@ namespace Datos.Interfaces
 
         // devolvemos una tupla con la lista y el diccionario
         (List<T>, Dictionary<string, T>) obtenerTodos();
-        Persona buscarPersonaje(string id);
+        Persona? buscarPersonaje(string id);
 
         // Esta nueva firma permitirá crear o actualizar nuestro .json a partir de la lista auxiliar
         // una vez halla finalizado el proceso de alta, baja o modificación de actores.

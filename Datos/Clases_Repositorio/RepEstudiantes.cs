@@ -40,9 +40,9 @@ namespace Datos.Clases_Repositorio
             if (persona is Estudiante estudiante && eliminarDelDiccionario(estudiante) && eliminarDeLista(estudiante)) return true;
             else return false;
         }
-        Persona IRepActores<Estudiante>.buscarPersonaje(string id)
+        Persona? IRepActores<Estudiante>.buscarPersonaje(string id)
         {
-            return Diccionario.TryGetValue(id, out Estudiante p)? p: throw new Exception("No encontramos objeto");
+            return Diccionario.TryGetValue(id, out Estudiante p)? p: null;
         }
         (List<Estudiante>, Dictionary<string, Estudiante>) IRepActores<Estudiante>.obtenerTodos()
         {
