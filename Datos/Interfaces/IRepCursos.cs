@@ -8,11 +8,13 @@ using Entidades.Stock;
 
 namespace Datos.Interfaces
 {
-    public interface IRepCursos
+    public interface IRepCursos<T>
     {
-        void guardarCurso(Curso curso);
-        void eliminarCurso(Curso curso);
-        List<Curso> obtenerTodos();
+        bool guardarCurso(Curso curso);
+        bool eliminarCurso(Curso curso);
+        (List<Curso>, Dictionary<string, T>) obtenerTodos();
         Curso BuscarPorCodigo(string codigoUnico);
+
+        void persistirCambios();
     }
 }

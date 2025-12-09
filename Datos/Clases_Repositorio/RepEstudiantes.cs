@@ -6,61 +6,51 @@ using System.Threading.Tasks;
 using Entidades.Actores;
 using Entidades.Stock;
 using Datos.Interfaces;
+using System.ComponentModel.Design;
 
 namespace Datos.Clases_Repositorio
 {
-    public class RepEstudiantes: RepBase<Estudiante>, IRepActores
+    public class RepEstudiantes: RepBase<Estudiante>, IRepActores<Estudiante>
     {
-        private Dictionary<string, Estudiante> diccionarioEstudiantes;
+        public RepEstudiantes(string filename) : base(filename) { }
 
-        public RepEstudiantes(string filename) : base(filename)
-        {
-            diccionarioEstudiantes = new Dictionary<string, Estudiante>();
-        }
         // Establezcamos el Dni como clave para buscar a un estudiante, mientras que indentifier cumplirá
         // una función de registro para logger.
-        private bool agregarEstudianteAlDiccionario(Estudiante estudiante)
+
+        protected override bool agregarAlDiccionario(Estudiante entidad)
         {
-            if (estudiante != null)
-            {
-                diccionarioEstudiantes.TryAdd(estudiante.Dni, estudiante);
-                return true;
-            }
-            return false;
+            if(entidad == null) return false;
+            return Diccionario.TryAdd(entidad.Dni, entidad);
         }
-        private bool eliminarEstudianteDelDiccionario(Estudiante estudiante)
+        protected override bool eliminarDelDiccionario(Estudiante entidad)
         {
-           if (estudiante != null)
-            {
-                return diccionarioEstudiantes.Remove(estudiante.Dni);
-            }
+            if(entidad == null) return false;
+            return Diccionario.Remove(entidad.Dni);
+        }
+
+        // En implementacion de interfaces:
+        // pendiente agregar implementaciones de interfaz que usen archivos .json
+        bool IRepActores<Estudiante>.guardarPersonaje(Persona persona)
+        {
+            if (persona is Estudiante estudiante && agregarAlDiccionario(estudiante) && agregarALista(estudiante)) return true;
             else return false;
         }
-        public Dictionary<string, Estudiante> DiccionarioEstudiantes
+        bool IRepActores<Estudiante>.eliminarPersonaje(Persona persona)
         {
-            get { return diccionarioEstudiantes; }
+            if (persona is Estudiante estudiante && eliminarDelDiccionario(estudiante) && eliminarDeLista(estudiante)) return true;
+            else return false;
         }
-        void IRepActores.guardarPersonaje(Persona persona)
+        Persona IRepActores<Estudiante>.buscarPersonaje(string id)
         {
-            //if (persona is Estudiante estudiante)
-            //{
-            //    agregarEstudianteAlDiccionario(estudiante);
-            //}
+            return Diccionario.TryGetValue(id, out Estudiante p)? p: throw new Exception("No encontramos objeto");
         }
-        void IRepActores.eliminarPersonaje(Persona persona)
+        (List<Estudiante>, Dictionary<string, Estudiante>) IRepActores<Estudiante>.obtenerTodos()
         {
-            //if (persona is Estudiante estudiante)
-            //{
-            //    eliminarEstudianteDelDiccionario(estudiante);
-            //}
+            return (Lista, Diccionario);
         }
-        Persona IRepActores.buscarPersonaje(string id)
+        void IRepActores<Estudiante>.persistirCambios()
         {
-           throw new NotImplementedException();
-        }
-        List<Persona> IRepActores.obtenerTodos()
-        {
-            throw new NotImplementedException();
+            // implementacion pendiente
         }
 
     }

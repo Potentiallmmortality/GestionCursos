@@ -9,15 +9,16 @@ using Entidades.Actores;
 namespace Datos.Interfaces
 {
 
-    public interface IRepReservas
+    public interface IRepReservas<T>
     {
-        void guardarReserva(Reserva reserva);
-        void eliminarReserva(Reserva reserva);
-        List<Reserva> obtenerTodas();
-        List<Reserva> obtenerReservasActivas();
-        List<Reserva> buscarPorCurso(Curso curso);
-        List<Reserva> buscarPorEstudiante(Estudiante estudiante);
+        bool guardarReserva(Reserva reserva);
+        bool eliminarReserva(Reserva reserva);
+        (List<Reserva>, Dictionary<string, T>) obtenerTodas();
+        (List<Reserva>, Dictionary<string, T>) obtenerReservasActivas();
+        (List<Reserva>, Dictionary<string, T>) buscarPorCurso(Curso curso);
+        (List<Reserva>, Dictionary<string, T>) buscarPorEstudiante(Estudiante estudiante);
         Reserva buscarReserva(string idUnico);
+        void persistirCambios();
 
     }
 }
