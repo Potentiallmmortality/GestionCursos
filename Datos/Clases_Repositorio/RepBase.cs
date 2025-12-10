@@ -39,7 +39,7 @@ namespace Datos.Clases_Repositorio
         }
         public bool agregarALista(T entidad)
         {
-            if (entidad != null)
+            if (entidad != null && !lista.Contains(entidad))
             {
                 lista.Add(entidad);
                 return true;

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Entidades.Actores;
 using Entidades.Stock;
 
+
 namespace Datos.Interfaces
 {
     public interface IRepCursos<T>

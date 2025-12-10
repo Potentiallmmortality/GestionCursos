@@ -105,15 +105,26 @@ namespace CursosTest
                 Assert.IsFalse(resultadoEliminarNoExistente);
             }
         }
+
         [TestClass]
+        public sealed class TestCurso
+        {
+
+        }
+
+        [TestClass]
+
+        // Tautologías de calibración
         public sealed class Debug
         {
             [TestMethod]
             public void debug()
             {
                 var prueba = new Instructor("Pedro", "44556677", "");
+                var prueba_2 = new Estudiante("Juan", "1886655", "");
 
                 Assert.IsNotNull(prueba);
+                Assert.IsNotNull(prueba_2);
             }
         }
 

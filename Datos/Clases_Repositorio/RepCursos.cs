@@ -27,8 +27,18 @@ namespace Datos.Clases_Repositorio
         }
         bool IRepCursos<Curso>.guardarCurso(Curso curso)
         {
-            if (agregarAlDiccionario(curso) && agregarALista(curso)) return true;
-            else return false;
+            //if (agregarAlDiccionario(curso) && agregarALista(curso)) return true;
+            //else return false;
+
+            if (agregarAlDiccionario(curso))
+            {
+                if (agregarALista(curso)) return true;
+                else
+                {
+                    eliminarDelDiccionario(curso);
+                    return false;
+                }
+            } return false;
         }
         bool IRepCursos<Curso>.eliminarCurso(Curso curso)
         {

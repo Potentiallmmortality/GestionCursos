@@ -11,9 +11,10 @@ namespace Negocio.SerivicioActores
         OperationResult Agregar(string nombre, string dni, string email);
         OperationResult Eliminar(string dni);
 
-        // Calquiera de los tres atributos modificables es un string
-        OperationResult Modificar(string parametro);
+        // Pendiente implementar una merjor lógica para modificar actores
+
+        //OperationResult Modificar(string parametro);
         OperationResult PersistirCambios();
-        T Buscar(string parametro);
+        OperationResult Buscar(string parametro);
     }
 }

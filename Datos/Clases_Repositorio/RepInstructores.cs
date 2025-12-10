@@ -37,9 +37,9 @@ namespace Datos.Clases_Repositorio
                 return eliminarDelDiccionario(instructor);
             } return false;
         }
-        Persona IRepActores<Instructor>.buscarPersonaje(string id)
+        Persona? IRepActores<Instructor>.buscarPersonaje(string id)
         {
-           throw new NotImplementedException();
+            return Diccionario.TryGetValue(id, out Instructor p) ? p : null;
         }
         (List<Instructor>, Dictionary<string, Instructor>) IRepActores<Instructor>.obtenerTodos()
         {

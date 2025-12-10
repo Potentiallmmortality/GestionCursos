@@ -20,6 +20,7 @@ namespace Entidades.Stock
 
         public Curso(string nombre, string idUnico, int cupoMaximo)
         {
+            if(string.IsNullOrWhiteSpace(nombre) || string.IsNullOrWhiteSpace(idUnico) || cupoMaximo < 0) throw new Exception("Datos Invalidos");
             contador++;
             this.nombre = nombre;
             this.cupoMaximo = cupoMaximo;

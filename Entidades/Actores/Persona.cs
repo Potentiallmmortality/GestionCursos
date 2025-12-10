@@ -16,6 +16,7 @@ namespace Entidades.Actores
 
         public Persona(string nombre, string dni, string email)
         {
+            if (string.IsNullOrWhiteSpace(nombre) || string.IsNullOrWhiteSpace(dni) || string.IsNullOrWhiteSpace(email)) throw new Exception("Datos Invalidos");
             this.nombre = nombre;
             this.dni = dni;
             this.email = email;
