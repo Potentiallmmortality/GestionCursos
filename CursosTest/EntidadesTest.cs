@@ -1,6 +1,7 @@
 ﻿using Entidades.Actores;
 using Entidades.Stock;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using static CursosTest.EntidadesTest;
 
 namespace CursosTest
 {
@@ -61,6 +62,36 @@ namespace CursosTest
                 Assert.IsFalse(estudiante.agregarCurso(cursoDuplicado));
 
             }
+            [TestMethod]
+            public void comprobar_GetterSetter()
+            {
+                // Debido a que los Atributos de estudiante e instructor son compartidos, esta prueba vale por dos.
+
+                // Assert: crear instancia de Estudiante
+
+                var estudiante = new Estudiante("Pedro", "55667788", "pedro@epn.edu.ec");
+
+                // Comprobar getters
+
+                Assert.AreEqual("Pedro", estudiante.Nombre);
+                Assert.AreEqual("55667788", estudiante.Dni);
+                Assert.AreEqual("pedro@epn.edu.ec", estudiante.Email);
+
+                // Comprobar al menos un setter
+
+                // No debería cambiar porque el valor es inválido
+
+                estudiante.Nombre = "Juan";
+                Assert.AreEqual("Juan", estudiante.Nombre);
+
+                estudiante.Nombre = "   ";
+                Assert.AreEqual("Juan", estudiante.Nombre); 
+                
+
+                estudiante.Email = "";
+                Assert.AreEqual("pedro@epn.edu.ec", estudiante.Email);
+
+            }
             public void ComprobarToStringEstudiante()
             {
                 // arrange: Crear instancia de Estudiante
@@ -73,6 +104,7 @@ namespace CursosTest
                 Console.WriteLine(resultado + '\n');
             }
         }
+
         [TestClass]
         public sealed class TestInstructor
         {
@@ -118,57 +150,111 @@ namespace CursosTest
                 Assert.IsTrue(instructor.agregarCurso(cursoDuplicado));
                 Assert.IsFalse(instructor.agregarCurso(cursoDuplicado));
             }
-        }
-
-        [TestClass]
-        public sealed class TestCurso
-        {
-            
             [TestMethod]
-            public void ComprobarCursoA()
+            public void comprobar_GetterSetter()
             {
-                // Act: Crear instancias de Curso y Estudiantes
+                // Debido a que los Atributos de estudiante e instructor son compartidos, esta prueba vale por dos.
+                // Assert: crear instancia de Instructor
+                var instructor = new Instructor("Laura", "66778899", "Laura@epn.edu.ec");
 
-                var curso = new Curso("Biología", "BIO101", 4);
-                Estudiante? estudiante = new Estudiante("Sofía","8856345","SOFIA.belen@epn.edu.ec");
-                Estudiante? estudiante_2 = new Estudiante("Miguel", "77441122", "email@generico");
+                // Comprobar getters
 
-                // Comprobar que el estudiante se haya agregado correctamente
+                Assert.AreEqual("Laura", instructor.Nombre);
+                Assert.AreEqual("66778899", instructor.Dni);
+                Assert.AreEqual("Laura@epn.edu.ec", instructor.Email);
 
-                Assert.IsTrue(curso.agregarEstudiante(estudiante));
+                // comprobar al menos un  setter
 
-                // Comprobar que se pueda eliminar estudiante agregado
-
-                Assert.IsTrue(curso.eliminarEstudiante(estudiante));
-
-                // Comprobar que no se pueda eliminar un estudiante que no está en la lista
-
-                Assert.IsFalse(curso.eliminarEstudiante(estudiante_2));
-
-                // comprobar si se puede agregar dos veces un mismo estudiante
-
-                Assert.IsTrue(curso.agregarEstudiante(estudiante_2));
-                Assert.IsFalse(curso.agregarEstudiante(estudiante_2));
+                instructor.Nombre = "   ";
+                Assert.AreEqual("Laura", instructor.Nombre);
             }
-        }
 
-        [TestClass]
-
-        // Tautologías de calibración
-        public sealed class Debug
-        {
-            [TestMethod]
-            public void debug()
+            [TestClass]
+            public sealed class TestCurso
             {
-                var prueba = new Instructor("Pedro", "44556677", "eamailGenerico@epn.edu.ec");
-                var prueba_2 = new Estudiante("Juan", "1886655", "maiGenerico2@epn.edu.ec");
-                var prueba_3 = new Curso("Curso de Prueba", "C101", 3);
 
-                Assert.IsNotNull(prueba);
-                Assert.IsNotNull(prueba_2);
-                Assert.IsNotNull(prueba_3);
+                [TestMethod]
+                public void ComprobarCursoA()
+                {
+                    // Act: Crear instancias de Curso y Estudiantes
+
+                    var curso = new Curso("Biología", "BIO101", 4);
+                    Estudiante? estudiante = new Estudiante("Sofía", "8856345", "SOFIA.belen@epn.edu.ec");
+                    Estudiante? estudiante_2 = new Estudiante("Miguel", "77441122", "email@generico");
+
+                    // Comprobar que el estudiante se haya agregado correctamente
+
+                    Assert.IsTrue(curso.agregarEstudiante(estudiante));
+
+                    // Comprobar que se pueda eliminar estudiante agregado
+
+                    Assert.IsTrue(curso.eliminarEstudiante(estudiante));
+
+                    // Comprobar que no se pueda eliminar un estudiante que no está en la lista
+
+                    Assert.IsFalse(curso.eliminarEstudiante(estudiante_2));
+
+                    // comprobar si se puede agregar dos veces un mismo estudiante
+
+                    Assert.IsTrue(curso.agregarEstudiante(estudiante_2));
+                    Assert.IsFalse(curso.agregarEstudiante(estudiante_2));
+                }
+                [TestMethod]
+                public void comprobar_GetterSetter()
+                {
+                    // Arrange: Crear instancia de Curso
+                    var curso = new Curso("Historia", "HIS101", 5);
+                    
+                    // Comprobar getters
+                    Assert.AreEqual("Historia", curso.Nombre);
+                    Assert.AreEqual("his101", curso.CodigoUnico);
+                    Assert.AreEqual(5, curso.CupoMaximo);
+
+                    // Comprobar al menos un setter
+
+                    var instructor = new Instructor("Andrés", "33445566", "andresi@epn.edu.ec");
+
+                    curso.Instructor = instructor;
+
+                    Assert.AreEqual(instructor, curso.Instructor);
+
+#pragma warning disable CS8625 // No se puede convertir un literal NULL en un tipo de referencia que no acepta valores NULL.
+                    curso.Instructor = null;
+#pragma warning restore CS8625 // No se puede convertir un literal NULL en un tipo de referencia que no acepta valores NULL.
+
+                    Assert.AreEqual(instructor, curso.Instructor);
+
+
+                    // comprobemos si podemos abrir y cerrar el curso
+
+
+                    curso.CerrarCurso();
+
+                    Assert.IsTrue(curso.CursoCerrado());
+                }
             }
-        }
+            [TestClass]
+            public sealed class TestReserva
+            {
 
-    }
+            }
+            [TestClass]
+
+            // Tautologías de calibración
+            public sealed class Debug
+            {
+                [TestMethod]
+                public void debug()
+                {
+                    var prueba = new Instructor("Pedro", "44556677", "eamailGenerico@epn.edu.ec");
+                    var prueba_2 = new Estudiante("Juan", "1886655", "maiGenerico2@epn.edu.ec");
+                    var prueba_3 = new Curso("Curso de Prueba", "C101", 3);
+
+                    Assert.IsNotNull(prueba);
+                    Assert.IsNotNull(prueba_2);
+                    Assert.IsNotNull(prueba_3);
+                }
+            }
+    }   }
+
 }

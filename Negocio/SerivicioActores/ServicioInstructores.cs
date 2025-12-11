@@ -1,14 +1,5 @@
 ﻿using Datos.Interfaces;
 using Entidades.Actores;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Entidades.Actores;
-using Entidades.Stock;
-using Datos.Interfaces;
-using System.Globalization;
 
 namespace Negocio.SerivicioActores
 {

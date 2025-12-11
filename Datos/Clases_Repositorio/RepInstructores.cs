@@ -25,16 +25,31 @@ namespace Datos.Clases_Repositorio
         }
         bool IRepActores<Instructor>.guardarPersonaje(Persona persona)
         {
-            if (persona is Instructor instructor)
+            //if (persona is Instructor instructor)
+            //{
+            //   return agregarAlDiccionario(instructor);
+            //} return false;
+            if (persona is Instructor instructor && agregarAlDiccionario(instructor))
             {
-               return agregarAlDiccionario(instructor);
-            } return false;
+                if (agregarALista(instructor)) return true;
+                else
+                {
+                    eliminarDelDiccionario(instructor);
+                    return false;
+                }
+            }
+            return false;
         }
         bool IRepActores<Instructor>.eliminarPersonaje(Persona persona)
         {
-            if (persona is Instructor instructor)
+            if (persona is Instructor instructor && eliminarDelDiccionario(instructor))
             {
-                return eliminarDelDiccionario(instructor);
+                if(eliminarDeLista(instructor)) return true;
+                else
+                {
+                    agregarAlDiccionario(instructor);
+                    return false;
+                }
             } return false;
         }
         Persona? IRepActores<Instructor>.buscarPersonaje(string id)

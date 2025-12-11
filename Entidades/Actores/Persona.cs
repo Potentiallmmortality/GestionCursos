@@ -25,17 +25,17 @@ namespace Entidades.Actores
         public string Nombre
         {
             get { return nombre; }
-            set { nombre = !string.IsNullOrWhiteSpace(value) ? nombre : value; }
+            set { nombre = string.IsNullOrWhiteSpace(value) ? nombre : value; }
         }
         public string Dni
         {
             get { return dni; }
-            set { dni = !string.IsNullOrWhiteSpace(value) ? dni: value; }
+            set { dni = string.IsNullOrWhiteSpace(value) ? dni: value; }
         }
         public string Email
         {
             get { return email; }
-            set { email = !string.IsNullOrWhiteSpace(value) ? email : value; }
+            set { email = string.IsNullOrWhiteSpace(value) ? email : value; }
         }
         public DateTime FechaRegistro
         {

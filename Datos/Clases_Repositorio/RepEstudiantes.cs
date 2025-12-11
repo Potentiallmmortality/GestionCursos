@@ -27,18 +27,37 @@ namespace Datos.Clases_Repositorio
             if(entidad == null) return false;
             return Diccionario.Remove(entidad.Dni);
         }
-
-        // En implementacion de interfaces:
-        // pendiente agregar implementaciones de interfaz que usen archivos .json
+        // Pendiente modificar las reglas de guardar y eliminar para que se desarollen de manera parlela y evitar discordancias entre lista y diccionario.
         bool IRepActores<Estudiante>.guardarPersonaje(Persona persona)
         {
-            if (persona is Estudiante estudiante && agregarAlDiccionario(estudiante) && agregarALista(estudiante)) return true;
-            else return false;
+            //if (persona is Estudiante estudiante && agregarAlDiccionario(estudiante) && agregarALista(estudiante)) return true;
+            //else return false;
+
+            if (persona is Estudiante estudiante && agregarAlDiccionario(estudiante))
+            {
+                if (agregarALista(estudiante)) return true;
+                else
+                {
+                    eliminarDelDiccionario(estudiante);
+                    return false;
+                } 
+            }
+            return false;
         }
         bool IRepActores<Estudiante>.eliminarPersonaje(Persona persona)
         {
-            if (persona is Estudiante estudiante && eliminarDelDiccionario(estudiante) && eliminarDeLista(estudiante)) return true;
-            else return false;
+            //if (persona is Estudiante estudiante && eliminarDelDiccionario(estudiante) && eliminarDeLista(estudiante)) return true;
+            //else return false;
+            if (persona is Estudiante estudiante && eliminarDelDiccionario(estudiante))
+            {
+                if (eliminarDeLista(estudiante)) return true;
+                else
+                {
+                    agregarAlDiccionario(estudiante);
+                    return false;
+                }
+            }
+            return false;
         }
         Persona? IRepActores<Estudiante>.buscarPersonaje(string id)
         {
