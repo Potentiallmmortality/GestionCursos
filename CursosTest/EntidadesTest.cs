@@ -53,6 +53,13 @@ namespace CursosTest
                 var cursoNoExistente = new Curso("Historia", "HIS101", 3);
                 bool resultadoEliminarNoExistente = estudiante.eliminarCurso(cursoNoExistente);
                 Assert.IsFalse(resultadoEliminarNoExistente);
+
+                // Comprobar si se puede agregar dos veces un mismo curso
+
+                var cursoDuplicado = new Curso("Geografía", "GEO101", 3);
+                Assert.IsTrue(estudiante.agregarCurso(cursoDuplicado));
+                Assert.IsFalse(estudiante.agregarCurso(cursoDuplicado));
+
             }
             public void ComprobarToStringEstudiante()
             {
@@ -98,18 +105,51 @@ namespace CursosTest
 
                 bool resultadoEliminar = instructor.eliminarCurso(curso);
                 Assert.IsTrue(resultadoEliminar);
+
                 // Verifiquemos que pasa cuando intentamos eliminar un curso que no existe en la lista
 
                 var cursoNoExistente = new Curso("Química", "QUI101", 3);
                 bool resultadoEliminarNoExistente = instructor.eliminarCurso(cursoNoExistente);
                 Assert.IsFalse(resultadoEliminarNoExistente);
+
+                // Comprobar si se puede agregar dos veces un mismo curso
+
+                var cursoDuplicado = new Curso("Biología", "BIO101", 3);
+                Assert.IsTrue(instructor.agregarCurso(cursoDuplicado));
+                Assert.IsFalse(instructor.agregarCurso(cursoDuplicado));
             }
         }
 
         [TestClass]
         public sealed class TestCurso
         {
+            
+            [TestMethod]
+            public void ComprobarCursoA()
+            {
+                // Act: Crear instancias de Curso y Estudiantes
 
+                var curso = new Curso("Biología", "BIO101", 4);
+                Estudiante? estudiante = new Estudiante("Sofía","8856345","SOFIA.belen@epn.edu.ec");
+                Estudiante? estudiante_2 = new Estudiante("Miguel", "77441122", "email@generico");
+
+                // Comprobar que el estudiante se haya agregado correctamente
+
+                Assert.IsTrue(curso.agregarEstudiante(estudiante));
+
+                // Comprobar que se pueda eliminar estudiante agregado
+
+                Assert.IsTrue(curso.eliminarEstudiante(estudiante));
+
+                // Comprobar que no se pueda eliminar un estudiante que no está en la lista
+
+                Assert.IsFalse(curso.eliminarEstudiante(estudiante_2));
+
+                // comprobar si se puede agregar dos veces un mismo estudiante
+
+                Assert.IsTrue(curso.agregarEstudiante(estudiante_2));
+                Assert.IsFalse(curso.agregarEstudiante(estudiante_2));
+            }
         }
 
         [TestClass]
@@ -120,11 +160,13 @@ namespace CursosTest
             [TestMethod]
             public void debug()
             {
-                var prueba = new Instructor("Pedro", "44556677", "");
-                var prueba_2 = new Estudiante("Juan", "1886655", "");
+                var prueba = new Instructor("Pedro", "44556677", "eamailGenerico@epn.edu.ec");
+                var prueba_2 = new Estudiante("Juan", "1886655", "maiGenerico2@epn.edu.ec");
+                var prueba_3 = new Curso("Curso de Prueba", "C101", 3);
 
                 Assert.IsNotNull(prueba);
                 Assert.IsNotNull(prueba_2);
+                Assert.IsNotNull(prueba_3);
             }
         }
 

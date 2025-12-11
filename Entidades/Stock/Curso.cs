@@ -53,8 +53,7 @@ namespace Entidades.Stock
         public EstadoCurso Estado { get { return estadoCurso; } }
         public bool agregarEstudiante(Estudiante estudiante)
         {
-            if (estudiante == null) return false;
-            if (this.estudiantesInscritos.Count >= this.cupoMaximo) return false;
+            if (estudiante == null || this.estudiantesInscritos.Count >= this.cupoMaximo || estudiantesInscritos.Contains(estudiante)) return false;
             else
             {
                 this.estudiantesInscritos.Add(estudiante);
@@ -69,9 +68,16 @@ namespace Entidades.Stock
                 return this.estudiantesInscritos.Remove(estudiante);
             }
         }
-        public bool CursoCerrado()
+        public void CerrarCurso()
         {
             this.estadoCurso = EstadoCurso.Cerrado;
+        }
+        public void AbrirCurso()
+        {
+            this.estadoCurso = EstadoCurso.Abierto;
+        }
+        public bool CursoCerrado()
+        {
             return this.estadoCurso == EstadoCurso.Cerrado;
         }
 

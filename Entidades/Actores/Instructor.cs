@@ -41,7 +41,7 @@ namespace Entidades.Actores
         }
         public bool agregarCurso(Curso curso)
         {
-            if (curso == null) return false;
+            if (curso == null || _cursoList.Contains(curso)) return false;
             else
             {
                 this._cursoList.Add(curso);
