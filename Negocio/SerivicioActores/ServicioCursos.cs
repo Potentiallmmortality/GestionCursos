@@ -5,13 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Entidades.Actores;
 using Entidades.Stock;
+using Datos.Clases_Repositorio;
+using Datos.Interfaces;
 
-
-namespace Datos.Interfaces
+namespace Negocio.SerivicioActores
 {
-    public interface IRepCursos: IRepGeneric<Curso> 
+    public class ServicioCursos
     {
-        bool guardarCurso(Curso curso);
-        bool eliminarCurso(Curso curso);
+        // implementacion pendiente
     }
 }

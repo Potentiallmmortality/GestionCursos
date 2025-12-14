@@ -80,6 +80,9 @@ namespace Entidades.Stock
         {
             return this.estadoCurso == EstadoCurso.Cerrado;
         }
-
+        public string toString()
+        {
+            return $"Curso: {Nombre}, Codigo Unico: {CodigoUnico}, Cupo Maximo: {CupoMaximo}, Estado: {Estado}";
+        }
     }
 }

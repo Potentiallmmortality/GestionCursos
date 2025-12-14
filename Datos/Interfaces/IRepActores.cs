@@ -13,17 +13,9 @@ using Entidades.Actores;
 
 namespace Datos.Interfaces
 {
-    public interface IRepActores<T>
+    public interface IRepActores<T>: IRepGeneric<T> where T : Persona
     {
         bool guardarPersonaje(Persona persona);
         bool eliminarPersonaje(Persona persona);
-
-        // devolvemos una tupla con la lista y el diccionario
-        (List<T>, Dictionary<string, T>) obtenerTodos();
-        Persona? buscarPersonaje(string id);
-
-        // Esta nueva firma permitirá crear o actualizar nuestro .json a partir de la lista auxiliar
-        // una vez halla finalizado el proceso de alta, baja o modificación de actores.
-        void persistirCambios();
     }
 }

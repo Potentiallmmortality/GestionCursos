@@ -46,8 +46,6 @@ namespace Datos.Clases_Repositorio
         }
         bool IRepActores<Estudiante>.eliminarPersonaje(Persona persona)
         {
-            //if (persona is Estudiante estudiante && eliminarDelDiccionario(estudiante) && eliminarDeLista(estudiante)) return true;
-            //else return false;
             if (persona is Estudiante estudiante && eliminarDelDiccionario(estudiante))
             {
                 if (eliminarDeLista(estudiante)) return true;
@@ -59,18 +57,25 @@ namespace Datos.Clases_Repositorio
             }
             return false;
         }
-        Persona? IRepActores<Estudiante>.buscarPersonaje(string id)
-        {
-            return Diccionario.TryGetValue(id, out Estudiante p)? p: null;
-        }
-        (List<Estudiante>, Dictionary<string, Estudiante>) IRepActores<Estudiante>.obtenerTodos()
+        (List<Estudiante>, Dictionary<string, Estudiante>) IRepGeneric<Estudiante>.obtenerTodos()
         {
             return (Lista, Diccionario);
         }
-        void IRepActores<Estudiante>.persistirCambios()
+        Estudiante? IRepGeneric<Estudiante>.BuscarPorIdentificacion(string id)
+        {
+            return Diccionario.TryGetValue(id, out Estudiante p)? p: throw new Exception("No encontramos al Estudiante");
+        }
+        Estudiante? IRepGeneric<Estudiante>.BuscarPorParametros(string id, string atributo1)
+        {
+            return Lista.FirstOrDefault(e => e.Dni == id || e.Email == atributo1);
+        }
+        void IRepGeneric<Estudiante>.persistirCambios()
         {
             // implementacion pendiente
         }
-
+        void IRepGeneric<Estudiante>.cargarDatos()
+        {
+            // implementacion pendiente
+        }
     }
 }

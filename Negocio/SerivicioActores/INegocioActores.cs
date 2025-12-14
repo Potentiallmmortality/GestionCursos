@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Negocio.SerivicioActores
 {
-    public interface INegocioActores<T>
+    public interface INegocioActores
     {
         OperationResult Agregar(string nombre, string dni, string email);
         OperationResult Eliminar(string dni);
@@ -15,6 +15,7 @@ namespace Negocio.SerivicioActores
 
         //OperationResult Modificar(string parametro);
         OperationResult PersistirCambios();
+        OperationResult CargarDatos();
         OperationResult Buscar(string parametro);
     }
 }

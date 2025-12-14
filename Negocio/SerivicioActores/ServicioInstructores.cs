@@ -1,9 +1,10 @@
-﻿using Datos.Interfaces;
+﻿using Datos.Clases_Repositorio;
+using Datos.Interfaces;
 using Entidades.Actores;
 
 namespace Negocio.SerivicioActores
 {
-    public class ServicioInstructores: INegocioActores<Instructor>
+    public class ServicioInstructores: INegocioActores
     {
         private readonly IRepActores<Instructor> repInstructores;
         public ServicioInstructores()
@@ -11,13 +12,16 @@ namespace Negocio.SerivicioActores
             this.repInstructores = null!;
             //.. / Datos.Archivos_Repositorio / Instructores / instructores.json
         }
-        OperationResult INegocioActores<Instructor>.Agregar(string nombre, string dni, string email)
+        OperationResult INegocioActores.Agregar(string nombre, string dni, string email)
         {
             try
             {
-                //Instructor? instructorExistente = repInstructores.buscarPersonaje(dni) as Instructor;
-                //if (instructorExistente != null) throw new Exception("El instructor ya se encuentra registrado \n");
-                if (repInstructores.guardarPersonaje(new Instructor(nombre, dni, email))) return OperationResult.Ok("Instructor agregado con éxito \n");
+                if (InstructorExiste(dni, email)) 
+                    return OperationResult.Fail(" El instructor ya se enuentra agregado \n");
+               
+                if ( repInstructores.guardarPersonaje(new Instructor(nombre, dni, email))) 
+                    return OperationResult.Ok("Instructor agregado con éxito \n");
+
                 else return OperationResult.Fail("No se pudo agregar el instructor \n");
             }
             catch (Exception ex)
@@ -25,13 +29,13 @@ namespace Negocio.SerivicioActores
                 return OperationResult.Fail($"Error {ex.Message} \n");
             }
         }
-        OperationResult INegocioActores<Instructor>.Eliminar(string dni)
+        OperationResult INegocioActores.Eliminar(string dni)
         {
             try
             {
-                Instructor? instructorExistente = repInstructores.buscarPersonaje(dni) as Instructor;
-                if (instructorExistente == null) throw new Exception("El instructor no se encuentra registrado \n");
-                if (repInstructores.eliminarPersonaje(instructorExistente)) return OperationResult.Ok("Instructor eliminado con éxito \n");
+                if (repInstructores.eliminarPersonaje(repInstructores.BuscarPorIdentificacion(dni)))
+                    return OperationResult.Ok("Instructor eliminado con éxito \n");
+
                 else return OperationResult.Fail("No se pudo eliminar el instructor \n");
             }
             catch (Exception ex)
@@ -39,7 +43,7 @@ namespace Negocio.SerivicioActores
                 return OperationResult.Fail($"Error {ex.Message} \n");
             }
         }
-        OperationResult INegocioActores<Instructor>.PersistirCambios()
+        OperationResult INegocioActores.PersistirCambios()
         {
             try
             {
@@ -51,18 +55,35 @@ namespace Negocio.SerivicioActores
                 return OperationResult.Fail($"Error {ex.Message} \n");
             }
         }
-        OperationResult INegocioActores<Instructor>.Buscar(string parametro)
+        OperationResult INegocioActores.CargarDatos()
         {
             try
             {
-                Instructor? instructorExistente = repInstructores.buscarPersonaje(parametro) as Instructor;
-                if (instructorExistente == null) throw new Exception("El instructor no se encuentra registrado \n");
-                return OperationResult.Ok("Instructor encontrado con éxito \n");
+                repInstructores.persistirCambios();
+                return OperationResult.Ok("Cambios persistidos con éxito \n");
+            }
+            catch(Exception ex)
+            {
+                return OperationResult.Fail($"Error {ex.Message} \n");
+            }
+        }
+        OperationResult INegocioActores.Buscar(string parametro)
+        {
+            try
+            {
+                var instructor = repInstructores.BuscarPorIdentificacion(parametro);
+                
+                return OperationResult.Ok(instructor.toString());
             }
             catch (Exception ex)
             {
                 return OperationResult.Fail($"Error {ex.Message} \n");
             }
+        }
+        private bool InstructorExiste(string dni, string email = "defaultEmail@epn.edu.ec")
+        {
+            var instructorExistente = repInstructores.BuscarPorParametros(dni, email);
+            return instructorExistente != null;
         }
     }
  }

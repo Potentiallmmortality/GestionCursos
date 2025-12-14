@@ -49,10 +49,21 @@ namespace Entidades.Stock
         public EstadoReserva Estado {
             get { return estadoReserva; } 
         }
-        public bool reservaAprobada()
+        public void aprobarReserva()
         {
             this.estadoReserva = EstadoReserva.Aprovada;
+        }
+        public void rechazarReserva()
+        {
+            this.estadoReserva = EstadoReserva.En_Espera;
+        }
+        public bool reservaAprobada()
+        {
             return this.estadoReserva == EstadoReserva.Aprovada;
+        }
+        public string toString()
+        {
+            return $"Reserva: {codigoUnico}, Estudiante: {estudiante.Nombre}, Curso: {curso.Nombre}, Fecha de Creacion: {fechaCreacion}, Estado: {estadoReserva}";
         }
     }
 }

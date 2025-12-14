@@ -52,15 +52,23 @@ namespace Datos.Clases_Repositorio
                 }
             } return false;
         }
-        Persona? IRepActores<Instructor>.buscarPersonaje(string id)
-        {
-            return Diccionario.TryGetValue(id, out Instructor p) ? p : null;
-        }
-        (List<Instructor>, Dictionary<string, Instructor>) IRepActores<Instructor>.obtenerTodos()
+        (List<Instructor>, Dictionary<string, Instructor>) IRepGeneric<Instructor>.obtenerTodos()
         {
             return (Lista, Diccionario);
         }
-        public void persistirCambios()
+        Instructor? IRepGeneric<Instructor>.BuscarPorIdentificacion(string id)
+        {
+            return Diccionario.TryGetValue(id, out Instructor p) ? p : null;
+        }
+        Instructor? IRepGeneric<Instructor>.BuscarPorParametros(string id, string atributo1)
+        {
+            return Lista.FirstOrDefault(i => i.Dni == id || i.Email == atributo1);
+        }
+        void IRepGeneric<Instructor>.persistirCambios()
+        {
+            // implementación pendiente
+        }
+        void IRepGeneric<Instructor>.cargarDatos()
         {
             // implementación pendiente
         }

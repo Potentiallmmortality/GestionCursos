@@ -14,7 +14,7 @@ using System.Globalization;
 
 namespace Negocio.SerivicioActores
 {
-    public class ServicioEstudiantes : INegocioActores<Estudiante>
+    public class ServicioEstudiantes : INegocioActores
     {
         private readonly IRepActores<Estudiante> repEstudiantes;
         public ServicioEstudiantes()
@@ -22,12 +22,12 @@ namespace Negocio.SerivicioActores
             this.repEstudiantes = new RepEstudiantes("");
             //.. / Datos.Archivos_Repositorio / Estudiantes / estudiantes.json
         }
-        OperationResult INegocioActores<Estudiante>.Agregar(string nombre, string dni, string email)
+        OperationResult INegocioActores.Agregar(string nombre, string dni, string email)
         {
             try
             {
-                Estudiante? estudianteExistente = repEstudiantes.buscarPersonaje(dni) as Estudiante;
-                if (estudianteExistente != null) throw new Exception("El estudiante ya se encuentra registrado \n");
+                if (EstudianteExiste(dni,email)) 
+                    return OperationResult.Fail("El estudiante ya se encuentre registrado \n");
 
                 if (repEstudiantes.guardarPersonaje(new Estudiante(nombre, dni, email))) return OperationResult.Ok("Estudiante agregado con éxito \n");
                 else return OperationResult.Fail("No se pudo agregar el estudiante \n");
@@ -37,13 +37,13 @@ namespace Negocio.SerivicioActores
                 return OperationResult.Fail($"Error {ex.Message} \n");
             }
         }
-        OperationResult INegocioActores<Estudiante>.Eliminar(string dni)
+        OperationResult INegocioActores.Eliminar(string dni)
         {
             try
-            {
-                Estudiante? estudianteExistente = repEstudiantes.buscarPersonaje(dni) as Estudiante;
-                if (estudianteExistente == null) throw new Exception("El estudiante no se encuentra registrado \n");
-                if (repEstudiantes.eliminarPersonaje(estudianteExistente)) return OperationResult.Ok("Estudiante eliminado con éxito \n");
+            {    
+                if (repEstudiantes.eliminarPersonaje(repEstudiantes.BuscarPorIdentificacion(dni))) 
+                    return OperationResult.Ok("Estudiante eliminado con éxito \n");
+                
                 else return OperationResult.Fail("No se pudo eliminar el estudiante \n");
             }
             catch (Exception ex)
@@ -51,7 +51,7 @@ namespace Negocio.SerivicioActores
                 return OperationResult.Fail($"Error {ex.Message} \n");
             }
         }
-        OperationResult INegocioActores<Estudiante>.PersistirCambios()
+        OperationResult INegocioActores.PersistirCambios()
         {
             try
             {
@@ -63,12 +63,29 @@ namespace Negocio.SerivicioActores
                 return OperationResult.Fail($"Error {ex.Message} \n");
             }
         }
-        OperationResult INegocioActores<Estudiante>.Buscar(string dni)
+        OperationResult INegocioActores.CargarDatos()
         {
-            var estudiante = repEstudiantes.buscarPersonaje(dni) as Estudiante;
-            if (estudiante == null) return OperationResult.Fail("Estudiante no encontrado \n");
-            return OperationResult.Ok($"Nombre: {estudiante.Nombre} - DNI: {estudiante.Dni} - Email: {estudiante.Email} - ID: {estudiante.Identifier}\n");
-
+            try
+            {
+                repEstudiantes.cargarDatos();
+                return OperationResult.Ok("Datos Cargados correctamente");
+            }
+            catch (Exception ex)
+            {
+                return OperationResult.Fail($"Error {ex.Message} \n");
+            }
+        }
+        OperationResult INegocioActores.Buscar(string dni)
+        {
+            try
+            {
+                var estudiante = repEstudiantes.BuscarPorIdentificacion(dni);
+                return OperationResult.Ok(estudiante.toString());
+            }
+            catch(Exception ex)
+            {
+                return OperationResult.Fail($"Error {ex.Message} \n");
+            }
         }
         public OperationResult ListarEstudiantes()
         {
@@ -82,6 +99,12 @@ namespace Negocio.SerivicioActores
                 aux += $"Nombre: {estudiante.Nombre} - DNI: {estudiante.Dni} - Email: {estudiante.Email} - ID: {estudiante.Identifier}\n";
             }
             return OperationResult.Ok(aux);
+        }
+        private bool EstudianteExiste(string dni, string email = "defaultEmail@epn.edu.ec")
+        {
+            var estudianteExistente = repEstudiantes.BuscarPorParametros(dni, email);
+
+            return estudianteExistente != null;
         }
     }
 }
