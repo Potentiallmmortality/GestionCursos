@@ -8,6 +8,7 @@ using Entidades.Actores;
 using Entidades.Stock;
 using Datos.Interfaces;
 using System.Globalization;
+using Negocio.InterfacesNegocio;
 
 
 
@@ -17,9 +18,9 @@ namespace Negocio.SerivicioActores
     public class ServicioEstudiantes : INegocioActores
     {
         private readonly IRepActores<Estudiante> repEstudiantes;
-        public ServicioEstudiantes()
+        public ServicioEstudiantes(IRepActores<Estudiante> repEstudiantes)
         {
-            this.repEstudiantes = new RepEstudiantes("");
+            this.repEstudiantes = repEstudiantes;
             //.. / Datos.Archivos_Repositorio / Estudiantes / estudiantes.json
         }
         OperationResult INegocioActores.Agregar(string nombre, string dni, string email)
@@ -51,7 +52,21 @@ namespace Negocio.SerivicioActores
                 return OperationResult.Fail($"Error {ex.Message} \n");
             }
         }
-        OperationResult INegocioActores.PersistirCambios()
+        OperationResult INegocioActores.ListarActores()
+        {
+            string aux = "";
+
+            (var lista, Dictionary<string, Estudiante> diccionario) = repEstudiantes.obtenerTodos();
+
+            foreach (KeyValuePair<string, Estudiante> k in diccionario)
+            {
+                var estudiante = k.Value;
+                //aux += $"Nombre: {estudiante.Nombre} - DNI: {estudiante.Dni} - Email: {estudiante.Email} - ID: {estudiante.Identifier}\n";
+                aux += estudiante.toString();
+            }
+            return OperationResult.Ok(aux);
+        }
+        OperationResult INegocioGeneric.PersistirCambios()
         {
             try
             {
@@ -63,7 +78,7 @@ namespace Negocio.SerivicioActores
                 return OperationResult.Fail($"Error {ex.Message} \n");
             }
         }
-        OperationResult INegocioActores.CargarDatos()
+        OperationResult INegocioGeneric.CargarDatos()
         {
             try
             {
@@ -75,7 +90,7 @@ namespace Negocio.SerivicioActores
                 return OperationResult.Fail($"Error {ex.Message} \n");
             }
         }
-        OperationResult INegocioActores.Buscar(string dni)
+        OperationResult INegocioGeneric.Buscar(string dni)
         {
             try
             {
@@ -86,19 +101,6 @@ namespace Negocio.SerivicioActores
             {
                 return OperationResult.Fail($"Error {ex.Message} \n");
             }
-        }
-        public OperationResult ListarEstudiantes()
-        {
-            string aux = "";
-
-            (var lista, Dictionary<string,Estudiante> diccionario) = repEstudiantes.obtenerTodos();
-            
-            foreach(KeyValuePair<string, Estudiante> k in diccionario)
-            {
-                var estudiante = k.Value;
-                aux += $"Nombre: {estudiante.Nombre} - DNI: {estudiante.Dni} - Email: {estudiante.Email} - ID: {estudiante.Identifier}\n";
-            }
-            return OperationResult.Ok(aux);
         }
         private bool EstudianteExiste(string dni, string email = "defaultEmail@epn.edu.ec")
         {

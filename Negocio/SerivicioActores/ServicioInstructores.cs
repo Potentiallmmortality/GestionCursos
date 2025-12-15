@@ -1,15 +1,16 @@
 ﻿using Datos.Clases_Repositorio;
 using Datos.Interfaces;
 using Entidades.Actores;
+using Negocio.InterfacesNegocio;
 
 namespace Negocio.SerivicioActores
 {
     public class ServicioInstructores: INegocioActores
     {
         private readonly IRepActores<Instructor> repInstructores;
-        public ServicioInstructores()
+        public ServicioInstructores(IRepActores<Instructor> repInstructores)
         {
-            this.repInstructores = null!;
+            this.repInstructores = repInstructores;
             //.. / Datos.Archivos_Repositorio / Instructores / instructores.json
         }
         OperationResult INegocioActores.Agregar(string nombre, string dni, string email)
@@ -43,7 +44,18 @@ namespace Negocio.SerivicioActores
                 return OperationResult.Fail($"Error {ex.Message} \n");
             }
         }
-        OperationResult INegocioActores.PersistirCambios()
+        OperationResult INegocioActores.ListarActores()
+        {
+            string aux = "";
+            (var lista, Dictionary<string, Instructor> diccionario) = repInstructores.obtenerTodos();
+            foreach (KeyValuePair<string, Instructor> k in diccionario)
+            {
+                var instructor = k.Value;
+                aux += instructor.ToString();
+            }
+            return OperationResult.Ok(aux);
+        }
+        OperationResult INegocioGeneric.PersistirCambios()
         {
             try
             {
@@ -55,7 +67,7 @@ namespace Negocio.SerivicioActores
                 return OperationResult.Fail($"Error {ex.Message} \n");
             }
         }
-        OperationResult INegocioActores.CargarDatos()
+        OperationResult INegocioGeneric.CargarDatos()
         {
             try
             {
@@ -67,7 +79,7 @@ namespace Negocio.SerivicioActores
                 return OperationResult.Fail($"Error {ex.Message} \n");
             }
         }
-        OperationResult INegocioActores.Buscar(string parametro)
+        OperationResult INegocioGeneric.Buscar(string parametro)
         {
             try
             {
