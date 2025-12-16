@@ -9,8 +9,70 @@ using Datos.Interfaces;
 
 namespace Datos.Clases_Repositorio
 {
-    public class RepReservas
+    public class RepReservas: RepBase<Reserva>,IRepReservas
     {
-        // Implementacion pendiente
+        public RepReservas(string filename) : base(filename) { }
+        protected override bool agregarAlDiccionario(Reserva entidad)
+        {
+            if (entidad == null) 
+                return false;
+
+            return Diccionario.TryAdd(entidad.IdUnico, entidad);
+        }
+        protected override bool eliminarDelDiccionario(Reserva entidad)
+        {
+            if (entidad == null) 
+                return false;
+
+            return Diccionario.Remove(entidad.IdUnico);
+        }
+        bool IRepReservas.guardarReserva(Reserva reserva)
+        {
+            if( agregarAlDiccionario(reserva))
+            {
+                if (agregarALista(reserva))
+                    return true;
+                else
+                {
+                    eliminarDelDiccionario(reserva);
+                    return false;
+                }
+            }
+            else return false;
+        }
+        bool IRepReservas.eliminarReserva(Reserva reserva)
+        {
+            if (eliminarDelDiccionario(reserva))
+            {
+                if (eliminarDeLista(reserva)) return true;
+                else
+                {
+                    agregarAlDiccionario(reserva);
+                    return false;
+                }
+            }
+            else return false;
+        }
+        (List<Reserva>, Dictionary<string, Reserva>) IRepGeneric<Reserva>.obtenerTodos()
+        {
+            return (Lista, Diccionario);
+        }
+        Reserva? IRepGeneric<Reserva>.BuscarPorParametros(string id, string atributo1 = "cadena por defecto")
+        {
+            return Lista.FirstOrDefault(b => b.IdUnico == id);
+        }
+        Reserva? IRepGeneric<Reserva>.BuscarPorIdentificacion(string id)
+        {
+            return Diccionario.TryGetValue(id, out Reserva b) ? b : throw new Exception("Reserva No encontrada");
+        }
+        void IRepGeneric<Reserva>.persistirCambios()
+        { 
+           // implementacion pendiente 
+        }
+
+        void IRepGeneric<Reserva>.cargarDatos()
+        { 
+           // implementacion pendiente 
+        }
     }
 }

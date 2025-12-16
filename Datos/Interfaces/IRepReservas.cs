@@ -9,12 +9,9 @@ using Entidades.Actores;
 namespace Datos.Interfaces
 {
 
-    public interface IRepReservas<T>: IRepGeneric<Reserva>
+    public interface IRepReservas: IRepGeneric<Reserva>
     {
         bool guardarReserva(Reserva reserva);
         bool eliminarReserva(Reserva reserva);
-        (List<Reserva>, Dictionary<string, T>) obtenerTodas();
-        (List<Reserva>, Dictionary<string, T>) obtenerReservasActivas();
-
     }
 }

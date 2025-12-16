@@ -11,7 +11,7 @@ namespace Entidades.Stock
     {
         private string idUnico;
         private string codigoUnico;
-        private static int contador = 1;
+        private static int _contador = 1;
         private Estudiante estudiante;
         private Curso curso;
         private DateTime fechaCreacion;
@@ -19,12 +19,12 @@ namespace Entidades.Stock
 
         public Reserva(Estudiante Estudiante, Curso Curso, string IdUnico)
         {
-            contador++;
+            _contador++;
             this.idUnico = IdUnico;
             this.fechaCreacion = DateTime.Now;
             this.estudiante = Estudiante;
             this.curso = Curso;
-            this.codigoUnico = $"Book-{DateTime.Now:yyyy}-{contador.ToString("D3")}";
+            this.codigoUnico = $"Book-{DateTime.Now:yyyy}-{_contador.ToString("D3")}";
             this.estadoReserva = EstadoReserva.En_Espera;
         }
         public string Identifier 

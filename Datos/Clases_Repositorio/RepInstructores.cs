@@ -16,12 +16,12 @@ namespace Datos.Clases_Repositorio
         protected override bool agregarAlDiccionario(Instructor entidad)
         {
             if (entidad == null) return false;
-            return Diccionario.TryAdd(entidad.Identifier, entidad);
+            return Diccionario.TryAdd(entidad.Dni, entidad);
         }
         protected override bool eliminarDelDiccionario(Instructor entidad)
         {
             if (entidad == null) return false;
-            return Diccionario.Remove(entidad.Identifier);
+            return Diccionario.Remove(entidad.Dni);
         }
         bool IRepActores<Instructor>.guardarPersonaje(Persona persona)
         {
