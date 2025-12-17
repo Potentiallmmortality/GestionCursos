@@ -51,7 +51,7 @@ namespace Negocio.SerivicioActores
             foreach (KeyValuePair<string, Instructor> k in diccionario)
             {
                 var instructor = k.Value;
-                aux += instructor.ToString();
+                aux += instructor.toString();
             }
             return OperationResult.Ok(aux);
         }
@@ -71,8 +71,8 @@ namespace Negocio.SerivicioActores
         {
             try
             {
-                repInstructores.persistirCambios();
-                return OperationResult.Ok("Cambios persistidos con éxito \n");
+                repInstructores.cargarDatos();
+                return OperationResult.Ok("Datos cargados con éxito \n");
             }
             catch(Exception ex)
             {
