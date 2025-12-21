@@ -13,5 +13,6 @@ namespace Datos.Interfaces
     {
         bool guardarReserva(Reserva reserva);
         bool eliminarReserva(Reserva reserva);
+        Reserva? BuscarPorEstudianteYCursos(Estudiante estudiante, Curso curso);
     }
 }

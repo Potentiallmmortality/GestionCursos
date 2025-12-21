@@ -60,7 +60,13 @@ namespace Datos.Clases_Repositorio
         }
         Reserva? IRepGeneric<Reserva>.BuscarPorParametros(string id, string atributo1 = "cadena por defecto")
         {
-            return Lista.FirstOrDefault(b => b.Identifier == id);
+            // Esta implementación no es soportada para Reservas.
+            //return Lista.FirstOrDefault(b => b.Identifier == id);
+            throw new NotSupportedException();
+        }
+        Reserva? IRepReservas.BuscarPorEstudianteYCursos(Estudiante estudiante, Curso curso)
+        {
+            return Lista.FirstOrDefault(r => r.Estudiante.Dni == estudiante.Dni && r.Curso.CodigoUnico == curso.CodigoUnico);
         }
         Reserva? IRepGeneric<Reserva>.BuscarPorIdentificacion(string id)
         {

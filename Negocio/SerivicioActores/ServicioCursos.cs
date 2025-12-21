@@ -79,8 +79,8 @@ namespace Negocio.SerivicioActores
             
             // Sincronizar ambos repositorios
                 
-                repInstructores.persistirCambios();
-                repCursos.persistirCambios();
+                //repInstructores.persistirCambios();
+                //repCursos.persistirCambios();
                 
                 return OperationResult.Ok("Curso agregado correctamente");
 
@@ -103,7 +103,7 @@ namespace Negocio.SerivicioActores
         }
         OperationResult INegocioGeneric.CargarDatos()
         {
-             try
+            try
             {
                 repCursos.cargarDatos();
                 return OperationResult.Ok("Cambios persistidos con éxito \n");

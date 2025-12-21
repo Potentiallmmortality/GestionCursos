@@ -10,10 +10,10 @@ namespace Negocio.InterfacesNegocio
 {
     public interface INegocioReservas:INegocioGeneric
     {
-        OperationResult CrearReserva(string dniEstudiante, string idUnicoCurso);
+        OperationResult CrearReserva(string DniEstudiante, string IdUnicoCurso);
         OperationResult CancelarReserva(string Identifier);
         OperationResult ListarTodas(); 
         OperationResult AprovarReserva(string Identifier);
-        List<Reserva> ObtenerReservasPorEstudiante(Estudiante estudiante);
+        List<Reserva> ObtenerReservasPorEstudiante(string dniEstudiante);
     }
 }
