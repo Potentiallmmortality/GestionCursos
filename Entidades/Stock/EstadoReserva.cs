@@ -11,6 +11,7 @@ namespace Entidades.Stock
     public enum EstadoReserva
     {
         Aprovada,
-        En_Espera
+        En_Espera,
+        Rechazada
     }
 }

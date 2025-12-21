@@ -21,7 +21,7 @@ namespace Entidades.Actores
         // multiplicidad muchos a muchos
 
         private List<Curso> _cursoList;
-        private static int _contador = 1;
+        private static int _contador = 0;
         private string _identifier;
 
         public Instructor(string nombre, string dni, string email)
@@ -29,7 +29,7 @@ namespace Entidades.Actores
         {
             _contador++;
             this._cursoList = new List<Curso>();
-            this._identifier = $"PROF-{DateTime.Now:yyyy}-{_contador.ToString("D3")}";
+            this._identifier = $"PROF-{DateTime.Now:yyyyMMddHHfff}-{_contador.ToString("D3")}";
         }
         public List<Curso> Cursos
         {

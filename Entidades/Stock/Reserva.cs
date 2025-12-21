@@ -9,32 +9,33 @@ namespace Entidades.Stock
 {
     public class Reserva
     {
-        private string idUnico;
+        //private string idUnico;
         private string codigoUnico;
-        private static int _contador = 1;
+        private static int _contador = 0;
         private Estudiante estudiante;
         private Curso curso;
         private DateTime fechaCreacion;
         private EstadoReserva estadoReserva;
 
-        public Reserva(Estudiante Estudiante, Curso Curso, string IdUnico)
+        public Reserva(Estudiante Estudiante, Curso Curso/*, string IdUnico*/)
         {
+            if (Estudiante == null || Curso == null) throw new Exception("Datos Invalidos para crear la reserva");
             _contador++;
-            this.idUnico = IdUnico;
+            //this.idUnico = IdUnico;
             this.fechaCreacion = DateTime.Now;
             this.estudiante = Estudiante;
             this.curso = Curso;
-            this.codigoUnico = $"Book-{DateTime.Now:yyyy}-{_contador.ToString("D3")}";
+            this.codigoUnico = $"Book-{DateTime.Now:yyyyMMddHHfff}-{_contador:D3}";
             this.estadoReserva = EstadoReserva.En_Espera;
         }
         public string Identifier 
         {
             get { return this.codigoUnico; }
         }
-        public string IdUnico
-        {
-            get { return idUnico; }
-        }
+        //public string IdUnico
+        //{
+        //    get { return idUnico; }
+        //}
         public Curso Curso 
         { 
             get { return this.curso; }

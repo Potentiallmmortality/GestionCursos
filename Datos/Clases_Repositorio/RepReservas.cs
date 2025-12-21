@@ -11,20 +11,21 @@ namespace Datos.Clases_Repositorio
 {
     public class RepReservas: RepBase<Reserva>,IRepReservas
     {
+        // Solo se manejará Identifier como clave para las reservas.
         public RepReservas(string filename) : base(filename) { }
         protected override bool agregarAlDiccionario(Reserva entidad)
         {
             if (entidad == null) 
                 return false;
 
-            return Diccionario.TryAdd(entidad.IdUnico, entidad);
+            return Diccionario.TryAdd(entidad.Identifier, entidad);
         }
         protected override bool eliminarDelDiccionario(Reserva entidad)
         {
             if (entidad == null) 
                 return false;
 
-            return Diccionario.Remove(entidad.IdUnico);
+            return Diccionario.Remove(entidad.Identifier);
         }
         bool IRepReservas.guardarReserva(Reserva reserva)
         {
@@ -59,7 +60,7 @@ namespace Datos.Clases_Repositorio
         }
         Reserva? IRepGeneric<Reserva>.BuscarPorParametros(string id, string atributo1 = "cadena por defecto")
         {
-            return Lista.FirstOrDefault(b => b.IdUnico == id);
+            return Lista.FirstOrDefault(b => b.Identifier == id);
         }
         Reserva? IRepGeneric<Reserva>.BuscarPorIdentificacion(string id)
         {

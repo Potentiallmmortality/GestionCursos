@@ -13,7 +13,7 @@ namespace Entidades.Stock
         private string idUnico;
         // Identificador de cada asigntura, en este caso se lo conceptualiza como un atributo pensado para su búsqueda
         private int cupoMaximo;
-        private static int _contador = 1;
+        private static int _contador = 0;
         private Instructor instructor;
         private string identifier;
         private List<Estudiante> estudiantesInscritos;
@@ -26,9 +26,9 @@ namespace Entidades.Stock
             this.nombre = nombre;
             this.cupoMaximo = cupoMaximo;
             this.estudiantesInscritos = new List<Estudiante>();
-            this.idUnico = idUnico.ToLower();
+            this.idUnico = idUnico.ToUpper();
             this.instructor = null!;
-            this.identifier = $"CLASS-{DateTime.Now:yyyy}-{_contador.ToString("D3")}";
+            this.identifier = $"CLASS-{DateTime.Now:yyyyMMddHHfff}-{_contador.ToString("D3")}";
             this.estadoCurso = EstadoCurso.Abierto;
         }
         public string Nombre

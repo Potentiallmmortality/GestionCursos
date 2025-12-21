@@ -39,7 +39,8 @@ namespace Entidades.Actores
         }
         public DateTime FechaRegistro
         {
-             get { return fechaRegistro; }
+            get { return fechaRegistro; }
+            set { fechaRegistro = value; }
         }
     }
 }

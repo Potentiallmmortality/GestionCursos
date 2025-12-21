@@ -18,21 +18,23 @@ namespace Entidades.Actores
 
         private List<Curso> _cursoList;
         private string _identifier;
-        private static int _contador= 1;
+        private static int _contador= 0;
         public Estudiante(string nombre, string dni, string email)
             : base(nombre, dni, email)
         {
             _contador++;
             this._cursoList = new List<Curso>();
-            this._identifier = $"EST-{DateTime.Now:yyyy}-{_contador.ToString("D3")}";
+            this._identifier = $"EST-{DateTime.Now:yyyyMMddHHfff}-{_contador.ToString("D3")}";
         }
         public List<Curso> Cursos
         {
             get { return _cursoList; }
+            set { _cursoList = value;}
         }
         public string Identifier
         {
             get { return _identifier; }
+            set { _identifier = string.IsNullOrWhiteSpace(value)? _identifier : value; }
         }
         public bool agregarCurso(Curso curso)
         {
