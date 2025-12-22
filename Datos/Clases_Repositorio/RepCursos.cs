@@ -42,8 +42,17 @@ namespace Datos.Clases_Repositorio
         }
         bool IRepCursos.eliminarCurso(Curso curso)
         {
-            if (eliminarDelDiccionario(curso) && eliminarDeLista(curso)) return true;
-            else return false;
+            //if (eliminarDelDiccionario(curso) && eliminarDeLista(curso)) return true;
+            //else return false;
+            if (eliminarDelDiccionario(curso))
+            {
+                if (eliminarDeLista(curso)) return true;
+                else
+                {
+                    agregarAlDiccionario(curso);
+                    return false;
+                }
+            } return false;
         }
         (List<Curso>, Dictionary<string, Curso>) IRepGeneric<Curso>.obtenerTodos()
         {

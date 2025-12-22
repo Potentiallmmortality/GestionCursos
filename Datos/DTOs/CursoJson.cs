@@ -8,6 +8,6 @@ namespace Datos.DTOs
 {
     public class CursoJson
     {
-
+        
     }
 }

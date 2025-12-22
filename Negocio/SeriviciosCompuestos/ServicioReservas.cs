@@ -51,7 +51,7 @@ namespace Negocio.SeriviciosCompuestos
             {
                 var reserva = repReservas.BuscarPorIdentificacion(identifier);
 
-                if (repReservas.eliminarReserva(reserva))
+                    if (repReservas.eliminarReserva(reserva))
                     return OperationResult.Ok("La reserva se canceló correctamente \n");
 
                 else return OperationResult.Fail("La reserva no se pudo cancelar \n");
@@ -77,14 +77,21 @@ namespace Negocio.SeriviciosCompuestos
             {
                 var reserva = repReservas.BuscarPorIdentificacion(identifier);
                 
+               if(reserva.Estado != EstadoReserva.En_Espera)
+                    return OperationResult.Fail("La reserva no se encuentra en estado 'En Espera' \n");
+
+               if (reserva.Curso.Estado != EstadoCurso.Abierto)
+                    return OperationResult.Fail("El curso asociado a la reserva no está abierto \n");
+
                 reserva.aprobarReserva();
-                reserva.Estudiante.agregarCurso(reserva.Curso);
                 reserva.Curso.agregarEstudiante(reserva.Estudiante);
+                reserva.Estudiante.agregarCurso(reserva.Curso);
 
-                // sincronizar cambios
 
-                //repCursos.persistirCambios();
-                //repEstudiantes.persistirCambios();
+                //sincronizar cambios
+
+                repCursos.persistirCambios();
+                repEstudiantes.persistirCambios();
 
                 return OperationResult.Ok("La reserva ha sido aprobada con éxito \n");
             }

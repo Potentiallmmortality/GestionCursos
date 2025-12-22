@@ -34,6 +34,9 @@ namespace Negocio.SerivicioActores
         {
             try
             {
+                if (!InstructorExiste(dni)) 
+                    return OperationResult.Fail(" El instructor no se encuentra registrado \n");
+
                 if (repInstructores.eliminarPersonaje(repInstructores.BuscarPorIdentificacion(dni)))
                     return OperationResult.Ok("Instructor eliminado con éxito \n");
 
@@ -85,7 +88,7 @@ namespace Negocio.SerivicioActores
             {
                 var instructor = repInstructores.BuscarPorIdentificacion(parametro);
                 
-                return OperationResult.Ok(instructor.toString());
+                return OperationResult.Ok(instructor.ToString());
             }
             catch (Exception ex)
             {

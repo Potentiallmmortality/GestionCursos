@@ -8,5 +8,11 @@ namespace Datos.DTOs
 {
     internal class InstructorJson
     {
+        public string Nombre { get; set; }
+        public string Dni { get; set; }
+        public string Email { get; set; }
+        public DateTime FechaRegistro { get; set; }
+        public List<string> IdsUnicosCursos { get; set; }
+        public string Identifier { get; set; }
     }
 }

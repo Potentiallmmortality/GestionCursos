@@ -41,10 +41,16 @@ namespace Negocio.SerivicioActores
         OperationResult INegocioActores.Eliminar(string dni)
         {
             try
-            {    
+            {   
+                if(!EstudianteExiste(dni))
+                {
+                    return OperationResult.Fail("El estudiante a eliminar no se encuentra en el Sistema");
+                }
+
                 if (repEstudiantes.eliminarPersonaje(repEstudiantes.BuscarPorIdentificacion(dni))) 
                     return OperationResult.Ok("Estudiante eliminado con éxito \n");
-                
+
+             
                 else return OperationResult.Fail("No se pudo eliminar el estudiante \n");
             }
             catch (Exception ex)
@@ -62,7 +68,7 @@ namespace Negocio.SerivicioActores
             {
                 var estudiante = k.Value;
                 //aux += $"Nombre: {estudiante.Nombre} - DNI: {estudiante.Dni} - Email: {estudiante.Email} - ID: {estudiante.Identifier}\n";
-                aux += estudiante.toString();
+                aux += estudiante.ToString();
             }
             return OperationResult.Ok(aux);
         }
@@ -95,7 +101,7 @@ namespace Negocio.SerivicioActores
             try
             {
                 var estudiante = repEstudiantes.BuscarPorIdentificacion(dni);
-                return OperationResult.Ok(estudiante.toString());
+                return OperationResult.Ok(estudiante.ToString());
             }
             catch(Exception ex)
             {

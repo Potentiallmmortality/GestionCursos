@@ -42,15 +42,17 @@ namespace Datos.Clases_Repositorio
         }
         bool IRepActores<Instructor>.eliminarPersonaje(Persona persona)
         {
+            //return persona is Instructor instructor && eliminarDelDiccionario(instructor) && eliminarDeLista(instructor);
             if (persona is Instructor instructor && eliminarDelDiccionario(instructor))
             {
-                if(eliminarDeLista(instructor)) return true;
+                if (eliminarDeLista(instructor)) return true;
                 else
                 {
                     agregarAlDiccionario(instructor);
                     return false;
                 }
-            } return false;
+            }
+            return false;
         }
         (List<Instructor>, Dictionary<string, Instructor>) IRepGeneric<Instructor>.obtenerTodos()
         {

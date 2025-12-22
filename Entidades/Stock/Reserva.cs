@@ -56,7 +56,7 @@ namespace Entidades.Stock
         }
         public void rechazarReserva()
         {
-            this.estadoReserva = EstadoReserva.En_Espera;
+            this.estadoReserva = EstadoReserva.Rechazada;
         }
         public bool reservaAprobada()
         {

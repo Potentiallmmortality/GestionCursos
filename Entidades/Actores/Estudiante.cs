@@ -53,7 +53,7 @@ namespace Entidades.Actores
                 return this._cursoList.Remove(curso);
             }
         }
-        public string toString()
+        public override string ToString()
         {
             return $"Estudiante: {Nombre}, Dni: {Dni}, Email: {Email}, Fecha de Registro: {FechaRegistro}, Identifier: {Identifier}";
         }

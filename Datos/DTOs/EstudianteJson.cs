@@ -12,7 +12,7 @@ namespace Datos.DTOs
         public string Dni { get; set; }
         public string Email { get; set; }
         public DateTime FechaRegistro { get; set; }
-        public List<string> IdsUnicosCursos { get; set; } = new();
+        public List<string> IdsUnicos_Cursos { get; set; } = new();
         public string Identifier { get; set; }
     
         // Nota del desarrollador, la parte de manejo de archivos .json es mas jodida de lo

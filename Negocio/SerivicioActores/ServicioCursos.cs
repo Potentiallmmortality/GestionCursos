@@ -43,6 +43,10 @@ namespace Negocio.SerivicioActores
         {
             try
             {
+                if (!Existe(idUnico))
+                {
+                    return OperationResult.Fail("El curso a eliminar no se encuentra en el Sistema");
+                }
                 if (repCursos.eliminarCurso(repCursos.BuscarPorIdentificacion(idUnico)))
                     return OperationResult.Ok("El Curso se eliminó correctamente \n");
 
@@ -59,7 +63,7 @@ namespace Negocio.SerivicioActores
             foreach(KeyValuePair<string, Curso> pair in Dicc)
             {
                 var Curso = pair.Value;
-                aux += Curso.toString();
+                aux += Curso.ToString();
             }
             return OperationResult.Ok(aux);
         }
@@ -74,14 +78,16 @@ namespace Negocio.SerivicioActores
                 
             // Cumplir con la multiplicidad de clases
 
-                curso.Instructor = instructor;
-                instructor.agregarCurso(curso);
-            
-            // Sincronizar ambos repositorios
-                
+                if (instructor.agregarCurso(curso))
+                {
+                    curso.Instructor = instructor;
+                } else return OperationResult.Fail("El instructor ya está asignado a este curso \n");
+
+                // Sincronizar ambos repositorios
+
                 //repInstructores.persistirCambios();
                 //repCursos.persistirCambios();
-                
+
                 return OperationResult.Ok("Curso agregado correctamente");
 
             }catch (Exception ex)
@@ -117,7 +123,7 @@ namespace Negocio.SerivicioActores
         {
             try 
             {
-                string aux = $"{repCursos.BuscarPorIdentificacion(parametro).toString()} \n";
+                string aux = $"{repCursos.BuscarPorIdentificacion(parametro).ToString()} \n";
                 return OperationResult.Ok(aux);
             }
             catch (Exception ex)
@@ -125,6 +131,7 @@ namespace Negocio.SerivicioActores
                 return OperationResult.Fail($"Error: {ex.Message} \n");
             }
         }
+
         private bool Existe(string idUnico)
         {
             var existente = repCursos.BuscarPorParametros(idUnico);

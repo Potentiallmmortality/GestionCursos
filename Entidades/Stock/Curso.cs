@@ -21,7 +21,7 @@ namespace Entidades.Stock
 
         public Curso(string nombre, string idUnico, int cupoMaximo)
         {
-            if(string.IsNullOrWhiteSpace(nombre) || string.IsNullOrWhiteSpace(idUnico) || cupoMaximo < 0) throw new Exception("Datos Invalidos");
+            if(string.IsNullOrWhiteSpace(nombre) || string.IsNullOrWhiteSpace(idUnico) || cupoMaximo < 0 || cupoMaximo > 24) throw new Exception("Datos Invalidos");
             _contador++;
             this.nombre = nombre;
             this.cupoMaximo = cupoMaximo;
@@ -42,15 +42,17 @@ namespace Entidades.Stock
         public int CupoMaximo
         {
             get { return cupoMaximo; }
+            set { cupoMaximo = value < 0 || value > 24? cupoMaximo: value; }
         }
         public List<Estudiante> EstudiantesInscritos
         {
             get { return estudiantesInscritos; }
+            set { estudiantesInscritos = value?? estudiantesInscritos; }
         }
         public Instructor Instructor
         {
             get { return instructor; }
-            set { instructor = instructor != null ? instructor : value; }
+            set { instructor = value ?? instructor; }
         }
         public EstadoCurso Estado { get { return estadoCurso; } }
         public bool agregarEstudiante(Estudiante estudiante)
@@ -59,6 +61,8 @@ namespace Entidades.Stock
             else
             {
                 this.estudiantesInscritos.Add(estudiante);
+                if(estudiantesInscritos.Count == cupoMaximo)
+                    this.CerrarCurso();
                 return true;
             }
         }
@@ -82,7 +86,7 @@ namespace Entidades.Stock
         {
             return this.estadoCurso == EstadoCurso.Cerrado;
         }
-        public string toString()
+        public override string ToString()
         {
             return $"Curso: {Nombre}, Codigo Unico: {CodigoUnico}, Cupo Maximo: {CupoMaximo}, Estado: {Estado}";
         }

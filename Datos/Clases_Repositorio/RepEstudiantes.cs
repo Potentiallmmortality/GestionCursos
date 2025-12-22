@@ -46,6 +46,7 @@ namespace Datos.Clases_Repositorio
         }
         bool IRepActores<Estudiante>.eliminarPersonaje(Persona persona)
         {
+            //return persona is Estudiante estudiante && eliminarDelDiccionario(estudiante) && eliminarDeLista(estudiante);
             if (persona is Estudiante estudiante && eliminarDelDiccionario(estudiante))
             {
                 if (eliminarDeLista(estudiante)) return true;
