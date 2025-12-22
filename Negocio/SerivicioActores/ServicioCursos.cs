@@ -85,8 +85,8 @@ namespace Negocio.SerivicioActores
 
                 // Sincronizar ambos repositorios
 
-                //repInstructores.persistirCambios();
-                //repCursos.persistirCambios();
+                repInstructores.persistirCambios();
+                repCursos.persistirCambios();
 
                 return OperationResult.Ok("Curso agregado correctamente");
 

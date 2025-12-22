@@ -31,6 +31,7 @@ namespace Entidades.Stock
         public string Identifier 
         {
             get { return this.codigoUnico; }
+            set { this.codigoUnico = value ?? this.codigoUnico; }
         }
         //public string IdUnico
         //{
@@ -39,16 +40,22 @@ namespace Entidades.Stock
         public Curso Curso 
         { 
             get { return this.curso; }
+            set { this.curso = value ?? this.curso; }
         }
-        public Estudiante Estudiante {
+        public Estudiante Estudiante 
+        {
             get { return this.estudiante; }
+            set { this.estudiante = value ?? this.estudiante; }
         }
         public DateTime FechaCreacion
         {
             get { return this.fechaCreacion; } 
+            set { this.fechaCreacion = value; }
         }
-        public EstadoReserva Estado {
-            get { return estadoReserva; } 
+        public EstadoReserva Estado 
+        {
+            get { return estadoReserva; }
+            set { estadoReserva = value; }
         }
         public void aprobarReserva()
         {

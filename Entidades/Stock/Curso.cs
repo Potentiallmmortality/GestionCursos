@@ -34,10 +34,12 @@ namespace Entidades.Stock
         public string Nombre
         {
             get { return nombre; }
+            set { nombre = value?? nombre; }
         }
         public string CodigoUnico
         {
             get { return idUnico; }
+            set { idUnico = value?? idUnico; }
         }
         public int CupoMaximo
         {
@@ -54,7 +56,16 @@ namespace Entidades.Stock
             get { return instructor; }
             set { instructor = value ?? instructor; }
         }
-        public EstadoCurso Estado { get { return estadoCurso; } }
+        public EstadoCurso Estado
+        { 
+            get { return estadoCurso; }
+            set { estadoCurso = value; }
+        }
+        public string Identifier
+        {
+            get { return identifier; }
+            set { identifier = value ?? identifier; }
+        }
         public bool agregarEstudiante(Estudiante estudiante)
         {
             if (estudiante == null || this.estudiantesInscritos.Count >= this.cupoMaximo || estudiantesInscritos.Contains(estudiante)) return false;
