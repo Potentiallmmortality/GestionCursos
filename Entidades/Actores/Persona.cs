@@ -14,6 +14,9 @@ namespace Entidades.Actores
         private string email;
         protected DateTime fechaRegistro;
 
+        // Posibles atributos extra para agregar un sistema de login para estudintes e instructores
+        // private string usuario;
+        // private string contrasena;
         public Persona(string nombre, string dni, string email)
         {
             if (string.IsNullOrWhiteSpace(nombre) || string.IsNullOrWhiteSpace(dni) || string.IsNullOrWhiteSpace(email)) throw new Exception("Datos Invalidos");
