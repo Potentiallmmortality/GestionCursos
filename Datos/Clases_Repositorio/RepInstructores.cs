@@ -25,18 +25,10 @@ namespace Datos.Clases_Repositorio
         }
         bool IRepActores<Instructor>.guardarPersonaje(Persona persona)
         {
-            //if (persona is Instructor instructor)
-            //{
-            //   return agregarAlDiccionario(instructor);
-            //} return false;
             if (persona is Instructor instructor && agregarAlDiccionario(instructor))
             {
-                if (agregarALista(instructor)) return true;
-                else
-                {
-                    eliminarDelDiccionario(instructor);
-                    return false;
-                }
+                agregarALista(instructor);              
+                return true;
             }
             return false;
         }
@@ -45,12 +37,8 @@ namespace Datos.Clases_Repositorio
             //return persona is Instructor instructor && eliminarDelDiccionario(instructor) && eliminarDeLista(instructor);
             if (persona is Instructor instructor && eliminarDelDiccionario(instructor))
             {
-                if (eliminarDeLista(instructor)) return true;
-                else
-                {
-                    agregarAlDiccionario(instructor);
-                    return false;
-                }
+                eliminarDeLista(instructor); 
+                return true;
             }
             return false;
         }

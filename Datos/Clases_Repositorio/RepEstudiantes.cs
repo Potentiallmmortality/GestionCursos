@@ -27,34 +27,22 @@ namespace Datos.Clases_Repositorio
             if(entidad == null) return false;
             return Diccionario.Remove(entidad.Dni);
         }
-        // Pendiente modificar las reglas de guardar y eliminar para que se desarollen de manera parlela y evitar discordancias entre lista y diccionario.
         bool IRepActores<Estudiante>.guardarPersonaje(Persona persona)
         {
-            //if (persona is Estudiante estudiante && agregarAlDiccionario(estudiante) && agregarALista(estudiante)) return true;
-            //else return false;
 
             if (persona is Estudiante estudiante && agregarAlDiccionario(estudiante))
             {
-                if (agregarALista(estudiante)) return true;
-                else
-                {
-                    eliminarDelDiccionario(estudiante);
-                    return false;
-                } 
+                agregarALista(estudiante);             
+                return true;
             }
             return false;
         }
         bool IRepActores<Estudiante>.eliminarPersonaje(Persona persona)
         {
-            //return persona is Estudiante estudiante && eliminarDelDiccionario(estudiante) && eliminarDeLista(estudiante);
             if (persona is Estudiante estudiante && eliminarDelDiccionario(estudiante))
             {
-                if (eliminarDeLista(estudiante)) return true;
-                else
-                {
-                    agregarAlDiccionario(estudiante);
-                    return false;
-                }
+                eliminarDeLista(estudiante);
+                return true;
             }
             return false;
         }

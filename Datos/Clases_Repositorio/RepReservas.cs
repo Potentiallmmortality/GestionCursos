@@ -29,15 +29,10 @@ namespace Datos.Clases_Repositorio
         }
         bool IRepReservas.guardarReserva(Reserva reserva)
         {
-            if( agregarAlDiccionario(reserva))
+            if(agregarAlDiccionario(reserva))
             {
-                if (agregarALista(reserva))
-                    return true;
-                else
-                {
-                    eliminarDelDiccionario(reserva);
-                    return false;
-                }
+               agregarALista(reserva);
+               return true; 
             }
             else return false;
         }
@@ -45,12 +40,8 @@ namespace Datos.Clases_Repositorio
         {
             if (eliminarDelDiccionario(reserva))
             {
-                if (eliminarDeLista(reserva)) return true;
-                else
-                {
-                    agregarAlDiccionario(reserva);
-                    return false;
-                }
+                eliminarDeLista(reserva);      
+                return true;
             }
             else return false;
         }

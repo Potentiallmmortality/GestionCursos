@@ -27,31 +27,21 @@ namespace Datos.Clases_Repositorio
         }
         bool IRepCursos.guardarCurso(Curso curso)
         {
-            //if (agregarAlDiccionario(curso) && agregarALista(curso)) return true;
-            //else return false;
 
             if (agregarAlDiccionario(curso))
             {
-                if (agregarALista(curso)) return true;
-                else
-                {
-                    eliminarDelDiccionario(curso);
-                    return false;
-                }
+                agregarALista(curso);
+                return true;
+
             } return false;
         }
         bool IRepCursos.eliminarCurso(Curso curso)
         {
-            //if (eliminarDelDiccionario(curso) && eliminarDeLista(curso)) return true;
-            //else return false;
             if (eliminarDelDiccionario(curso))
             {
-                if (eliminarDeLista(curso)) return true;
-                else
-                {
-                    agregarAlDiccionario(curso);
-                    return false;
-                }
+                eliminarDeLista(curso);
+                return true;
+
             } return false;
         }
         (List<Curso>, Dictionary<string, Curso>) IRepGeneric<Curso>.obtenerTodos()
