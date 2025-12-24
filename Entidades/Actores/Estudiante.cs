@@ -19,8 +19,8 @@ namespace Entidades.Actores
         private List<Curso> _cursoList;
         private string _identifier;
         private static int _contador= 0;
-        public Estudiante(string nombre, string dni, string email)
-            : base(nombre, dni, email)
+        public Estudiante(string nombre, string dni, string email, string usuario, string contraseña)
+            : base(nombre, dni, email, usuario, contraseña)
         {
             _contador++;
             this._cursoList = new List<Curso>();

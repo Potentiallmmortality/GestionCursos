@@ -52,13 +52,9 @@ namespace Datos.Clases_Repositorio
         {
             return Diccionario.TryGetValue(codigoUnico, out Curso curso) ? curso : throw new Exception("No encontramos el curso");
         }
-
-        // The given method can return a null value 
-        // In this implementation it looks similar to 'BuscarPorIndentificación' but it´s not the same method
-        // since they have different signatures.
-        Curso? IRepGeneric<Curso>.BuscarPorParametros(string id, string atributo1)
+        Curso? IRepCursos.BuscarCursoExistente(string codigoUnico)
         {
-            return  Lista.FirstOrDefault(curso => curso.CodigoUnico == id);
+            return Lista.FirstOrDefault(c => c.CodigoUnico == codigoUnico);
         }
         void IRepGeneric<Curso>.cargarDatos()
         {

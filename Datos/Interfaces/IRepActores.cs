@@ -17,5 +17,6 @@ namespace Datos.Interfaces
     {
         bool guardarPersonaje(Persona persona);
         bool eliminarPersonaje(Persona persona);
+        T? BuscarPersonajePorParametros(string dni, string email, string usuario);
     }
 }

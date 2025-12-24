@@ -134,7 +134,7 @@ namespace Negocio.SerivicioActores
 
         private bool Existe(string idUnico)
         {
-            var existente = repCursos.BuscarPorParametros(idUnico);
+            var existente = repCursos.BuscarCursoExistente(idUnico);
             return existente != null;
         }
     }

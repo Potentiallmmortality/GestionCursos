@@ -13,14 +13,14 @@ namespace Negocio.SerivicioActores
             this.repInstructores = repInstructores;
             //.. / Datos.Archivos_Repositorio / Instructores / instructores.json
         }
-        OperationResult INegocioActores.Agregar(string nombre, string dni, string email)
+        OperationResult INegocioActores.Agregar(string nombre, string dni, string email, string usuario, string contraseña)
         {
             try
             {
-                if (InstructorExiste(dni, email)) 
+                if (InstructorExiste(dni, email, usuario)) 
                     return OperationResult.Fail(" El instructor ya se enuentra agregado \n");
                
-                if ( repInstructores.guardarPersonaje(new Instructor(nombre, dni, email))) 
+                if ( repInstructores.guardarPersonaje(new Instructor(nombre, dni, email, usuario, contraseña))) 
                     return OperationResult.Ok("Instructor agregado con éxito \n");
 
                 else return OperationResult.Fail("No se pudo agregar el instructor \n");
@@ -95,9 +95,9 @@ namespace Negocio.SerivicioActores
                 return OperationResult.Fail($"Error {ex.Message} \n");
             }
         }
-        private bool InstructorExiste(string dni, string email = "defaultEmail@epn.edu.ec")
+        private bool InstructorExiste(string dni, string email = "defaultEmail@epn.edu.ec", string usuario = "usuarioGenerico")
         {
-            var instructorExistente = repInstructores.BuscarPorParametros(dni, email);
+            var instructorExistente = repInstructores.BuscarPersonajePorParametros(dni, email, usuario);
             return instructorExistente != null;
         }
     }

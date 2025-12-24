@@ -14,12 +14,14 @@ namespace Entidades.Actores
         private string email;
         protected DateTime fechaRegistro;
 
-        // Posibles atributos extra para agregar un sistema de login para estudintes e instructores
-        // private string usuario;
-        // private string contrasena;
-        public Persona(string nombre, string dni, string email)
+        // Atributos extra para agregar  a un sistema de login para estudintes e instructores
+
+        private string usuario;
+        private string contrasena;
+        public Persona(string nombre, string dni, string email, string usuario, string contraseña)
         {
-            if (string.IsNullOrWhiteSpace(nombre) || string.IsNullOrWhiteSpace(dni) || string.IsNullOrWhiteSpace(email)) throw new Exception("Datos Invalidos");
+            if (string.IsNullOrWhiteSpace(nombre) || string.IsNullOrWhiteSpace(dni) || string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(usuario) ||string.IsNullOrWhiteSpace(contraseña)) 
+                throw new Exception("Datos Invalidos");
             this.nombre = nombre;
             this.dni = dni;
             this.email = email;
@@ -44,6 +46,16 @@ namespace Entidades.Actores
         {
             get { return fechaRegistro; }
             set { fechaRegistro = value; }
+        }
+        public string Usuario
+        {
+            get { return usuario; }
+            set { usuario = string.IsNullOrWhiteSpace(value) ? usuario : value; }
+        }
+        public string Contrasena
+        {
+            get { return contrasena; }
+            set { contrasena = string.IsNullOrWhiteSpace(value) ? contrasena : value; }
         }
     }
 }

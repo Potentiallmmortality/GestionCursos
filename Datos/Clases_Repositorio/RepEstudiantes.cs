@@ -7,6 +7,7 @@ using Entidades.Actores;
 using Entidades.Stock;
 using Datos.Interfaces;
 using System.ComponentModel.Design;
+using System.Transactions;
 
 namespace Datos.Clases_Repositorio
 {
@@ -54,9 +55,9 @@ namespace Datos.Clases_Repositorio
         {
             return Diccionario.TryGetValue(id, out Estudiante p)? p: throw new Exception("No encontramos al Estudiante");
         }
-        Estudiante? IRepGeneric<Estudiante>.BuscarPorParametros(string id, string atributo1)
+        Estudiante? IRepActores<Estudiante>.BuscarPersonajePorParametros(string dni, string email, string usuario)
         {
-            return Lista.FirstOrDefault(e => e.Dni == id || e.Email == atributo1);
+            return Lista.FirstOrDefault(e => e.Dni == dni || e.Email == email || e.Usuario == usuario);
         }
         void IRepGeneric<Estudiante>.persistirCambios()
         {

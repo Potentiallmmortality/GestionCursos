@@ -32,7 +32,7 @@ namespace CursosTest
             {
                 // arrange: Crear instancia de Estudiante y Curso
 
-                var estudiante = new Estudiante("Ana", "87654321", "Ana@epn.edu.ec");
+                var estudiante = new Estudiante("Ana", "87654321", "Ana@epn.edu.ec", "usuarioRandom", "ContraseñaRandom");
 
                 var curso = new Curso("Matemáticas", "MAT101", 4);
 
@@ -69,7 +69,7 @@ namespace CursosTest
 
                 // Assert: crear instancia de Estudiante
 
-                var estudiante = new Estudiante("Pedro", "55667788", "pedro@epn.edu.ec");
+                var estudiante = new Estudiante("Pedro", "55667788", "pedro@epn.edu.ec", "usuarioRandom", "Contraseña");
 
                 // Comprobar getters
 
@@ -95,7 +95,7 @@ namespace CursosTest
             public void ComprobarToStringEstudiante()
             {
                 // arrange: Crear instancia de Estudiante
-                var estudiante = new Estudiante("Luis", "12345678", "Luis@epn.edu.ec");
+                var estudiante = new Estudiante("Luis", "12345678", "Luis@epn.edu.ec", "usuarioRandom", "contraseña");
 
                 // act: Obtener la representación en cadena del estudiante
 
@@ -111,7 +111,7 @@ namespace CursosTest
             public void ComprobarToStringInstructor()
             {
                 // arrange: Crear instancia de Instructor
-                var instructor = new Instructor("Carlos", "11223344", "Carlos@epn.edu.ec");
+                var instructor = new Instructor("Carlos", "11223344", "Carlos@epn.edu.ec", "usuarioRandom", "contraseña");
 
                 // act: Obtener la representación en cadena del instructor
 
@@ -123,7 +123,7 @@ namespace CursosTest
             {
                 // arrange: Crear instancia de Instructor y Curso
 
-                var instructor = new Instructor("María", "99887766", "Maria@epn.edu.ec");
+                var instructor = new Instructor("María", "99887766", "Maria@epn.edu.ec", "usuarioRandom", "contraseña");
                 var curso = new Curso("Física", "FIS101", 4);
 
                 // act: Agregar curso al instructor
@@ -155,7 +155,7 @@ namespace CursosTest
             {
                 // Debido a que los Atributos de estudiante e instructor son compartidos, esta prueba vale por dos.
                 // Assert: crear instancia de Instructor
-                var instructor = new Instructor("Laura", "66778899", "Laura@epn.edu.ec");
+                var instructor = new Instructor("Laura", "66778899", "Laura@epn.edu.ec", "usuarioRandom", "contraseña");
 
                 // Comprobar getters
 
@@ -179,8 +179,8 @@ namespace CursosTest
                     // Act: Crear instancias de Curso y Estudiantes
 
                     var curso = new Curso("Biología", "BIO101", 4);
-                    Estudiante? estudiante = new Estudiante("Sofía", "8856345", "SOFIA.belen@epn.edu.ec");
-                    Estudiante? estudiante_2 = new Estudiante("Miguel", "77441122", "email@generico");
+                    Estudiante? estudiante = new Estudiante("Sofía", "8856345", "SOFIA.belen@epn.edu.ec", "usuarioRandom", "contraseña");
+                    Estudiante? estudiante_2 = new Estudiante("Miguel", "77441122", "email@generico", "usuarioRandom", "contraseña");
 
                     // Comprobar que el estudiante se haya agregado correctamente
 
@@ -212,7 +212,7 @@ namespace CursosTest
 
                     // Comprobar al menos un setter
 
-                    var instructor = new Instructor("Andrés", "33445566", "andresi@epn.edu.ec");
+                    var instructor = new Instructor("Andrés", "33445566", "andresi@epn.edu.ec", "usuarioRandom", "contraseña");
 
                     curso.Instructor = instructor;
 
@@ -246,8 +246,8 @@ namespace CursosTest
                 [TestMethod]
                 public void debug()
                 {
-                    var prueba = new Instructor("Pedro", "44556677", "eamailGenerico@epn.edu.ec");
-                    var prueba_2 = new Estudiante("Juan", "1886655", "maiGenerico2@epn.edu.ec");
+                    var prueba = new Instructor("Pedro", "44556677", "eamailGenerico@epn.edu.ec", "usuarioRandom", "contraseña");
+                    var prueba_2 = new Estudiante("Juan", "1886655", "maiGenerico2@epn.edu.ec", "usuarioRandom", "contraseña");
                     var prueba_3 = new Curso("Curso de Prueba", "C101", 3);
 
                     Assert.IsNotNull(prueba);

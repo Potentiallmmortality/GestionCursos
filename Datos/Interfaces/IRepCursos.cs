@@ -13,5 +13,6 @@ namespace Datos.Interfaces
     {
         bool guardarCurso(Curso curso);
         bool eliminarCurso(Curso curso);
+        Curso? BuscarCursoExistente(string codigoUnico);
     }
 }

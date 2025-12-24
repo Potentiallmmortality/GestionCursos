@@ -23,14 +23,15 @@ namespace Negocio.SerivicioActores
             this.repEstudiantes = repEstudiantes;
             //.. / Datos.Archivos_Repositorio / Estudiantes / estudiantes.json
         }
-        OperationResult INegocioActores.Agregar(string nombre, string dni, string email)
+        OperationResult INegocioActores.Agregar(string nombre, string dni, string email, string usuario, string contraseña)
         {
             try
             {
-                if (EstudianteExiste(dni,email)) 
+                if (EstudianteExiste(dni,email,usuario)) 
                     return OperationResult.Fail("El estudiante ya se encuentre registrado \n");
 
-                if (repEstudiantes.guardarPersonaje(new Estudiante(nombre, dni, email))) return OperationResult.Ok("Estudiante agregado con éxito \n");
+                if (repEstudiantes.guardarPersonaje(new Estudiante(nombre, dni, email, usuario, contraseña))) 
+                    return OperationResult.Ok("Estudiante agregado con éxito \n");
                 else return OperationResult.Fail("No se pudo agregar el estudiante \n");
             }
             catch (Exception ex)
@@ -67,7 +68,6 @@ namespace Negocio.SerivicioActores
             foreach (KeyValuePair<string, Estudiante> k in diccionario)
             {
                 var estudiante = k.Value;
-                //aux += $"Nombre: {estudiante.Nombre} - DNI: {estudiante.Dni} - Email: {estudiante.Email} - ID: {estudiante.Identifier}\n";
                 aux += estudiante.ToString();
             }
             return OperationResult.Ok(aux);
@@ -108,10 +108,9 @@ namespace Negocio.SerivicioActores
                 return OperationResult.Fail($"Error {ex.Message} \n");
             }
         }
-        private bool EstudianteExiste(string dni, string email = "defaultEmail@epn.edu.ec")
+        private bool EstudianteExiste(string dni, string email = "usuarioGenercic@epn.edu.ec", string usuario = "usuarioGenerico")
         {
-            var estudianteExistente = repEstudiantes.BuscarPorParametros(dni, email);
-
+            var estudianteExistente = repEstudiantes.BuscarPersonajePorParametros(dni, email, usuario);
             return estudianteExistente != null;
         }
     }

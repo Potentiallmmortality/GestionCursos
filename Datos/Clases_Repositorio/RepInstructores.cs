@@ -50,9 +50,18 @@ namespace Datos.Clases_Repositorio
         {
             return Diccionario.TryGetValue(id, out Instructor p) ? p : null;
         }
-        Instructor? IRepGeneric<Instructor>.BuscarPorParametros(string id, string atributo1)
+        Instructor? IRepActores<Instructor>.BuscarPersonajePorParametros(string dni, string email, string usuario)
         {
-            return Lista.FirstOrDefault(i => i.Dni == id || i.Email == atributo1);
+            return Lista.FirstOrDefault(i => i.Dni == dni || i.Email == email || i.Usuario == usuario);
+            //foreach(KeyValuePair<string, Instructor> par in Diccionario)
+            //{
+            //    Instructor instructor = par.Value;
+            //    if (instructor.Dni == dni || instructor.Email == email || instructor.Usuario == usuario)
+            //    {
+            //        return instructor;
+            //    }
+            //}
+            //return null;
         }
         void IRepGeneric<Instructor>.persistirCambios()
         {
