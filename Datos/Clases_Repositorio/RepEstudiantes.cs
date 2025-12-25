@@ -9,8 +9,10 @@ namespace Datos.Clases_Repositorio
     using System.ComponentModel.Design;
     using System.Linq;
     using System.Text;
+    using System.Text.Json;
     using System.Threading.Tasks;
     using System.Transactions;
+    using Datos.DTOs;
     using Datos.Interfaces;
     using Entidades.Actores;
     using Entidades.Stock;
@@ -63,12 +65,61 @@ namespace Datos.Clases_Repositorio
 
         void IRepGeneric<Estudiante>.persistirCambios()
         {
-            // implementacion pendiente
+            this.sincronizarDatos();
+
+            List<EstudianteJson> estudiantesJson = new List<EstudianteJson>();
+            foreach (var estudiante in this.Lista)
+            {
+                // Console.WriteLine($"Persistiendo datos del estudiante: {estudiante} \n");   // Debug
+                EstudianteJson estudianteJson = new EstudianteJson
+                {
+                    Nombre = estudiante.Nombre,
+                    Dni = estudiante.Dni,
+                    Email = estudiante.Email,
+                    FechaRegistro = estudiante.FechaRegistro,
+                    IdsUnicos_Cursos = estudiante.Cursos.Select(c => c.CodigoUnico).ToList(),
+                    Identifier = estudiante.Identifier,
+                    Usuario = estudiante.Usuario,
+                    Contrasena = estudiante.Contrasena,
+                };
+
+                estudiantesJson.Add(estudianteJson);
+            }
+
+            string jsonString = JsonSerializer.Serialize(estudiantesJson, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(this.Filename, jsonString);
         }
 
         void IRepGeneric<Estudiante>.cargarDatos()
         {
-            // implementacion pendiente
+            if (!File.Exists(this.Filename))
+            {
+                this.Diccionario = new Dictionary<string, Estudiante>();
+                this.Lista = new List<Estudiante>();
+                return;
+            }
+
+            this.Lista.Clear();
+            this.Diccionario.Clear();
+            string jsonString = File.ReadAllText(this.Filename);
+            List<EstudianteJson>? estudiantesJson = JsonSerializer.Deserialize<List<EstudianteJson>>(jsonString);
+            foreach (var estudianteJson in estudiantesJson!)
+            {
+                Estudiante estudiante = new Estudiante(
+                    estudianteJson.Nombre,
+                    estudianteJson.Dni,
+                    estudianteJson.Email,
+                    estudianteJson.Usuario,
+                    estudianteJson.Contrasena);
+
+                estudiante.FechaRegistro = estudianteJson.FechaRegistro;
+                estudiante.Identifier = estudianteJson.Identifier;
+
+                this.agregarAlDiccionario(estudiante);
+                this.agregarALista(estudiante);
+            }
+
+            this.sincronizarDatos();
         }
 
         protected override bool agregarAlDiccionario(Estudiante entidad)
@@ -83,6 +134,29 @@ namespace Datos.Clases_Repositorio
             if (entidad == null)
                 return false;
             return this.Diccionario.Remove(entidad.Dni);
+        }
+
+        private void sincronizarDatos()
+        {
+            foreach (var estudiante in this.Lista)
+            {
+                if (!this.Diccionario.ContainsKey(estudiante.Dni))
+                {
+                    this.Diccionario[estudiante.Dni] = estudiante;
+                }
+            }
+
+            var listaHashSet = new HashSet<Estudiante>(this.Lista);
+
+            foreach (var key in this.Diccionario.Keys)
+            {
+                var estudiante = this.Diccionario[key];
+                if (!listaHashSet.Contains(estudiante))
+                {
+                    this.Lista.Add(estudiante);
+                    listaHashSet.Add(estudiante);
+                }
+            }
         }
     }
 }

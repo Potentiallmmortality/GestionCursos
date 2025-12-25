@@ -11,6 +11,7 @@ namespace Datos.Clases_Repositorio
     using System.Text;
     using System.Threading.Tasks;
     using Datos.Clases_Repositorio;
+    using Datos.DTOs;
     using Datos.Interfaces;
     using Entidades.Actores;
     using Entidades.Stock;
@@ -61,12 +62,55 @@ namespace Datos.Clases_Repositorio
 
         void IRepGeneric<Curso>.cargarDatos()
         {
-            // implementación pendiente
+           if (!File.Exists(this.Filename))
+           {
+                this.Lista = new List<Curso>();
+                this.Diccionario = new Dictionary<string, Curso>();
+                return;
+           }
+
+           this.Lista.Clear();
+           this.Diccionario.Clear();
+           string jsonString = File.ReadAllText(this.Filename);
+
+           List<CursoJson>? cursosJson = System.Text.Json.JsonSerializer.Deserialize<List<CursoJson>>(jsonString);
+           foreach (var cursoJson in cursosJson!)
+           {
+                Curso curso = new Curso(
+                    cursoJson.Nombre,
+                    cursoJson.CodigoUnico,
+                    cursoJson.CupoMaximo);
+                cursoJson.Estado = curso.Estado;
+                cursoJson.Identifier = curso.Identifier;
+
+                this.agregarALista(curso);
+                this.agregarAlDiccionario(curso);
+            }
+
+           this.sincronizarDatos();
         }
 
         void IRepGeneric<Curso>.persistirCambios()
         {
-            // implementación pendiente
+           this.sincronizarDatos();
+           List<CursoJson> cursosJson = new List<CursoJson>();
+           foreach (var curso in this.Lista)
+            {
+                CursoJson cursoJson = new CursoJson
+                {
+                    Nombre = curso.Nombre,
+                    CodigoUnico = curso.CodigoUnico,
+                    CupoMaximo = curso.CupoMaximo,
+                    Dni_Instructor = curso.Instructor.Dni,
+                    Dni_Estudiantes = curso.EstudiantesInscritos.Select(e => e.Dni).ToList(),
+                    Estado = curso.Estado,
+                    Identifier = curso.Identifier,
+                };
+                cursosJson.Add(cursoJson);
+            }
+
+           string jsonString = System.Text.Json.JsonSerializer.Serialize(cursosJson, new System.Text.Json.JsonSerializerOptions { WriteIndented = true });
+           File.WriteAllText(this.Filename, jsonString);
         }
 
         protected override bool agregarAlDiccionario(Curso entidad)
@@ -83,6 +127,29 @@ namespace Datos.Clases_Repositorio
                 return false;
 
             return this.Diccionario.Remove(entidad.CodigoUnico);
+        }
+
+        private void sincronizarDatos()
+        {
+            foreach (var curso in this.Lista)
+            {
+                if (!this.Diccionario.ContainsKey(curso.CodigoUnico))
+                {
+                    this.Diccionario[curso.CodigoUnico] = curso;
+                }
+            }
+
+            var listaHashSet = new HashSet<Curso>(this.Lista);
+
+            foreach (var key in this.Diccionario.Keys)
+            {
+                var curso = this.Diccionario[key];
+                if (!listaHashSet.Contains(curso))
+                {
+                    this.Lista.Add(curso);
+                    listaHashSet.Add(curso);
+                }
+            }
         }
     }
 }

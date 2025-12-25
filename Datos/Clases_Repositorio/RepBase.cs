@@ -34,11 +34,13 @@ namespace Datos.Clases_Repositorio
         public List<T> Lista
         {
             get { return this.lista; }
+            set { this.lista = value ?? this.lista; }
         }
 
         public Dictionary<string, T> Diccionario
         {
             get { return this.diccionario; }
+            set { this.diccionario = value ?? this.diccionario; }
         }
 
         public bool agregarALista(T entidad)

@@ -23,5 +23,9 @@ namespace Datos.DTOs
         public List<string> IdsUnicosCursos { get; set; } = new ();
 
         public string Identifier { get; set; }
+
+        public string Usuario { get; set; }
+
+        public string Contrasena { get; set; }
     }
 }

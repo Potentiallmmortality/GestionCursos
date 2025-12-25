@@ -27,11 +27,13 @@ namespace Entidades.Actores
         public List<Curso> Cursos
         {
             get { return this._cursoList; }
+            set { this._cursoList = value ?? this._cursoList; }
         }
 
         public string Identifier
         {
             get { return this._identifier; }
+            set { this._identifier = string.IsNullOrWhiteSpace(value) ? this._identifier : value; }
         }
 
         public bool agregarCurso(Curso curso)
