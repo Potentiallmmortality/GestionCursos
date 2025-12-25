@@ -1,68 +1,79 @@
-﻿using Datos.Clases_Repositorio;
-using Datos.Interfaces;
-using Entidades.Actores;
-using Negocio.InterfacesNegocio;
+﻿// <copyright file="ServicioInstructores.cs" company="Grupo 9 Escuela Politécnica Nacional">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace Negocio.SerivicioActores
 {
-    public class ServicioInstructores: INegocioActores
+    using Datos.Clases_Repositorio;
+    using Datos.Interfaces;
+    using Entidades.Actores;
+    using Negocio.InterfacesNegocio;
+
+    public class ServicioInstructores : INegocioActores
     {
         private readonly IRepActores<Instructor> repInstructores;
+
         public ServicioInstructores(IRepActores<Instructor> repInstructores)
         {
             this.repInstructores = repInstructores;
-            //.. / Datos.Archivos_Repositorio / Instructores / instructores.json
+
+            // .. / Datos.Archivos_Repositorio / Instructores / instructores.json
         }
+
         OperationResult INegocioActores.Agregar(string nombre, string dni, string email, string usuario, string contraseña)
         {
             try
             {
-                if (InstructorExiste(dni, email, usuario)) 
+                if (this.InstructorExiste(dni, email, usuario))
                     return OperationResult.Fail(" El instructor ya se enuentra agregado \n");
-               
-                if ( repInstructores.guardarPersonaje(new Instructor(nombre, dni, email, usuario, contraseña))) 
-                    return OperationResult.Ok("Instructor agregado con éxito \n");
 
-                else return OperationResult.Fail("No se pudo agregar el instructor \n");
+                if (this.repInstructores.guardarPersonaje(new Instructor(nombre, dni, email, usuario, contraseña)))
+                    return OperationResult.Ok("Instructor agregado con éxito \n");
+                else
+                    return OperationResult.Fail("No se pudo agregar el instructor \n");
             }
             catch (Exception ex)
             {
                 return OperationResult.Fail($"Error {ex.Message} \n");
             }
         }
+
         OperationResult INegocioActores.Eliminar(string dni)
         {
             try
             {
-                if (!InstructorExiste(dni)) 
+                if (!this.InstructorExiste(dni))
                     return OperationResult.Fail(" El instructor no se encuentra registrado \n");
 
-                if (repInstructores.eliminarPersonaje(repInstructores.BuscarPorIdentificacion(dni)))
+                if (this.repInstructores.eliminarPersonaje(this.repInstructores.BuscarPorIdentificacion(dni)))
                     return OperationResult.Ok("Instructor eliminado con éxito \n");
-
-                else return OperationResult.Fail("No se pudo eliminar el instructor \n");
+                else
+                    return OperationResult.Fail("No se pudo eliminar el instructor \n");
             }
             catch (Exception ex)
             {
                 return OperationResult.Fail($"Error {ex.Message} \n");
             }
         }
+
         OperationResult INegocioActores.ListarActores()
         {
-            string aux = "";
-            (var lista, Dictionary<string, Instructor> diccionario) = repInstructores.obtenerTodos();
+            string aux = string.Empty;
+            (var lista, Dictionary<string, Instructor> diccionario) = this.repInstructores.obtenerTodos();
             foreach (KeyValuePair<string, Instructor> k in diccionario)
             {
                 var instructor = k.Value;
                 aux += instructor.ToString();
             }
+
             return OperationResult.Ok(aux);
         }
+
         OperationResult INegocioGeneric.PersistirCambios()
         {
             try
             {
-                repInstructores.persistirCambios();
+                this.repInstructores.persistirCambios();
                 return OperationResult.Ok("Cambios persistidos con éxito \n");
             }
             catch (Exception ex)
@@ -70,24 +81,25 @@ namespace Negocio.SerivicioActores
                 return OperationResult.Fail($"Error {ex.Message} \n");
             }
         }
+
         OperationResult INegocioGeneric.CargarDatos()
         {
             try
             {
-                repInstructores.persistirCambios();
+                this.repInstructores.persistirCambios();
                 return OperationResult.Ok("Cambios persistidos con éxito \n");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return OperationResult.Fail($"Error {ex.Message} \n");
             }
         }
+
         OperationResult INegocioGeneric.Buscar(string parametro)
         {
             try
             {
-                var instructor = repInstructores.BuscarPorIdentificacion(parametro);
-                
+                var instructor = this.repInstructores.BuscarPorIdentificacion(parametro);
                 return OperationResult.Ok(instructor.ToString());
             }
             catch (Exception ex)
@@ -95,9 +107,10 @@ namespace Negocio.SerivicioActores
                 return OperationResult.Fail($"Error {ex.Message} \n");
             }
         }
+
         private bool InstructorExiste(string dni, string email = "defaultEmail@epn.edu.ec", string usuario = "usuarioGenerico")
         {
-            var instructorExistente = repInstructores.BuscarPersonajePorParametros(dni, email, usuario);
+            var instructorExistente = this.repInstructores.BuscarPersonajePorParametros(dni, email, usuario);
             return instructorExistente != null;
         }
     }

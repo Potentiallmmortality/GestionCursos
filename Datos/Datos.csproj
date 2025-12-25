@@ -5,6 +5,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+	<NoWarn>SA1600;SA1601;SA1602;SA1604;SA1503;SA1520;SA1300</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,6 +17,13 @@
     <Folder Include="Archivos_Repositorio\Instructores\" />
     <Folder Include="Archivos_Repositorio\Logs\" />
     <Folder Include="Archivos_Repositorio\Reservas\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
 </Project>

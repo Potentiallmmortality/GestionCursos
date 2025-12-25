@@ -1,22 +1,25 @@
-﻿using Entidades.Stock;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// <copyright file="IRepGeneric.cs" company="Grupo 9 Escuela Politécnica Nacional">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace Datos.Interfaces
 {
-    public interface IRepGeneric<T> where T : class
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using Entidades.Stock;
+
+    public interface IRepGeneric<T>
+        where T : class
     {
         void persistirCambios();
+
         void cargarDatos();
+
         (List<T>, Dictionary<string, T>) obtenerTodos();
-        // Tanto actores como productos se construyen a partir de 3 parametros de tipo string
-        // uno de ellos es un identificador principal y los otros dos son atributos adicionales
+
         T? BuscarPorIdentificacion(string id);
-
-
-        //T? BuscarPorParametros(string id, string atributo1 = "cadena por defecto");
     }
 }

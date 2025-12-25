@@ -1,76 +1,84 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Entidades.Actores;
-using Datos.Interfaces;
-using System.Diagnostics.CodeAnalysis;
+﻿// <copyright file="RepInstructores.cs" company="Grupo 9 Escuela Politécnica Nacional">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace Datos.Clases_Repositorio
 {
-    public class RepInstructores: RepBase<Instructor>, IRepActores<Instructor>
-    {
-        public RepInstructores(string filename) : base(filename) { }
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using Datos.Interfaces;
+    using Entidades.Actores;
 
-        protected override bool agregarAlDiccionario(Instructor entidad)
+    public class RepInstructores : RepBase<Instructor>, IRepActores<Instructor>
+    {
+        public RepInstructores(string filename)
+            : base(filename)
         {
-            if (entidad == null) return false;
-            return Diccionario.TryAdd(entidad.Dni, entidad);
         }
-        protected override bool eliminarDelDiccionario(Instructor entidad)
-        {
-            if (entidad == null) return false;
-            return Diccionario.Remove(entidad.Dni);
-        }
+
         bool IRepActores<Instructor>.guardarPersonaje(Persona persona)
         {
-            if (persona is Instructor instructor && agregarAlDiccionario(instructor))
+            if (persona is Instructor instructor && this.agregarAlDiccionario(instructor))
             {
-                agregarALista(instructor);              
+                this.agregarALista(instructor);
                 return true;
             }
-            return false;
+            else
+                return false;
         }
+
         bool IRepActores<Instructor>.eliminarPersonaje(Persona persona)
         {
-            //return persona is Instructor instructor && eliminarDelDiccionario(instructor) && eliminarDeLista(instructor);
-            if (persona is Instructor instructor && eliminarDelDiccionario(instructor))
+            if (persona is Instructor instructor && this.eliminarDelDiccionario(instructor))
             {
-                eliminarDeLista(instructor); 
+                this.eliminarDeLista(instructor);
                 return true;
             }
-            return false;
+            else
+                return false;
         }
+
         (List<Instructor>, Dictionary<string, Instructor>) IRepGeneric<Instructor>.obtenerTodos()
         {
-            return (Lista, Diccionario);
+            return (this.Lista, this.Diccionario);
         }
+
         Instructor? IRepGeneric<Instructor>.BuscarPorIdentificacion(string id)
         {
-            return Diccionario.TryGetValue(id, out Instructor p) ? p : null;
+            return this.Diccionario.TryGetValue(id, out Instructor p) ? p : null;
         }
+
         Instructor? IRepActores<Instructor>.BuscarPersonajePorParametros(string dni, string email, string usuario)
         {
-            return Lista.FirstOrDefault(i => i.Dni == dni || i.Email == email || i.Usuario == usuario);
-            //foreach(KeyValuePair<string, Instructor> par in Diccionario)
-            //{
-            //    Instructor instructor = par.Value;
-            //    if (instructor.Dni == dni || instructor.Email == email || instructor.Usuario == usuario)
-            //    {
-            //        return instructor;
-            //    }
-            //}
-            //return null;
+            return this.Lista.FirstOrDefault(i => i.Dni == dni || i.Email == email || i.Usuario == usuario);
         }
+
         void IRepGeneric<Instructor>.persistirCambios()
         {
             // implementación pendiente
         }
+
         void IRepGeneric<Instructor>.cargarDatos()
         {
             // implementación pendiente
         }
 
+        protected override bool agregarAlDiccionario(Instructor entidad)
+        {
+            if (entidad == null)
+                return false;
+            return this.Diccionario.TryAdd(entidad.Dni, entidad);
+        }
+
+        protected override bool eliminarDelDiccionario(Instructor entidad)
+        {
+            if (entidad == null)
+                return false;
+            return this.Diccionario.Remove(entidad.Dni);
+        }
     }
 }

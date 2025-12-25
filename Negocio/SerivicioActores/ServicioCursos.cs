@@ -1,105 +1,112 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Entidades.Actores;
-using Entidades.Stock;
-using Datos.Clases_Repositorio;
-using Datos.Interfaces;
-using Negocio.InterfacesNegocio;
+﻿// <copyright file="ServicioCursos.cs" company="Grupo 9 Escuela Politécnica Nacional">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace Negocio.SerivicioActores
 {
-    public class ServicioCursos: INegocioCursos
-    {
-        // implementacion pendiente
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using Datos.Clases_Repositorio;
+    using Datos.Interfaces;
+    using Entidades.Actores;
+    using Entidades.Stock;
+    using Negocio.InterfacesNegocio;
 
+    public class ServicioCursos : INegocioCursos
+    {
         private readonly IRepCursos repCursos;
         private readonly IRepActores<Instructor> repInstructores;
+
         public ServicioCursos(IRepCursos repCursos, IRepActores<Instructor> repInstructores)
         {
             this.repCursos = repCursos;
             this.repInstructores = repInstructores;
         }
+
         OperationResult INegocioCursos.Agregar(string nombre, string idUnico, int cupoMaximo)
         {
             try
             {
-                if (Existe(idUnico))
+                if (this.Existe(idUnico))
                     return OperationResult.Fail("El curso ya está registrado \n");
-
-                if (repCursos.guardarCurso(new Curso(nombre, idUnico, cupoMaximo)))
+                if (this.repCursos.guardarCurso(new Curso(nombre, idUnico, cupoMaximo)))
                     return OperationResult.Ok("Curso agregado con exito \n");
-
-                else return OperationResult.Fail("No se puedo agregar Curso \n");
+                else
+                    return OperationResult.Fail("No se puedo agregar Curso \n");
             }
             catch (Exception ex)
             {
                 return OperationResult.Fail($"Error {ex.Message} \n");
             }
         }
+
         OperationResult INegocioCursos.Eliminar(string idUnico)
         {
             try
             {
-                if (!Existe(idUnico))
-                {
+                if (!this.Existe(idUnico))
                     return OperationResult.Fail("El curso a eliminar no se encuentra en el Sistema");
-                }
-                if (repCursos.eliminarCurso(repCursos.BuscarPorIdentificacion(idUnico)))
-                    return OperationResult.Ok("El Curso se eliminó correctamente \n");
 
-                else return OperationResult.Fail("El Curso no se pudo eliminar \n");
-            }catch (Exception ex)
+                if (this.repCursos.eliminarCurso(this.repCursos.BuscarPorIdentificacion(idUnico)))
+                    return OperationResult.Ok("El Curso se eliminó correctamente \n");
+                else
+                    return OperationResult.Fail("El Curso no se pudo eliminar \n");
+            }
+            catch (Exception ex)
             {
                 return OperationResult.Fail($"Error {ex.Message} \n");
             }
         }
+
         OperationResult INegocioCursos.ListarCursos()
         {
-            (var list, Dictionary<string, Curso> Dicc) = repCursos.obtenerTodos();
-            string aux = "";
-            foreach(KeyValuePair<string, Curso> pair in Dicc)
+            (var list, Dictionary<string, Curso> dicc) = this.repCursos.obtenerTodos();
+            string aux = string.Empty;
+
+            foreach (KeyValuePair<string, Curso> pair in dicc)
             {
-                var Curso = pair.Value;
-                aux += Curso.ToString();
+                var curso = pair.Value;
+                aux += curso.ToString();
             }
+
             return OperationResult.Ok(aux);
         }
+
         OperationResult INegocioCursos.AsignarInstructor(string dniInstructor, string codigoCurso)
         {
             // Recordatorio importante, si no se encuentra alguno de los dos se lanza una excepcion
             // please ignore the warnings
             try
             {
-                var instructor = repInstructores.BuscarPorIdentificacion(dniInstructor);
-                var curso = repCursos.BuscarPorIdentificacion(codigoCurso);
-                
-            // Cumplir con la multiplicidad de clases
+                var instructor = this.repInstructores.BuscarPorIdentificacion(dniInstructor);
+                var curso = this.repCursos.BuscarPorIdentificacion(codigoCurso);
 
                 if (instructor.agregarCurso(curso))
                 {
                     curso.Instructor = instructor;
-                } else return OperationResult.Fail("El instructor ya está asignado a este curso \n");
+                }
+                else
+                    return OperationResult.Fail("El instructor ya está asignado a este curso \n");
 
-                // Sincronizar ambos repositorios
-
-                repInstructores.persistirCambios();
-                repCursos.persistirCambios();
+                this.repInstructores.persistirCambios();
+                this.repCursos.persistirCambios();
 
                 return OperationResult.Ok("Curso agregado correctamente");
-
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 return OperationResult.Fail($"Error: {ex.Message} \n");
             }
         }
+
         OperationResult INegocioGeneric.PersistirCambios()
         {
             try
             {
-                repCursos.persistirCambios();
+                this.repCursos.persistirCambios();
                 return OperationResult.Ok("Cambios persistidos con éxito \n");
             }
             catch (Exception ex)
@@ -107,23 +114,25 @@ namespace Negocio.SerivicioActores
                 return OperationResult.Fail($"Error {ex.Message} \n");
             }
         }
+
         OperationResult INegocioGeneric.CargarDatos()
         {
             try
             {
-                repCursos.cargarDatos();
+                this.repCursos.cargarDatos();
                 return OperationResult.Ok("Cambios persistidos con éxito \n");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return OperationResult.Fail($"Error {ex.Message} \n");
             }
         }
+
         OperationResult INegocioGeneric.Buscar(string parametro)
         {
-            try 
+            try
             {
-                string aux = $"{repCursos.BuscarPorIdentificacion(parametro).ToString()} \n";
+                string aux = $"{this.repCursos.BuscarPorIdentificacion(parametro).ToString()} \n";
                 return OperationResult.Ok(aux);
             }
             catch (Exception ex)
@@ -134,7 +143,7 @@ namespace Negocio.SerivicioActores
 
         private bool Existe(string idUnico)
         {
-            var existente = repCursos.BuscarCursoExistente(idUnico);
+            var existente = this.repCursos.BuscarCursoExistente(idUnico);
             return existente != null;
         }
     }

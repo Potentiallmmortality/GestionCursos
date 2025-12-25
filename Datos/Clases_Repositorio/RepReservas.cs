@@ -1,70 +1,87 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Entidades.Actores;
-using Entidades.Stock;
-using Datos.Interfaces;
+﻿// <copyright file="RepReservas.cs" company="Grupo 9 Escuela Politécnica Nacional">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace Datos.Clases_Repositorio
 {
-    public class RepReservas: RepBase<Reserva>,IRepReservas
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using Datos.Interfaces;
+    using Entidades.Actores;
+    using Entidades.Stock;
+
+    public class RepReservas : RepBase<Reserva>, IRepReservas
     {
         // Solo se manejará Identifier como clave para las reservas.
-        public RepReservas(string filename) : base(filename) { }
-        protected override bool agregarAlDiccionario(Reserva entidad)
+        public RepReservas(string filename)
+            : base(filename)
         {
-            if (entidad == null) 
-                return false;
-
-            return Diccionario.TryAdd(entidad.Identifier, entidad);
         }
-        protected override bool eliminarDelDiccionario(Reserva entidad)
-        {
-            if (entidad == null) 
-                return false;
 
-            return Diccionario.Remove(entidad.Identifier);
-        }
         bool IRepReservas.guardarReserva(Reserva reserva)
         {
-            if(agregarAlDiccionario(reserva))
+            if (this.agregarAlDiccionario(reserva))
             {
-               agregarALista(reserva);
-               return true; 
+               this.agregarALista(reserva);
+               return true;
             }
-            else return false;
+            else
+                return false;
         }
+
         bool IRepReservas.eliminarReserva(Reserva reserva)
         {
-            if (eliminarDelDiccionario(reserva))
+            if (this.eliminarDelDiccionario(reserva))
             {
-                eliminarDeLista(reserva);      
+                this.eliminarDeLista(reserva);
                 return true;
             }
-            else return false;
+            else
+                return false;
         }
+
         (List<Reserva>, Dictionary<string, Reserva>) IRepGeneric<Reserva>.obtenerTodos()
         {
-            return (Lista, Diccionario);
+            return (this.Lista, this.Diccionario);
         }
+
         Reserva? IRepReservas.BuscarPorEstudianteYCursos(Estudiante estudiante, Curso curso)
         {
-            return Lista.FirstOrDefault(r => r.Estudiante.Dni == estudiante.Dni && r.Curso.CodigoUnico == curso.CodigoUnico);
+            return this.Lista.FirstOrDefault(r => r.Estudiante.Dni == estudiante.Dni && r.Curso.CodigoUnico == curso.CodigoUnico);
         }
+
         Reserva? IRepGeneric<Reserva>.BuscarPorIdentificacion(string id)
         {
-            return Diccionario.TryGetValue(id, out Reserva b) ? b : throw new Exception("Reserva No encontrada");
+            return this.Diccionario.TryGetValue(id, out Reserva b) ? b : throw new Exception("Reserva No encontrada");
         }
+
         void IRepGeneric<Reserva>.persistirCambios()
-        { 
-           // implementacion pendiente 
+        {
+           // implementacion pendiente
         }
 
         void IRepGeneric<Reserva>.cargarDatos()
-        { 
-           // implementacion pendiente 
+        {
+           // implementacion pendiente
+        }
+
+        protected override bool agregarAlDiccionario(Reserva entidad)
+        {
+            if (entidad == null)
+                return false;
+
+            return this.Diccionario.TryAdd(entidad.Identifier, entidad);
+        }
+
+        protected override bool eliminarDelDiccionario(Reserva entidad)
+        {
+            if (entidad == null)
+                return false;
+
+            return this.Diccionario.Remove(entidad.Identifier);
         }
     }
 }

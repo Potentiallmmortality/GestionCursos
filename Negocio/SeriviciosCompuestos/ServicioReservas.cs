@@ -1,42 +1,47 @@
-﻿using Datos;
-using Datos.Interfaces;
-using Entidades;
-using Entidades.Actores;
-using Entidades.Stock;
-using Negocio.InterfacesNegocio;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿// <copyright file="ServicioReservas.cs" company="Grupo 9 Escuela Politécnica Nacional">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace Negocio.SeriviciosCompuestos
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Runtime.CompilerServices;
+    using System.Text;
+    using System.Threading.Tasks;
+    using Datos;
+    using Datos.Interfaces;
+    using Entidades;
+    using Entidades.Actores;
+    using Entidades.Stock;
+    using Negocio.InterfacesNegocio;
+
     public class ServicioReservas : INegocioReservas
     {
         private readonly IRepReservas repReservas;
         private readonly IRepCursos repCursos;
         private readonly IRepActores<Estudiante> repEstudiantes;
+
         public ServicioReservas(IRepReservas repReservas, IRepCursos repCursos, IRepActores<Estudiante> repEstudiantes)
         {
             this.repReservas = repReservas;
             this.repCursos = repCursos;
             this.repEstudiantes = repEstudiantes;
         }
+
         OperationResult INegocioReservas.CrearReserva(string dniEstudiante, string idUnicoCurso)
         {
             try
             {
-                var estudiante = repEstudiantes.BuscarPorIdentificacion(dniEstudiante);
-                var curso = repCursos.BuscarPorIdentificacion(idUnicoCurso);
+                var estudiante = this.repEstudiantes.BuscarPorIdentificacion(dniEstudiante);
+                var curso = this.repCursos.BuscarPorIdentificacion(idUnicoCurso);
 
-                if (Existe(estudiante,curso)) 
+                if (this.Existe(estudiante, curso))
                     return OperationResult.Fail("La reserva ya está registrada \n");
 
-                if(repReservas.guardarReserva(new Reserva(estudiante, curso))) 
+                if (this.repReservas.guardarReserva(new Reserva(estudiante, curso)))
                     return OperationResult.Ok("La reserva ha sido registrada con éxito");
-
                 else
                     return OperationResult.Fail("No se pudo registrar la reserva \n");
             }
@@ -45,53 +50,53 @@ namespace Negocio.SeriviciosCompuestos
                 return OperationResult.Fail($"Error {ex.Message} \n");
             }
         }
+
         OperationResult INegocioReservas.CancelarReserva(string identifier)
         {
             try
             {
-                var reserva = repReservas.BuscarPorIdentificacion(identifier);
+                var reserva = this.repReservas.BuscarPorIdentificacion(identifier);
 
-                    if (repReservas.eliminarReserva(reserva))
+                if (this.repReservas.eliminarReserva(reserva))
                     return OperationResult.Ok("La reserva se canceló correctamente \n");
-
-                else return OperationResult.Fail("La reserva no se pudo cancelar \n");
+                else
+                    return OperationResult.Fail("La reserva no se pudo cancelar \n");
             }
             catch (Exception ex)
             {
                 return OperationResult.Fail($"Error {ex.Message} \n");
             }
         }
+
         OperationResult INegocioReservas.ListarTodas()
         {
-            string aux = "";
-            (var list, Dictionary<string, Reserva> Dicc) = repReservas.obtenerTodos();
-            foreach (KeyValuePair<string, Reserva> pair in Dicc)
+            string aux = string.Empty;
+            (var list, Dictionary<string, Reserva> dicc) = this.repReservas.obtenerTodos();
+            foreach (KeyValuePair<string, Reserva> pair in dicc)
             {
                 aux += pair.Value.ToString() + "\n";
             }
+
             return OperationResult.Ok(aux);
         }
+
         OperationResult INegocioReservas.AprovarReserva(string identifier)
         {
             try
             {
-                var reserva = repReservas.BuscarPorIdentificacion(identifier);
-                
-               if(reserva.Estado != EstadoReserva.En_Espera)
+                var reserva = this.repReservas.BuscarPorIdentificacion(identifier);
+                if (reserva.Estado != EstadoReserva.En_Espera)
                     return OperationResult.Fail("La reserva no se encuentra en estado 'En Espera' \n");
 
-               if (reserva.Curso.Estado != EstadoCurso.Abierto)
+                if (reserva.Curso.Estado != EstadoCurso.Abierto)
                     return OperationResult.Fail("El curso asociado a la reserva no está abierto \n");
 
                 reserva.aprobarReserva();
                 reserva.Curso.agregarEstudiante(reserva.Estudiante);
                 reserva.Estudiante.agregarCurso(reserva.Curso);
 
-
-                //sincronizar cambios
-
-                repCursos.persistirCambios();
-                repEstudiantes.persistirCambios();
+                this.repCursos.persistirCambios();
+                this.repEstudiantes.persistirCambios();
 
                 return OperationResult.Ok("La reserva ha sido aprobada con éxito \n");
             }
@@ -100,44 +105,48 @@ namespace Negocio.SeriviciosCompuestos
                 return OperationResult.Fail($"Error {ex.Message} \n");
             }
         }
-        List<Reserva> INegocioReservas.ObtenerReservasPorEstudiante(string dniEstudiante)
+
+        OperationResult INegocioReservas.ObtenerReservasPorEstudiante(string dniEstudiante)
         {
             try
             {
-                var estudiante = repEstudiantes.BuscarPorIdentificacion(dniEstudiante);
-                List<Reserva> aux = new List<Reserva>();
-                (List<Reserva> Lista, Dictionary<string, Reserva> dicc) = repReservas.obtenerTodos();
-                foreach (Reserva reserva in Lista)
+                var estudiante = this.repEstudiantes.BuscarPorIdentificacion(dniEstudiante);
+                string aux = string.Empty;
+                (List<Reserva> lista, Dictionary<string, Reserva> dicc) = this.repReservas.obtenerTodos();
+                foreach (Reserva reserva in lista)
                 {
                     if (reserva.Estudiante.Dni == estudiante.Dni)
                     {
-                        aux.Add(reserva);
+                        aux += reserva;
                     }
                 }
-                return aux;
+
+                return OperationResult.Ok(aux);
             }
             catch (Exception ex)
             {
-                throw new Exception($"Error {ex.Message} \n");
+                return OperationResult.Fail($"Error {ex.Message} \n");
             }
         }
+
         OperationResult INegocioGeneric.Buscar(string identifier)
         {
             try
             {
-                var reserva = repReservas.BuscarPorIdentificacion(identifier);
-                return OperationResult.Ok(reserva.toString());
+                var reserva = this.repReservas.BuscarPorIdentificacion(identifier);
+                return OperationResult.Ok(reserva.ToString());
             }
             catch (Exception ex)
             {
                 return OperationResult.Fail($"Error {ex.Message} \n");
             }
         }
+
         OperationResult INegocioGeneric.PersistirCambios()
         {
             try
             {
-                repCursos.persistirCambios();
+                this.repCursos.persistirCambios();
                 return OperationResult.Ok("Cambios persistidos con éxito \n");
             }
             catch (Exception ex)
@@ -145,11 +154,12 @@ namespace Negocio.SeriviciosCompuestos
                 return OperationResult.Fail($"Error {ex.Message} \n");
             }
         }
+
         OperationResult INegocioGeneric.CargarDatos()
         {
             try
             {
-                repCursos.cargarDatos();
+                this.repCursos.cargarDatos();
                 return OperationResult.Ok("Cambios persistidos con éxito \n");
             }
             catch (Exception ex)
@@ -157,9 +167,10 @@ namespace Negocio.SeriviciosCompuestos
                 return OperationResult.Fail($"Error {ex.Message} \n");
             }
         }
+
         private bool Existe(Estudiante estudiante, Curso curso)
         {
-            var reservasEstudiante = repReservas.BuscarPorEstudianteYCursos(estudiante, curso);
+            var reservasEstudiante = this.repReservas.BuscarPorEstudianteYCursos(estudiante, curso);
             return reservasEstudiante != null;
         }
     }
