@@ -87,6 +87,12 @@ namespace Datos.Clases_Repositorio
             }
 
             string jsonString = JsonSerializer.Serialize(estudiantesJson, new JsonSerializerOptions { WriteIndented = true });
+
+            string directorio = Path.GetDirectoryName(this.Filename);
+
+            if (!Directory.Exists(directorio))
+                Directory.CreateDirectory(directorio);
+
             File.WriteAllText(this.Filename, jsonString);
         }
 
