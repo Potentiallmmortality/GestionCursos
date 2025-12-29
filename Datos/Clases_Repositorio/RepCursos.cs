@@ -6,6 +6,7 @@ namespace Datos.Clases_Repositorio
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Security.AccessControl;
     using System.Text;
@@ -71,19 +72,28 @@ namespace Datos.Clases_Repositorio
 
            this.Lista.Clear();
            this.Diccionario.Clear();
-           string jsonString = File.ReadAllText(this.Filename);
 
+           string jsonString = File.ReadAllText(this.Filename);
            List<CursoJson>? cursosJson = System.Text.Json.JsonSerializer.Deserialize<List<CursoJson>>(jsonString);
-           foreach (var cursoJson in cursosJson!)
+
+           if (cursosJson == null)
+           {
+                this.Lista = new List<Curso>();
+                this.Diccionario = new Dictionary<string, Curso>();
+                return;
+           }
+
+           foreach (var cursoJson in cursosJson)
            {
                 Curso curso = new Curso(
                     cursoJson.Nombre,
                     cursoJson.CodigoUnico,
                     cursoJson.CupoMaximo);
-                cursoJson.Estado = curso.Estado;
-                cursoJson.Identifier = curso.Identifier;
+                curso.Estado = cursoJson.Estado;
+                curso.Identifier = cursoJson.Identifier;
 
                 this.agregarALista(curso);
+
                 this.agregarAlDiccionario(curso);
             }
 
@@ -93,23 +103,31 @@ namespace Datos.Clases_Repositorio
         void IRepGeneric<Curso>.persistirCambios()
         {
            this.sincronizarDatos();
+
            List<CursoJson> cursosJson = new List<CursoJson>();
+
            foreach (var curso in this.Lista)
-            {
+           {
                 CursoJson cursoJson = new CursoJson
                 {
                     Nombre = curso.Nombre,
                     CodigoUnico = curso.CodigoUnico,
                     CupoMaximo = curso.CupoMaximo,
-                    Dni_Instructor = curso.Instructor.Dni,
+                    Dni_Instructor = curso.Instructor?.Dni,
                     Dni_Estudiantes = curso.EstudiantesInscritos.Select(e => e.Dni).ToList(),
                     Estado = curso.Estado,
                     Identifier = curso.Identifier,
                 };
                 cursosJson.Add(cursoJson);
-            }
+           }
 
            string jsonString = System.Text.Json.JsonSerializer.Serialize(cursosJson, new System.Text.Json.JsonSerializerOptions { WriteIndented = true });
+
+           string? directorio = Path.GetDirectoryName(this.Filename);
+
+           if (!Directory.Exists(directorio) && directorio != null)
+                    Directory.CreateDirectory(directorio);
+
            File.WriteAllText(this.Filename, jsonString);
         }
 

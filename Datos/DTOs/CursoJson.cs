@@ -20,7 +20,7 @@ namespace Datos.DTOs
 
         public int CupoMaximo { get; set; }
 
-        public string Dni_Instructor { get; set; }
+        public string? Dni_Instructor { get; set; }
 
         public List<string> Dni_Estudiantes { get; set; } = new ();
 

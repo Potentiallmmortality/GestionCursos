@@ -80,6 +80,12 @@ namespace Datos.Clases_Repositorio
             }
 
             string jsonString = JsonSerializer.Serialize(instructoresJson, new JsonSerializerOptions { WriteIndented = true });
+
+            string? directorio = Path.GetDirectoryName(this.Filename);
+
+            if (directorio != null && !Directory.Exists(directorio))
+                Directory.CreateDirectory(directorio);
+
             File.WriteAllText(this.Filename, jsonString);
         }
 
@@ -96,6 +102,13 @@ namespace Datos.Clases_Repositorio
             this.Diccionario.Clear();
             string jsonString = File.ReadAllText(this.Filename);
             List<InstructorJson>? instructoresJson = JsonSerializer.Deserialize<List<InstructorJson>>(jsonString);
+
+            if (instructoresJson == null)
+            {
+                this.Lista = new List<Instructor>();
+                this.Diccionario = new Dictionary<string, Instructor>();
+                return;
+            }
 
             foreach (var instructorJson in instructoresJson!)
             {

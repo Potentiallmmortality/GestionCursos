@@ -88,9 +88,9 @@ namespace Datos.Clases_Repositorio
 
             string jsonString = JsonSerializer.Serialize(estudiantesJson, new JsonSerializerOptions { WriteIndented = true });
 
-            string directorio = Path.GetDirectoryName(this.Filename);
+            string? directorio = Path.GetDirectoryName(this.Filename);
 
-            if (!Directory.Exists(directorio))
+            if (!Directory.Exists(directorio) && directorio != null)
                 Directory.CreateDirectory(directorio);
 
             File.WriteAllText(this.Filename, jsonString);
@@ -107,8 +107,17 @@ namespace Datos.Clases_Repositorio
 
             this.Lista.Clear();
             this.Diccionario.Clear();
+
             string jsonString = File.ReadAllText(this.Filename);
             List<EstudianteJson>? estudiantesJson = JsonSerializer.Deserialize<List<EstudianteJson>>(jsonString);
+
+            if (estudiantesJson == null)
+            {
+                this.Diccionario = new Dictionary<string, Estudiante>();
+                this.Lista = new List<Estudiante>();
+                return;
+            }
+
             foreach (var estudianteJson in estudiantesJson!)
             {
                 Estudiante estudiante = new Estudiante(
