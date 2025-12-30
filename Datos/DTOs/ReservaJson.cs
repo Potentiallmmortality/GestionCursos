@@ -15,9 +15,9 @@ namespace Datos.DTOs
     {
         public string CodigoUnico { get; set; }
 
-        public string Dni_Estudiante { get; set; }
+        public string? Dni_Estudiante { get; set; }
 
-        public string IdUnico_Curso { get; set; }
+        public string? IdUnico_Curso { get; set; }
 
         public DateTime FechaReserva { get; set; }
 

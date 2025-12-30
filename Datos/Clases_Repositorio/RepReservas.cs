@@ -9,6 +9,7 @@ namespace Datos.Clases_Repositorio
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using Datos.DTOs;
     using Datos.Interfaces;
     using Entidades.Actores;
     using Entidades.Stock;
@@ -60,12 +61,60 @@ namespace Datos.Clases_Repositorio
 
         void IRepGeneric<Reserva>.persistirCambios()
         {
-           // implementacion pendiente
+            this.sincronizarDatos();
+            List<ReservaJson> reservaJsons = new List<ReservaJson>();
+
+            foreach (var reserva in this.Lista)
+            {
+                ReservaJson reservaJson = new ReservaJson
+                {
+                    CodigoUnico = reserva.Identifier,
+                    Dni_Estudiante = reserva.Estudiante?.Dni,
+                    IdUnico_Curso = reserva.Curso?.CodigoUnico,
+                    FechaReserva = reserva.FechaCreacion,
+                    EstadoReserva = reserva.Estado,
+                };
+                reservaJsons.Add(reservaJson);
+            }
+
+            string jsonString = System.Text.Json.JsonSerializer.Serialize(reservaJsons, new System.Text.Json.JsonSerializerOptions { WriteIndented = true });
+
+            string? directory = Path.GetDirectoryName(this.Filename);
+
+            if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
+                Directory.CreateDirectory(directory);
+
+            File.WriteAllText(this.Filename, jsonString);
         }
 
         void IRepGeneric<Reserva>.cargarDatos()
         {
-           // implementacion pendiente
+           if (!File.Exists(this.Filename))
+           {
+                this.Lista = new List<Reserva>();
+                this.Diccionario = new Dictionary<string, Reserva>();
+                return;
+           }
+
+           string jsonString = File.ReadAllText(this.Filename);
+           List<ReservaJson>? reservaJsons = System.Text.Json.JsonSerializer.Deserialize<List<ReservaJson>>(jsonString);
+
+           if (reservaJsons == null)
+                return;
+
+           foreach (var reservaJson in reservaJsons)
+           {
+                // Reserva reserva = new Reserva();
+                // {
+                //     Identifier = reservaJson.CodigoUnico,
+                //     FechaCreacion = reservaJson.FechaReserva,
+                //     Estado = reservaJson.EstadoReserva,
+                // };
+                // this.agregarAlDiccionario(reserva);
+                // this.agregarALista(reserva);
+           }
+
+           this.sincronizarDatos();
         }
 
         protected override bool agregarAlDiccionario(Reserva entidad)
@@ -82,6 +131,27 @@ namespace Datos.Clases_Repositorio
                 return false;
 
             return this.Diccionario.Remove(entidad.Identifier);
+        }
+
+        private void sincronizarDatos()
+        {
+            foreach (var reserva in this.Lista)
+            {
+                if (!this.Diccionario.ContainsKey(reserva.Identifier))
+                    this.Diccionario[reserva.Identifier] = reserva;
+            }
+
+            HashSet<Reserva> listaHashSet = new HashSet<Reserva>(this.Lista);
+
+            foreach (var keyPair in this.Diccionario)
+            {
+                var reserva = keyPair.Value;
+                if (!listaHashSet.Contains(reserva))
+                {
+                    this.Lista.Add(reserva);
+                    listaHashSet.Add(reserva);
+                }
+            }
         }
     }
 }
