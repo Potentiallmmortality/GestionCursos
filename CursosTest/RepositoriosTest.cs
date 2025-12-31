@@ -140,6 +140,7 @@ namespace CursosTest
                 throw new Exception(ex.ToString());
             }
         }
+
         [TestMethod]
         public void Test_ManejoArchivos()
         {
@@ -167,4 +168,29 @@ namespace CursosTest
         }
     }
 
+    [TestClass]
+    public sealed class RepositoriosTest
+    {
+        private void Test_ManejoArchivos_repositorio_PersistirCambios()
+        {
+            IRepReservas RepReservas = new RepReservas("..\\CursosTest\\DirectorioTest\\ReservasTest.json");
+
+            var reserva1 = new Reserva(new Estudiante("Luis Fernandez", "3344556677", "luis.fernandez@epn.edu.ec", "luisito", "comunica"), new Curso("Historia", "HIST101", 20));
+
+            var reserva2 = new Reserva(new Estudiante("Gabriela Ruiz", "7788990011", "gabi.ruiz@epn.edu.ec", "gabriela", "clave"), new Curso("Geografia", "GEOG101", 15));
+
+            RepReservas.guardarReserva(reserva1);
+            RepReservas.guardarReserva(reserva2);
+            RepReservas.persistirCambios();
+        }
+
+        [TestMethod]
+        public void Test_MenejoArchivos()
+        {
+            this.Test_ManejoArchivos_repositorio_PersistirCambios();
+
+            Assert.IsTrue(File.Exists("..\\CursosTest\\DirectorioTest\\CursosTest.json"));
+        }
+    }
+    
 }

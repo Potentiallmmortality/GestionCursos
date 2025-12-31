@@ -1,4 +1,4 @@
-﻿// <copyright file="ServicioDatos.cs" company="PlaceholderCompany">
+﻿// <copyright file="ServicioDatos.cs" company="Grupo 9 Escuela Politécnica Nacional">
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
@@ -32,12 +32,16 @@ namespace Negocio.SeriviciosCompuestos
 
         public void CargarRepositorios()
         {
-            // Implementacion pendiente
+            this.repReservas.cargarDatos();
+            this.repCursos.cargarDatos();
+            this.repEstudiantes.cargarDatos();
         }
 
         public void GuardarRepositorios()
         {
-            // Implementación pendiente
+            this.repReservas.persistirCambios();
+            this.repCursos.persistirCambios();
+            this.repEstudiantes.persistirCambios();
         }
 
         public void ReconstuirDatos()

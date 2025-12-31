@@ -19,6 +19,7 @@ namespace Entidades.Actores
         private string email;
         private string usuario;
         private string contrasena;
+        private List<string> codigosCursos;
 
         public Persona(string nombre, string dni, string email, string usuario, string contraseña)
         {
@@ -30,6 +31,7 @@ namespace Entidades.Actores
             this.usuario = usuario;
             this.contrasena = contraseña;
             this.fechaRegistro = DateTime.Now;
+            this.codigosCursos = new List<string>();
         }
 
         public string Nombre
@@ -66,6 +68,12 @@ namespace Entidades.Actores
         {
             get { return this.contrasena; }
             set { this.contrasena = string.IsNullOrWhiteSpace(value) ? this.contrasena : value; }
+        }
+
+        public List<string> Datos
+        {
+            get { return this.codigosCursos; }
+            set { this.codigosCursos = value ?? this.codigosCursos; }
         }
     }
 }

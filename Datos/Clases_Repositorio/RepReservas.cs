@@ -16,11 +16,15 @@ namespace Datos.Clases_Repositorio
 
     public class RepReservas : RepBase<Reserva>, IRepReservas
     {
-        // Solo se manejará Identifier como clave para las reservas.
+        private List<ReservaJson> listaJson;
+
         public RepReservas(string filename)
             : base(filename)
         {
+            this.listaJson = new List<ReservaJson>();
         }
+
+        public List<ReservaJson> ListaJson { get => this.listaJson; }
 
         bool IRepReservas.guardarReserva(Reserva reserva)
         {
@@ -87,34 +91,24 @@ namespace Datos.Clases_Repositorio
             File.WriteAllText(this.Filename, jsonString);
         }
 
+        // Debdido a que las reservas dependen de  las referencias estudiantes y cursos, necesito reconstruir esas referencias despues de cargar los datos
+        // Es mejor hacerlo fuera de este metodo, en una capa superior donde tenga acceso a los repositorios de estudiantes y cursos
         void IRepGeneric<Reserva>.cargarDatos()
         {
-           if (!File.Exists(this.Filename))
+            if (!File.Exists(this.Filename))
            {
                 this.Lista = new List<Reserva>();
                 this.Diccionario = new Dictionary<string, Reserva>();
                 return;
            }
 
-           string jsonString = File.ReadAllText(this.Filename);
-           List<ReservaJson>? reservaJsons = System.Text.Json.JsonSerializer.Deserialize<List<ReservaJson>>(jsonString);
+            string jsonString = File.ReadAllText(this.Filename);
+            List<ReservaJson>? reservaJsons = System.Text.Json.JsonSerializer.Deserialize<List<ReservaJson>>(jsonString);
 
-           if (reservaJsons == null)
+            if (reservaJsons == null)
                 return;
 
-           foreach (var reservaJson in reservaJsons)
-           {
-                // Reserva reserva = new Reserva();
-                // {
-                //     Identifier = reservaJson.CodigoUnico,
-                //     FechaCreacion = reservaJson.FechaReserva,
-                //     Estado = reservaJson.EstadoReserva,
-                // };
-                // this.agregarAlDiccionario(reserva);
-                // this.agregarALista(reserva);
-           }
-
-           this.sincronizarDatos();
+            this.listaJson = reservaJsons;
         }
 
         protected override bool agregarAlDiccionario(Reserva entidad)

@@ -129,6 +129,7 @@ namespace Datos.Clases_Repositorio
 
                 estudiante.FechaRegistro = estudianteJson.FechaRegistro;
                 estudiante.Identifier = estudianteJson.Identifier;
+                estudiante.Datos = estudianteJson.IdsUnicos_Cursos;
 
                 this.agregarAlDiccionario(estudiante);
                 this.agregarALista(estudiante);

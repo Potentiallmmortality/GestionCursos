@@ -118,8 +118,10 @@ namespace Datos.Clases_Repositorio
                     instructorJson.Email,
                     instructorJson.Usuario,
                     instructorJson.Contrasena);
+
                 instructor.FechaRegistro = instructorJson.FechaRegistro;
                 instructor.Identifier = instructorJson.Identifier;
+                instructor.Datos = instructorJson.IdsUnicosCursos;
 
                 this.agregarALista(instructor);
                 this.agregarAlDiccionario(instructor);

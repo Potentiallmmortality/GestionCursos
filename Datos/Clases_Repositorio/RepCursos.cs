@@ -89,11 +89,12 @@ namespace Datos.Clases_Repositorio
                     cursoJson.Nombre,
                     cursoJson.CodigoUnico,
                     cursoJson.CupoMaximo);
+
                 curso.Estado = cursoJson.Estado;
                 curso.Identifier = cursoJson.Identifier;
+                curso.Datos = (cursoJson.Dni_Instructor ?? string.Empty, cursoJson.Dni_Estudiantes);
 
                 this.agregarALista(curso);
-
                 this.agregarAlDiccionario(curso);
             }
 
