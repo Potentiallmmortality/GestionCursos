@@ -17,12 +17,14 @@ namespace Datos.Clases_Repositorio
         private string filename;
         private List<T> lista;
         private Dictionary<string, T> diccionario;
+        private bool datosCargados;
 
         public RepBase(string filename)
         {
             this.filename = filename;
             this.lista = new List<T>();
             this.diccionario = new Dictionary<string, T>();
+            this.datosCargados = false;
         }
 
         public string Filename
@@ -41,6 +43,12 @@ namespace Datos.Clases_Repositorio
         {
             get { return this.diccionario; }
             set { this.diccionario = value ?? this.diccionario; }
+        }
+
+        public bool DatosCargados
+        {
+            get { return this.datosCargados; }
+            set { this.datosCargados = value; }
         }
 
         public bool agregarALista(T entidad)

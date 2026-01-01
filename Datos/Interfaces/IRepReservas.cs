@@ -9,6 +9,7 @@ namespace Datos.Interfaces
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using Datos.DTOs;
     using Entidades.Actores;
     using Entidades.Stock;
 
@@ -19,5 +20,7 @@ namespace Datos.Interfaces
         bool eliminarReserva(Reserva reserva);
 
         Reserva? BuscarPorEstudianteYCursos(Estudiante estudiante, Curso curso);
+
+        List<ReservaJson> obtenerDatos();
     }
 }

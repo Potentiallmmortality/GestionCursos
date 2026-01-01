@@ -35,18 +35,61 @@ namespace Negocio.SeriviciosCompuestos
             this.repReservas.cargarDatos();
             this.repCursos.cargarDatos();
             this.repEstudiantes.cargarDatos();
+            this.ReconstuirRelaciones();
         }
 
-        public void GuardarRepositorios()
+        private void ReconstuirRelaciones()
         {
-            this.repReservas.persistirCambios();
-            this.repCursos.persistirCambios();
-            this.repEstudiantes.persistirCambios();
+            this.Reconstruir_Estudiante_Cursos();
+            this.Reconstruir_Instructor_Cursos();
+            this.Reconstruir_Reservas();
         }
 
-        public void ReconstuirDatos()
+        private void Reconstruir_Estudiante_Cursos()
         {
-            // Implementación
+            foreach (var estudiante in this.repEstudiantes.obtenerTodos().Item1)
+            {
+                var idsCursos = estudiante.Datos;
+                foreach (var idCurso in idsCursos)
+                {
+                    if (this.repCursos.obtenerTodos().Item2.TryGetValue(idCurso, out Curso? curso))
+                    {
+                        estudiante.agregarCurso(curso);
+                        curso.agregarEstudiante(estudiante);
+                    }
+                }
+            }
+        }
+
+        private void Reconstruir_Instructor_Cursos()
+        {
+            foreach (var curso in this.repCursos.obtenerTodos().Item1)
+            {
+                var dniInstructor = curso.Datos;
+                if (!string.IsNullOrEmpty(dniInstructor) && this.repInstructores.obtenerTodos().Item2.TryGetValue(dniInstructor, out Instructor? instructor))
+                {
+                    curso.Instructor = instructor;
+                    instructor.agregarCurso(curso);
+                }
+            }
+        }
+
+        private void Reconstruir_Reservas()
+        {
+            foreach (var reservaJson in this.repReservas.obtenerDatos())
+            {
+                if (this.repEstudiantes.obtenerTodos().Item2.TryGetValue(reservaJson.Dni_Estudiante!, out Estudiante? estudiante) &&
+                    this.repCursos.obtenerTodos().Item2.TryGetValue(reservaJson.IdUnico_Curso!, out Curso? curso))
+                {
+                    Reserva reserva = new Reserva(estudiante, curso)
+                    {
+                        FechaCreacion = reservaJson.FechaReserva,
+                        Estado = reservaJson.EstadoReserva,
+                        Identifier = reservaJson.CodigoUnico,
+                    };
+                    this.repReservas.guardarReserva(reserva);
+                }
+            }
         }
     }
 }

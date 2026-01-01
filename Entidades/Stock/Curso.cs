@@ -21,7 +21,7 @@ namespace Entidades.Stock
         private string identifier;
         private List<Estudiante> estudiantesInscritos;
         private EstadoCurso estadoCurso;
-        private (string dni_Instructor, List<string> dni_Estudiantes) datos;
+        private string datos;
 
         public Curso(string nombre, string idUnico, int cupoMaximo)
         {
@@ -36,7 +36,7 @@ namespace Entidades.Stock
             this.instructor = null!;
             this.identifier = $"CLASS-{DateTime.Now:yyyyMMddHHfff}-{_contador.ToString("D3")}";
             this.estadoCurso = EstadoCurso.Abierto;
-            this.datos = (string.Empty, new List<string>());
+            this.datos = string.Empty;
         }
 
         public string Nombre
@@ -81,10 +81,10 @@ namespace Entidades.Stock
             set { this.identifier = value ?? this.identifier; }
         }
 
-        public (string dni_Instructor, List<string> dni_Estudiantes) Datos
+        public string Datos
         {
             get { return this.datos; }
-            set { this.datos = value; }
+            set { this.datos = value ?? this.datos; }
         }
 
         public bool agregarEstudiante(Estudiante estudiante)

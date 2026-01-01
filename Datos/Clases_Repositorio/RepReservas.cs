@@ -24,7 +24,10 @@ namespace Datos.Clases_Repositorio
             this.listaJson = new List<ReservaJson>();
         }
 
-        public List<ReservaJson> ListaJson { get => this.listaJson; }
+        List<ReservaJson> IRepReservas.obtenerDatos()
+        {
+            return this.listaJson;
+        }
 
         bool IRepReservas.guardarReserva(Reserva reserva)
         {

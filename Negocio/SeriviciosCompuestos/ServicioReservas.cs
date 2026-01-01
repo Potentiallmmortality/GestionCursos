@@ -37,10 +37,10 @@ namespace Negocio.SeriviciosCompuestos
                 var estudiante = this.repEstudiantes.BuscarPorIdentificacion(dniEstudiante);
                 var curso = this.repCursos.BuscarPorIdentificacion(idUnicoCurso);
 
-                if (this.Existe(estudiante, curso))
+                if (this.Existe(estudiante!, curso!))
                     return OperationResult.Fail("La reserva ya está registrada \n");
 
-                if (this.repReservas.guardarReserva(new Reserva(estudiante, curso)))
+                if (this.repReservas.guardarReserva(new Reserva(estudiante!, curso!)))
                     return OperationResult.Ok("La reserva ha sido registrada con éxito");
                 else
                     return OperationResult.Fail("No se pudo registrar la reserva \n");
@@ -57,7 +57,7 @@ namespace Negocio.SeriviciosCompuestos
             {
                 var reserva = this.repReservas.BuscarPorIdentificacion(identifier);
 
-                if (this.repReservas.eliminarReserva(reserva))
+                if (this.repReservas.eliminarReserva(reserva!))
                     return OperationResult.Ok("La reserva se canceló correctamente \n");
                 else
                     return OperationResult.Fail("La reserva no se pudo cancelar \n");
@@ -85,7 +85,7 @@ namespace Negocio.SeriviciosCompuestos
             try
             {
                 var reserva = this.repReservas.BuscarPorIdentificacion(identifier);
-                if (reserva.Estado != EstadoReserva.En_Espera)
+                if (reserva!.Estado != EstadoReserva.En_Espera)
                     return OperationResult.Fail("La reserva no se encuentra en estado 'En Espera' \n");
 
                 if (reserva.Curso.Estado != EstadoCurso.Abierto)
@@ -97,6 +97,7 @@ namespace Negocio.SeriviciosCompuestos
 
                 this.repCursos.persistirCambios();
                 this.repEstudiantes.persistirCambios();
+                this.repReservas.persistirCambios();
 
                 return OperationResult.Ok("La reserva ha sido aprobada con éxito \n");
             }
@@ -115,7 +116,7 @@ namespace Negocio.SeriviciosCompuestos
                 (List<Reserva> lista, Dictionary<string, Reserva> dicc) = this.repReservas.obtenerTodos();
                 foreach (Reserva reserva in lista)
                 {
-                    if (reserva.Estudiante.Dni == estudiante.Dni)
+                    if (reserva.Estudiante.Dni == estudiante!.Dni)
                     {
                         aux += reserva;
                     }
@@ -134,7 +135,7 @@ namespace Negocio.SeriviciosCompuestos
             try
             {
                 var reserva = this.repReservas.BuscarPorIdentificacion(identifier);
-                return OperationResult.Ok(reserva.ToString());
+                return OperationResult.Ok(reserva!.ToString());
             }
             catch (Exception ex)
             {

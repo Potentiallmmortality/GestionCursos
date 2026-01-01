@@ -92,7 +92,7 @@ namespace Datos.Clases_Repositorio
 
                 curso.Estado = cursoJson.Estado;
                 curso.Identifier = cursoJson.Identifier;
-                curso.Datos = (cursoJson.Dni_Instructor ?? string.Empty, cursoJson.Dni_Estudiantes);
+                curso.Datos = cursoJson.Dni_Instructor ?? string.Empty;
 
                 this.agregarALista(curso);
                 this.agregarAlDiccionario(curso);
