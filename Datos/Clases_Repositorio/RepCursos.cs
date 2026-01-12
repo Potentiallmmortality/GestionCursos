@@ -22,6 +22,7 @@ namespace Datos.Clases_Repositorio
         public RepCursos(string filename)
             : base(filename)
         {
+            ((IRepGeneric<Curso>)this).cargarDatos();
         }
 
         bool IRepCursos.guardarCurso(Curso curso)

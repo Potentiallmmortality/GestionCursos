@@ -18,6 +18,6 @@ namespace Datos.Interfaces
 
         bool eliminarPersonaje(Persona persona);
 
-        T? BuscarPersonajePorParametros(string dni, string email, string usuario);
+        T? BuscarPersonajePorParametros(string dni, string email);
     }
 }

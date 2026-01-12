@@ -21,7 +21,7 @@ namespace Datos.Clases_Repositorio
 
         public RepBase(string filename)
         {
-            this.filename = filename;
+            this.Filename = filename;
             this.lista = new List<T>();
             this.diccionario = new Dictionary<string, T>();
             this.datosCargados = false;

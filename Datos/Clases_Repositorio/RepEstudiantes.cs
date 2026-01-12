@@ -22,6 +22,7 @@ namespace Datos.Clases_Repositorio
         public RepEstudiantes(string filename)
             : base(filename)
         {
+            ((IRepGeneric<Estudiante>)this).cargarDatos();
         }
 
         // Establezcamos el Dni como clave para buscar a un estudiante, mientras que indentifier cumplirá
@@ -58,9 +59,9 @@ namespace Datos.Clases_Repositorio
             return this.Diccionario.TryGetValue(id, out Estudiante p) ? p : throw new Exception("No encontramos al Estudiante");
         }
 
-        Estudiante? IRepActores<Estudiante>.BuscarPersonajePorParametros(string dni, string email, string usuario)
+        Estudiante? IRepActores<Estudiante>.BuscarPersonajePorParametros(string dni, string email)
         {
-            return this.Lista.FirstOrDefault(e => e.Dni == dni || e.Email == email || e.Usuario == usuario);
+            return this.Lista.FirstOrDefault(e => e.Dni == dni || e.Email == email);
         }
 
         void IRepGeneric<Estudiante>.persistirCambios()
@@ -79,8 +80,6 @@ namespace Datos.Clases_Repositorio
                     FechaRegistro = estudiante.FechaRegistro,
                     IdsUnicos_Cursos = estudiante.Cursos.Select(c => c.CodigoUnico).ToList(),
                     Identifier = estudiante.Identifier,
-                    Usuario = estudiante.Usuario,
-                    Contrasena = estudiante.Contrasena,
                 };
 
                 estudiantesJson.Add(estudianteJson);
@@ -123,9 +122,7 @@ namespace Datos.Clases_Repositorio
                 Estudiante estudiante = new Estudiante(
                     estudianteJson.Nombre,
                     estudianteJson.Dni,
-                    estudianteJson.Email,
-                    estudianteJson.Usuario,
-                    estudianteJson.Contrasena);
+                    estudianteJson.Email);
 
                 estudiante.FechaRegistro = estudianteJson.FechaRegistro;
                 estudiante.Identifier = estudianteJson.Identifier;

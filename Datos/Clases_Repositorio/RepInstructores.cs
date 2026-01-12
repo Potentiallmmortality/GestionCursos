@@ -20,6 +20,7 @@ namespace Datos.Clases_Repositorio
         public RepInstructores(string filename)
             : base(filename)
         {
+            ((IRepGeneric<Instructor>)this).cargarDatos();
         }
 
         bool IRepActores<Instructor>.guardarPersonaje(Persona persona)
@@ -54,9 +55,9 @@ namespace Datos.Clases_Repositorio
             return this.Diccionario.TryGetValue(id, out Instructor p) ? p : null;
         }
 
-        Instructor? IRepActores<Instructor>.BuscarPersonajePorParametros(string dni, string email, string usuario)
+        Instructor? IRepActores<Instructor>.BuscarPersonajePorParametros(string dni, string email)
         {
-            return this.Lista.FirstOrDefault(i => i.Dni == dni || i.Email == email || i.Usuario == usuario);
+            return this.Lista.FirstOrDefault(i => i.Dni == dni || i.Email == email );
         }
 
         void IRepGeneric<Instructor>.persistirCambios()
@@ -74,8 +75,7 @@ namespace Datos.Clases_Repositorio
                     FechaRegistro = instructor.FechaRegistro,
                     IdsUnicosCursos = instructor.Cursos.Select(c => c.CodigoUnico).ToList(),
                     Identifier = instructor.Identifier,
-                    Usuario = instructor.Usuario,
-                    Contrasena = instructor.Contrasena,
+                    
                 });
             }
 
@@ -115,9 +115,7 @@ namespace Datos.Clases_Repositorio
                 Instructor instructor = new Instructor(
                     instructorJson.Nombre,
                     instructorJson.Dni,
-                    instructorJson.Email,
-                    instructorJson.Usuario,
-                    instructorJson.Contrasena);
+                    instructorJson.Email);
 
                 instructor.FechaRegistro = instructorJson.FechaRegistro;
                 instructor.Identifier = instructorJson.Identifier;

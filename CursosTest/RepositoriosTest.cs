@@ -20,11 +20,11 @@ namespace CursosTest
             {
                 IRepActores<Estudiante> RepEstudiantes = new RepEstudiantes("..\\CursosTest\\DirectorioTest\\EstudiantesTest.json");
 
-                RepEstudiantes.guardarPersonaje(new Estudiante("Juan Perez", "1234567890", "Juan.Perez@epn.ecu.ec", "juanito", "pasword"));
+                RepEstudiantes.guardarPersonaje(new Estudiante("Juan Perez", "1234567890", "Juan.Perez@epn.ecu.ec"));
 
-                RepEstudiantes.guardarPersonaje(new Estudiante("Maria Gomez", "0987654321", "maria.gomez@epn.edu.ec", "marie", "currie"));
+                RepEstudiantes.guardarPersonaje(new Estudiante("Maria Gomez", "0987654321", "maria.gomez@epn.edu.ec"));
 
-                RepEstudiantes.guardarPersonaje(new Estudiante("Sebastian Arevalo", "1755323215", "sebastian.arevalo@epn.edu.ec", "sebitas3", "saludos"));
+                RepEstudiantes.guardarPersonaje(new Estudiante("Sebastian Arevalo", "1755323215", "sebastian.arevalo@epn.edu.ec"));
 
                 RepEstudiantes.persistirCambios();
             }
@@ -77,9 +77,9 @@ namespace CursosTest
             {
                 IRepActores<Instructor> RepInstructores = new RepInstructores("..\\CursosTest\\DirectorioTest\\InstructoresTest.json");
 
-                RepInstructores.guardarPersonaje(new Instructor("Carlos Mena", "1122334455", "carlos.mena@epn.edu.ec", "cmenaa", "clave123"));
+                RepInstructores.guardarPersonaje(new Instructor("Carlos Mena", "1122334455", "carlos.mena@epn.edu.ec"));
 
-                RepInstructores.guardarPersonaje(new Instructor("Ana Torres", "5566778899", "ana.torres@epn.edu.ec", "anaisd", "user123"));
+                RepInstructores.guardarPersonaje(new Instructor("Ana Torres", "5566778899", "ana.torres@epn.edu.ec"));
 
                 RepInstructores.persistirCambios();
             }
@@ -129,7 +129,7 @@ namespace CursosTest
                 RepCursos.guardarCurso(new Curso("Fisica", "PHYS101", 15));
 
                 var curso = new Curso("Quimica", "CHEM101", 20);
-                curso.Instructor = new Instructor("Laura Martinez", "2233445566", "laura.martinez@epn.edu.ec", "alurita", "123456");
+                curso.Instructor = new Instructor("Laura Martinez", "2233445566", "laura.martinez@epn.edu.ec");
                 RepCursos.guardarCurso(curso);
 
                 RepCursos.persistirCambios();
@@ -175,9 +175,9 @@ namespace CursosTest
         {
             IRepReservas RepReservas = new RepReservas("..\\CursosTest\\DirectorioTest\\ReservasTest.json");
 
-            var reserva1 = new Reserva(new Estudiante("Luis Fernandez", "3344556677", "luis.fernandez@epn.edu.ec", "luisito", "comunica"), new Curso("Historia", "HIST101", 20));
+            var reserva1 = new Reserva(new Estudiante("Luis Fernandez", "3344556677", "luis.fernandez@epn.edu.ec"), new Curso("Historia", "HIST101", 20));
 
-            var reserva2 = new Reserva(new Estudiante("Gabriela Ruiz", "7788990011", "gabi.ruiz@epn.edu.ec", "gabriela", "clave"), new Curso("Geografia", "GEOG101", 15));
+            var reserva2 = new Reserva(new Estudiante("Gabriela Ruiz", "7788990011", "gabi.ruiz@epn.edu.ec"), new Curso("Geografia", "GEOG101", 15));
 
             RepReservas.guardarReserva(reserva1);
             RepReservas.guardarReserva(reserva2);

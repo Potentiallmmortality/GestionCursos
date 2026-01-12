@@ -32,8 +32,15 @@ namespace Negocio.SerivicioActores
             {
                 if (this.Existe(idUnico))
                     return OperationResult.Fail("El curso ya está registrado \n");
+
+                // 1. Guardamos en memoria (RAM)
                 if (this.repCursos.guardarCurso(new Curso(nombre, idUnico, cupoMaximo)))
+                {
+                    // 2. ¡IMPORTANTE! Guardamos en el archivo físico (JSON)
+                    this.repCursos.persistirCambios(); // <--- AGREGA ESTA LÍNEA
+
                     return OperationResult.Ok("Curso agregado con exito \n");
+                }
                 else
                     return OperationResult.Fail("No se puedo agregar Curso \n");
             }

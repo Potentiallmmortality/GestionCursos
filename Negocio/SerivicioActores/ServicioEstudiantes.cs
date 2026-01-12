@@ -27,17 +27,21 @@ namespace Negocio.SerivicioActores
             // .. / Datos.Archivos_Repositorio / Estudiantes / estudiantes.json
         }
 
-        OperationResult INegocioActores.Agregar(string nombre, string dni, string email, string usuario, string contraseña)
+        OperationResult INegocioActores.Agregar(string nombre, string dni, string email)
         {
             try
             {
-                if (this.EstudianteExiste(dni, email, usuario))
+                if (this.EstudianteExiste(dni, email))
                     return OperationResult.Fail("El estudiante ya se encuentre registrado \n");
 
-                if (this.repEstudiantes.guardarPersonaje(new Estudiante(nombre, dni, email, usuario, contraseña)))
+                if (this.repEstudiantes.guardarPersonaje(new Estudiante(nombre, dni, email)))
+                {
+                    this.repEstudiantes.persistirCambios();
                     return OperationResult.Ok("Estudiante agregado con éxito \n");
+                }
                 else
                     return OperationResult.Fail("No se pudo agregar el estudiante \n");
+                
             }
             catch (Exception ex)
             {
@@ -119,7 +123,7 @@ namespace Negocio.SerivicioActores
 
         private bool EstudianteExiste(string dni, string email = "usuarioGenercic@epn.edu.ec", string usuario = "usuarioGenerico")
         {
-            var estudianteExistente = this.repEstudiantes.BuscarPersonajePorParametros(dni, email, usuario);
+            var estudianteExistente = this.repEstudiantes.BuscarPersonajePorParametros(dni, email);
             return estudianteExistente != null;
         }
     }

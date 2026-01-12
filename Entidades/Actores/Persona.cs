@@ -17,19 +17,17 @@ namespace Entidades.Actores
         private string nombre;
         private string dni;
         private string email;
-        private string usuario;
-        private string contrasena;
+        
         private List<string> codigosCursos;
 
-        public Persona(string nombre, string dni, string email, string usuario, string contraseña)
+        public Persona(string nombre, string dni, string email)
         {
-            if (string.IsNullOrWhiteSpace(nombre) || string.IsNullOrWhiteSpace(dni) || string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(usuario) || string.IsNullOrWhiteSpace(contraseña))
+            if (string.IsNullOrWhiteSpace(nombre) || string.IsNullOrWhiteSpace(dni) || string.IsNullOrWhiteSpace(email))
                 throw new Exception("Datos Invalidos");
             this.nombre = nombre;
             this.dni = dni;
             this.email = email;
-            this.usuario = usuario;
-            this.contrasena = contraseña;
+            
             this.fechaRegistro = DateTime.Now;
             this.codigosCursos = new List<string>();
         }
@@ -58,17 +56,6 @@ namespace Entidades.Actores
             set { this.fechaRegistro = value; }
         }
 
-        public string Usuario
-        {
-            get { return this.usuario; }
-            set { this.usuario = string.IsNullOrWhiteSpace(value) ? this.usuario : value; }
-        }
-
-        public string Contrasena
-        {
-            get { return this.contrasena; }
-            set { this.contrasena = string.IsNullOrWhiteSpace(value) ? this.contrasena : value; }
-        }
 
         public List<string> Datos
         {

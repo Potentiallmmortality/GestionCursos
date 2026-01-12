@@ -12,7 +12,7 @@ namespace Negocio.InterfacesNegocio
 
     public interface INegocioActores : INegocioGeneric
     {
-        OperationResult Agregar(string nombre, string dni, string email, string usuario, string contraseña);
+        OperationResult Agregar(string nombre, string dni, string email);
 
         OperationResult Eliminar(string dni);
 
