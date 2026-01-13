@@ -38,28 +38,37 @@
             btnAgregar = new Button();
             btnEliminar = new Button();
             btnListar = new Button();
-            rtbListado = new RichTextBox();
             pictureBox1 = new PictureBox();
+            panel1 = new Panel();
+            button2 = new Button();
+            button1 = new Button();
+            groupBox1 = new GroupBox();
+            textBox1 = new TextBox();
+            label4 = new Label();
+            dgvEstudiantes = new DataGridView();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            panel1.SuspendLayout();
+            groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvEstudiantes).BeginInit();
             SuspendLayout();
             // 
             // txtNombre
             // 
-            txtNombre.Location = new Point(116, 68);
+            txtNombre.Location = new Point(143, 102);
             txtNombre.Name = "txtNombre";
             txtNombre.Size = new Size(100, 23);
             txtNombre.TabIndex = 0;
             // 
             // txtDni
             // 
-            txtDni.Location = new Point(116, 109);
+            txtDni.Location = new Point(143, 143);
             txtDni.Name = "txtDni";
             txtDni.Size = new Size(100, 23);
             txtDni.TabIndex = 1;
             // 
             // txtEmail
             // 
-            txtEmail.Location = new Point(116, 153);
+            txtEmail.Location = new Point(143, 187);
             txtEmail.Name = "txtEmail";
             txtEmail.Size = new Size(100, 23);
             txtEmail.TabIndex = 2;
@@ -67,7 +76,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(37, 71);
+            label1.Location = new Point(64, 105);
             label1.Name = "label1";
             label1.Size = new Size(54, 15);
             label1.TabIndex = 5;
@@ -76,7 +85,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(37, 112);
+            label2.Location = new Point(64, 146);
             label2.Name = "label2";
             label2.Size = new Size(28, 15);
             label2.TabIndex = 6;
@@ -85,7 +94,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(37, 156);
+            label3.Location = new Point(64, 190);
             label3.Name = "label3";
             label3.Size = new Size(39, 15);
             label3.TabIndex = 7;
@@ -93,7 +102,7 @@
             // 
             // btnAgregar
             // 
-            btnAgregar.Location = new Point(89, 215);
+            btnAgregar.Location = new Point(116, 249);
             btnAgregar.Name = "btnAgregar";
             btnAgregar.Size = new Size(75, 23);
             btnAgregar.TabIndex = 8;
@@ -103,7 +112,7 @@
             // 
             // btnEliminar
             // 
-            btnEliminar.Location = new Point(89, 253);
+            btnEliminar.Location = new Point(49, 75);
             btnEliminar.Name = "btnEliminar";
             btnEliminar.Size = new Size(75, 23);
             btnEliminar.TabIndex = 9;
@@ -113,7 +122,7 @@
             // 
             // btnListar
             // 
-            btnListar.Location = new Point(89, 295);
+            btnListar.Location = new Point(512, 414);
             btnListar.Name = "btnListar";
             btnListar.Size = new Size(75, 23);
             btnListar.TabIndex = 10;
@@ -121,33 +130,101 @@
             btnListar.UseVisualStyleBackColor = true;
             btnListar.Click += btnListar_Click;
             // 
-            // rtbListado
-            // 
-            rtbListado.Location = new Point(237, 54);
-            rtbListado.Name = "rtbListado";
-            rtbListado.ReadOnly = true;
-            rtbListado.Size = new Size(370, 250);
-            rtbListado.TabIndex = 11;
-            rtbListado.Text = "";
-            // 
             // pictureBox1
             // 
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
             pictureBox1.Location = new Point(-26, -12);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(699, 408);
+            pictureBox1.Size = new Size(865, 537);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 12;
             pictureBox1.TabStop = false;
+            // 
+            // panel1
+            // 
+            panel1.BackColor = SystemColors.ActiveCaptionText;
+            panel1.Controls.Add(button2);
+            panel1.Controls.Add(button1);
+            panel1.Location = new Point(-8, 1);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(809, 53);
+            panel1.TabIndex = 16;
+            // 
+            // button2
+            // 
+            button2.BackColor = Color.Black;
+            button2.FlatAppearance.BorderSize = 0;
+            button2.FlatStyle = FlatStyle.Flat;
+            button2.Font = new Font("Showcard Gothic", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            button2.ForeColor = Color.White;
+            button2.Location = new Point(3, 6);
+            button2.Name = "button2";
+            button2.Size = new Size(220, 45);
+            button2.TabIndex = 6;
+            button2.Text = "Gestionde Estudiantes";
+            button2.UseVisualStyleBackColor = false;
+            // 
+            // button1
+            // 
+            button1.BackColor = Color.Black;
+            button1.FlatAppearance.BorderSize = 0;
+            button1.FlatStyle = FlatStyle.Flat;
+            button1.Font = new Font("Showcard Gothic", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            button1.ForeColor = Color.IndianRed;
+            button1.Location = new Point(743, 0);
+            button1.Name = "button1";
+            button1.Size = new Size(46, 45);
+            button1.TabIndex = 0;
+            button1.Text = "X";
+            button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
+            // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(textBox1);
+            groupBox1.Controls.Add(label4);
+            groupBox1.Controls.Add(btnEliminar);
+            groupBox1.Location = new Point(55, 326);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(188, 111);
+            groupBox1.TabIndex = 17;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Eliminar Estudiante";
+            // 
+            // textBox1
+            // 
+            textBox1.Location = new Point(70, 31);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(100, 23);
+            textBox1.TabIndex = 11;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(20, 34);
+            label4.Name = "label4";
+            label4.Size = new Size(28, 15);
+            label4.TabIndex = 10;
+            label4.Text = "Dni:";
+            // 
+            // dgvEstudiantes
+            // 
+            dgvEstudiantes.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvEstudiantes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvEstudiantes.Location = new Point(338, 95);
+            dgvEstudiantes.Name = "dgvEstudiantes";
+            dgvEstudiantes.Size = new Size(406, 285);
+            dgvEstudiantes.TabIndex = 18;
             // 
             // frmGestionEstudiantes
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(645, 360);
-            Controls.Add(rtbListado);
+            ClientSize = new Size(793, 481);
+            Controls.Add(dgvEstudiantes);
+            Controls.Add(groupBox1);
+            Controls.Add(panel1);
             Controls.Add(btnListar);
-            Controls.Add(btnEliminar);
             Controls.Add(btnAgregar);
             Controls.Add(label3);
             Controls.Add(label2);
@@ -156,9 +233,15 @@
             Controls.Add(txtDni);
             Controls.Add(txtNombre);
             Controls.Add(pictureBox1);
+            FormBorderStyle = FormBorderStyle.None;
             Name = "frmGestionEstudiantes";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "frmGestionEstudiantes";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            panel1.ResumeLayout(false);
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvEstudiantes).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -174,7 +257,13 @@
         private Button btnAgregar;
         private Button btnEliminar;
         private Button btnListar;
-        private RichTextBox rtbListado;
         private PictureBox pictureBox1;
+        private Panel panel1;
+        private Button button2;
+        private Button button1;
+        private GroupBox groupBox1;
+        private TextBox textBox1;
+        private Label label4;
+        private DataGridView dgvEstudiantes;
     }
 }

@@ -1,37 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Negocio.InterfacesNegocio; // Para INegocioActores
-using Entidades.Actores;         // Para Instructor
-
-namespace UIs
+﻿namespace UIs
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Data;
+    using System.Drawing;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Windows.Forms;
+    using Entidades.Actores;        
+    using Negocio.InterfacesNegocio; 
+
     public partial class FrmGestionInstructores : Form
     {
-        // Usamos la interfaz genérica o específica según tengas configurado
         private readonly INegocioActores _negocioInstructores;
 
         public FrmGestionInstructores(INegocioActores negocioInstructores)
         {
-            InitializeComponent();
-            _negocioInstructores = negocioInstructores;
+            this.InitializeComponent();
+            this._negocioInstructores = negocioInstructores;
         }
 
-        // 1. AGREGAR INSTRUCTOR
         private void btnAgregar_Click(object sender, EventArgs e)
         {
             try
             {
-                // Solo pedimos los 3 datos que dejaste
-                string nombre = txtNombre.Text;
-                string dni = txtDni.Text;
-                string email = txtEmail.Text;
+                string nombre = this.txtNombre.Text;
+                string dni = this.txtDni.Text;
+                string email = this.txtEmail.Text;
 
                 if (string.IsNullOrWhiteSpace(nombre) || string.IsNullOrWhiteSpace(dni))
                 {
@@ -39,11 +36,11 @@ namespace UIs
                     return;
                 }
 
-                // Asegúrate de que tu método Agregar en el servicio acepte solo estos 3
-                var resultado = _negocioInstructores.Agregar(nombre, dni, email);
+                var resultado = this._negocioInstructores.Agregar(nombre, dni, email);
 
-                MostrarMensaje(resultado.Message, resultado.Success);
-                if (resultado.Success) LimpiarCampos();
+                this.MostrarMensaje(resultado.Message, resultado.Success);
+                if (resultado.Success) 
+                    this.LimpiarCampos();
             }
             catch (Exception ex)
             {
@@ -51,53 +48,58 @@ namespace UIs
             }
         }
 
-        // 2. ELIMINAR INSTRUCTOR
         private void btnEliminar_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtDni.Text))
+            if (string.IsNullOrWhiteSpace(this.txtDni.Text))
             {
                 MessageBox.Show("Ingrese el DNI para eliminar.");
                 return;
             }
 
-            var resultado = _negocioInstructores.Eliminar(txtDni.Text);
-            MostrarMensaje(resultado.Message, resultado.Success);
-            if (resultado.Success) LimpiarCampos();
+            var resultado = this._negocioInstructores.Eliminar(this.txtDni.Text);
+            this.MostrarMensaje(resultado.Message, resultado.Success);
+            if (resultado.Success) this.LimpiarCampos();
         }
 
-        // 3. BUSCAR INSTRUCTOR
         private void btnBuscar_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtDni.Text))
+            if (string.IsNullOrWhiteSpace(this.txtDni.Text))
             {
                 MessageBox.Show("Ingrese el DNI para buscar.");
                 return;
             }
 
-            var resultado = _negocioInstructores.Buscar(txtDni.Text);
-            txtSalida.Text = resultado.Success ? resultado.Message : "Instructor no encontrado.";
+            var resultado = this._negocioInstructores.Buscar(this.txtDni.Text);
+            this.txtSalida.Text = resultado.Success ? resultado.Message : "Instructor no encontrado.";
         }
-
-        // 4. LISTAR TODOS
+        
         private void btnListar_Click(object sender, EventArgs e)
         {
-            var resultado = _negocioInstructores.ListarActores();
-            txtSalida.Text = "--- LISTA DE INSTRUCTORES ---\r\n";
-            txtSalida.Text += resultado.Message;
+            var resultado = this._negocioInstructores.ListarActores();
+            this.txtSalida.Text = "--- LISTA DE INSTRUCTORES ---\r\n";
+            this.txtSalida.Text += resultado.Message;
         }
 
-        // MÉTODOS AUXILIARES
         private void MostrarMensaje(string mensaje, bool exito)
         {
-            txtSalida.Text = mensaje;
+            this.txtSalida.Text = mensaje;
             MessageBox.Show(mensaje, exito ? "Éxito" : "Error", MessageBoxButtons.OK, exito ? MessageBoxIcon.Information : MessageBoxIcon.Error);
         }
 
         private void LimpiarCampos()
         {
-            txtNombre.Clear();
-            txtDni.Clear();
-            txtEmail.Clear();
+            this.txtNombre.Clear();
+            this.txtDni.Clear();
+            this.txtEmail.Clear();
+        }
+
+        private void FrmGestionInstructores_Load(object sender, EventArgs e)
+        {
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            FrmGestionInstructores.ActiveForm.Close();
         }
     }
 }

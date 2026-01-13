@@ -23,8 +23,6 @@ namespace Negocio.SerivicioActores
         public ServicioEstudiantes(IRepActores<Estudiante> repEstudiantes)
         {
             this.repEstudiantes = repEstudiantes;
-
-            // .. / Datos.Archivos_Repositorio / Estudiantes / estudiantes.json
         }
 
         OperationResult INegocioActores.Agregar(string nombre, string dni, string email)
@@ -125,6 +123,12 @@ namespace Negocio.SerivicioActores
         {
             var estudianteExistente = this.repEstudiantes.BuscarPersonajePorParametros(dni, email);
             return estudianteExistente != null;
+        }
+
+        public List<Entidades.Actores.Persona> ObtenerListaReal()
+        {
+            var (lista, _) = this.repEstudiantes.obtenerTodos();
+            return lista.Cast<Entidades.Actores.Persona>().ToList();
         }
     }
 }

@@ -13,28 +13,23 @@
     {
         public frmLogin()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            // Credenciales "de fábrica" (Hardcoded)
             string usuarioCorrecto = "admin";
             string passCorrecto = "1234";
 
-            if (txtUsuario.Text == usuarioCorrecto && txtPassword.Text == passCorrecto)
+            if (this.txtUsuario.Text == usuarioCorrecto && this.txtPassword.Text == passCorrecto)
             {
-                // Pantalla emergente
                 MessageBox.Show("Usuario correcto", "Bienvenido", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // Abrir el menú principal
                 frmMenuPrincipal menu = new frmMenuPrincipal();
-                this.Hide(); // Ocultamos el login
-                menu.ShowDialog(); // Mostramos el menú
+                this.Hide(); 
+                menu.ShowDialog(); 
                 string rutaCursos = "cursos.json";
                 string rutaInstructores = "instructores.json";
-
-                // Al cerrar el menú, cerramos la aplicación completa para que no quede en memoria
                 this.Close();
             }
             else

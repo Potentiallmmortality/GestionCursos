@@ -41,26 +41,30 @@
             btnListar = new Button();
             txtSalida = new TextBox();
             pictureBox1 = new PictureBox();
+            panel1 = new Panel();
+            button2 = new Button();
+            button1 = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // txtNombre
             // 
-            txtNombre.Location = new Point(104, 61);
+            txtNombre.Location = new Point(173, 108);
             txtNombre.Name = "txtNombre";
             txtNombre.Size = new Size(100, 23);
             txtNombre.TabIndex = 0;
             // 
             // txtDni
             // 
-            txtDni.Location = new Point(104, 90);
+            txtDni.Location = new Point(173, 137);
             txtDni.Name = "txtDni";
             txtDni.Size = new Size(100, 23);
             txtDni.TabIndex = 1;
             // 
             // txtEmail
             // 
-            txtEmail.Location = new Point(104, 119);
+            txtEmail.Location = new Point(173, 166);
             txtEmail.Name = "txtEmail";
             txtEmail.Size = new Size(100, 23);
             txtEmail.TabIndex = 2;
@@ -68,7 +72,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(34, 64);
+            label1.Location = new Point(103, 111);
             label1.Name = "label1";
             label1.Size = new Size(54, 15);
             label1.TabIndex = 3;
@@ -77,7 +81,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(34, 93);
+            label2.Location = new Point(103, 140);
             label2.Name = "label2";
             label2.Size = new Size(28, 15);
             label2.TabIndex = 4;
@@ -86,7 +90,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(34, 122);
+            label3.Location = new Point(103, 169);
             label3.Name = "label3";
             label3.Size = new Size(39, 15);
             label3.TabIndex = 5;
@@ -94,7 +98,7 @@
             // 
             // btnAgregar
             // 
-            btnAgregar.Location = new Point(82, 177);
+            btnAgregar.Location = new Point(151, 224);
             btnAgregar.Name = "btnAgregar";
             btnAgregar.Size = new Size(75, 23);
             btnAgregar.TabIndex = 6;
@@ -104,7 +108,7 @@
             // 
             // btnEliminar
             // 
-            btnEliminar.Location = new Point(82, 223);
+            btnEliminar.Location = new Point(151, 270);
             btnEliminar.Name = "btnEliminar";
             btnEliminar.Size = new Size(75, 23);
             btnEliminar.TabIndex = 7;
@@ -114,7 +118,7 @@
             // 
             // btnBuscar
             // 
-            btnBuscar.Location = new Point(199, 177);
+            btnBuscar.Location = new Point(268, 224);
             btnBuscar.Name = "btnBuscar";
             btnBuscar.Size = new Size(75, 23);
             btnBuscar.TabIndex = 8;
@@ -124,7 +128,7 @@
             // 
             // btnListar
             // 
-            btnListar.Location = new Point(199, 223);
+            btnListar.Location = new Point(268, 270);
             btnListar.Name = "btnListar";
             btnListar.Size = new Size(75, 23);
             btnListar.TabIndex = 9;
@@ -134,7 +138,7 @@
             // 
             // txtSalida
             // 
-            txtSalida.Location = new Point(252, 64);
+            txtSalida.Location = new Point(321, 111);
             txtSalida.Multiline = true;
             txtSalida.Name = "txtSalida";
             txtSalida.ReadOnly = true;
@@ -147,16 +151,56 @@
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
             pictureBox1.Location = new Point(-107, -60);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(699, 408);
+            pictureBox1.Size = new Size(726, 461);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 13;
             pictureBox1.TabStop = false;
+            // 
+            // panel1
+            // 
+            panel1.BackColor = SystemColors.ActiveCaptionText;
+            panel1.Controls.Add(button2);
+            panel1.Controls.Add(button1);
+            panel1.Location = new Point(-2, -2);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(587, 57);
+            panel1.TabIndex = 14;
+            // 
+            // button2
+            // 
+            button2.BackColor = Color.Black;
+            button2.FlatAppearance.BorderSize = 0;
+            button2.FlatStyle = FlatStyle.Flat;
+            button2.Font = new Font("Showcard Gothic", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            button2.ForeColor = Color.White;
+            button2.Location = new Point(3, 6);
+            button2.Name = "button2";
+            button2.Size = new Size(222, 45);
+            button2.TabIndex = 6;
+            button2.Text = "Gestion de Instructores";
+            button2.UseVisualStyleBackColor = false;
+            // 
+            // button1
+            // 
+            button1.BackColor = Color.Black;
+            button1.FlatAppearance.BorderSize = 0;
+            button1.FlatStyle = FlatStyle.Flat;
+            button1.Font = new Font("Showcard Gothic", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            button1.ForeColor = Color.IndianRed;
+            button1.Location = new Point(525, 5);
+            button1.Name = "button1";
+            button1.Size = new Size(46, 45);
+            button1.TabIndex = 0;
+            button1.Text = "X";
+            button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
             // 
             // FrmGestionInstructores
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(485, 288);
+            ClientSize = new Size(581, 355);
+            Controls.Add(panel1);
             Controls.Add(txtSalida);
             Controls.Add(btnListar);
             Controls.Add(btnBuscar);
@@ -169,9 +213,12 @@
             Controls.Add(txtDni);
             Controls.Add(txtNombre);
             Controls.Add(pictureBox1);
+            FormBorderStyle = FormBorderStyle.None;
             Name = "FrmGestionInstructores";
-            Text = "Form1";
+            StartPosition = FormStartPosition.CenterScreen;
+            Load += FrmGestionInstructores_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            panel1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -190,5 +237,8 @@
         private Button btnListar;
         private TextBox txtSalida;
         private PictureBox pictureBox1;
+        private Panel panel1;
+        private Button button2;
+        private Button button1;
     }
 }

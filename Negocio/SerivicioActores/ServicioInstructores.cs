@@ -116,5 +116,14 @@ namespace Negocio.SerivicioActores
             var instructorExistente = this.repInstructores.BuscarPersonajePorParametros(dni, email);
             return instructorExistente != null;
         }
+
+        public List<Entidades.Actores.Persona> ObtenerListaReal()
+        {
+            // Obtenemos la lista de instructores del repositorio
+            var (lista, _) = this.repInstructores.obtenerTodos();
+
+            // Convertimos la lista de Instructores a lista de Personas para cumplir el contrato
+            return lista.Cast<Entidades.Actores.Persona>().ToList();
+        }
     }
  }

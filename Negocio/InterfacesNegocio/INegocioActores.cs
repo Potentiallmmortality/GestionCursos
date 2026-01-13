@@ -17,5 +17,7 @@ namespace Negocio.InterfacesNegocio
         OperationResult Eliminar(string dni);
 
         OperationResult ListarActores();
+
+        List<Entidades.Actores.Persona> ObtenerListaReal();
     }
 }

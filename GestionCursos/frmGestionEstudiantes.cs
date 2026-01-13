@@ -1,75 +1,66 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Entidades.Actores;       
-using Negocio;                 
-using Negocio.SerivicioActores; 
-using Negocio.InterfacesNegocio; // Para INegocioActores
-using Datos.Clases_Repositorio; // NECESARIO: Para RepEstudiantes
-using Datos.Interfaces;        // NECESARIO: Para IRepActores
-
-namespace UIs
+﻿namespace UIs
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Data;
+    using System.Drawing;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Windows.Forms;
+    using Entidades.Actores;
+    using Negocio;
+    using Negocio.SerivicioActores;
+    using Negocio.InterfacesNegocio; 
+    using Datos.Clases_Repositorio; 
+    using Datos.Interfaces;
+
     public partial class frmGestionEstudiantes : Form
     {
-        // Declaramos la interfaz, no la clase concreta, para poder usar los métodos
         private INegocioActores _servicioEstudiantes;
 
         public frmGestionEstudiantes()
         {
-            InitializeComponent();
-            ConfigurarDependencias();
+            this.InitializeComponent();
+            this.ConfigurarDependencias();
         }
 
         private void ConfigurarDependencias()
         {
-            // CORRECCIÓN: Definimos la ruta o nombre del archivo JSON
+           
             string nombreArchivo = "..\\directorioPrueba\\estudiantes.json";
 
-            // 1. Instanciamos el Repositorio pasando el argumento 'filename' que faltaba
-            // Esto soluciona el error: "No se ha dado ningún argumento..."
-            IRepActores<Estudiante> repositorio = new RepEstudiantes(nombreArchivo);
+             IRepActores<Estudiante> repositorio = new RepEstudiantes(nombreArchivo);
 
-            // 2. Instanciamos el Servicio inyectando el repositorio
-            _servicioEstudiantes = new ServicioEstudiantes(repositorio);
+            this._servicioEstudiantes = new ServicioEstudiantes(repositorio);
 
-            // 3. Cargar datos existentes
-            var servicioGenerico = (INegocioGeneric)_servicioEstudiantes;
+            var servicioGenerico = (INegocioGeneric)this._servicioEstudiantes;
             servicioGenerico.CargarDatos();
         }
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
-            // Validaciones básicas de UI
-            if (string.IsNullOrWhiteSpace(txtDni.Text) || string.IsNullOrWhiteSpace(txtNombre.Text))
+            
+            if (string.IsNullOrWhiteSpace(this.txtDni.Text) || string.IsNullOrWhiteSpace(this.txtNombre.Text))
             {
                 MessageBox.Show("El nombre y el DNI son obligatorios.");
                 return;
             }
 
-            // Llamamos al método Agregar de la interfaz INegocioActores
-            OperationResult resultado = _servicioEstudiantes.Agregar(
-                txtNombre.Text,
-                txtDni.Text,
-                txtEmail.Text
-            );
+            OperationResult resultado = this._servicioEstudiantes.Agregar(
+                this.txtNombre.Text,
+                this.txtDni.Text,
+                this.txtEmail.Text);
 
             if (resultado.Success)
             {
                 MessageBox.Show(resultado.Message, "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LimpiarCampos();
+                this.LimpiarCampos();
 
-                // Guardar cambios en el archivo (Persistencia)
-                ((INegocioGeneric)_servicioEstudiantes).PersistirCambios();
+                ((INegocioGeneric)this._servicioEstudiantes).PersistirCambios();
 
-                // Actualizar la lista visualmente
-                btnListar_Click(sender, e);
+                this.btnListar_Click(sender, e);
             }
             else
             {
@@ -79,7 +70,8 @@ namespace UIs
 
         private void btnEliminar_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtDni.Text))
+            txtDni.Text=textBox1.Text;
+            if (string.IsNullOrWhiteSpace(this.txtDni.Text))
             {
                 MessageBox.Show("Escribe el DNI del estudiante a eliminar.");
                 return;
@@ -88,14 +80,14 @@ namespace UIs
             var confirm = MessageBox.Show("¿Seguro que deseas eliminar este estudiante?", "Confirmar", MessageBoxButtons.YesNo);
             if (confirm == DialogResult.Yes)
             {
-                OperationResult resultado = _servicioEstudiantes.Eliminar(txtDni.Text);
+                OperationResult resultado = this._servicioEstudiantes.Eliminar(this.txtDni.Text);
 
                 if (resultado.Success)
                 {
                     MessageBox.Show(resultado.Message);
-                    LimpiarCampos();
-                    ((INegocioGeneric)_servicioEstudiantes).PersistirCambios();
-                    btnListar_Click(sender, e);
+                    this.LimpiarCampos();
+                    ((INegocioGeneric)this._servicioEstudiantes).PersistirCambios();
+                    this.btnListar_Click(sender, e);
                 }
                 else
                 {
@@ -104,27 +96,29 @@ namespace UIs
             }
         }
 
+        private void CargarGrilla()
+        {
+            dgvEstudiantes.DataSource = null;
+            dgvEstudiantes.DataSource = _servicioEstudiantes.ObtenerListaReal();
+        }
+
         private void btnListar_Click(object sender, EventArgs e)
         {
-            // Como tu amigo devuelve un STRING en lugar de una LISTA, 
-            // no podemos usar DataGridView fácilmente. Usamos el RichTextBox.
-            OperationResult resultado = _servicioEstudiantes.ListarActores();
-
-            if (resultado.Success)
-            {
-                rtbListado.Text = resultado.Message;
-            }
-            else
-            {
-                MessageBox.Show("Error al listar: " + resultado.Message);
-            }
+            var lista = _servicioEstudiantes.ObtenerListaReal();
+            dgvEstudiantes.DataSource = null;
+            dgvEstudiantes.DataSource = lista;
         }
 
         private void LimpiarCampos()
         {
-            txtNombre.Clear();
-            txtDni.Clear();
-            txtEmail.Clear();
+            this.txtNombre.Clear();
+            this.txtDni.Clear();
+            this.txtEmail.Clear();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            frmGestionEstudiantes.ActiveForm.Close();
         }
     }
 }

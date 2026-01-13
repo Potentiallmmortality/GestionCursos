@@ -102,7 +102,7 @@
             button1.FlatStyle = FlatStyle.Flat;
             button1.Font = new Font("Showcard Gothic", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             button1.ForeColor = Color.IndianRed;
-            button1.Location = new Point(511, 5);
+            button1.Location = new Point(496, 5);
             button1.Name = "button1";
             button1.Size = new Size(46, 45);
             button1.TabIndex = 0;
