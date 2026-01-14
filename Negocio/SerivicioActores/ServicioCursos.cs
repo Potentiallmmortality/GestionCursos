@@ -153,5 +153,11 @@ namespace Negocio.SerivicioActores
             var existente = this.repCursos.BuscarCursoExistente(idUnico);
             return existente != null;
         }
+
+        public List<Entidades.Stock.Curso> ObtenerListaReal()
+        {
+            var (lista, _) = this.repCursos.obtenerTodos();
+            return lista;
+        }
     }
 }

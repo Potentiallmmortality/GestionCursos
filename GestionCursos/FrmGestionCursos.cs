@@ -37,6 +37,7 @@
 
         private void btnEliminar_Click(object sender, EventArgs e)
         {
+            txtCodigo.Text = textBox1.Text;
             if (string.IsNullOrWhiteSpace(this.txtCodigo.Text))
             {
                 MessageBox.Show("Por favor, ingrese el Código Único del curso a eliminar.");
@@ -50,6 +51,7 @@
 
         private void btnBuscar_Click(object sender, EventArgs e)
         {
+            txtCodigo.Text = textBox2.Text;
             if (string.IsNullOrWhiteSpace(this.txtCodigo.Text))
             {
                 MessageBox.Show("Ingrese el Código para buscar.");
@@ -57,19 +59,16 @@
             }
 
             var resultado = this._negocioCursos.Buscar(this.txtCodigo.Text);
-
-            this.txtSalida.Text = resultado.Success ? resultado.Message : "No encontrado.";
-
+            MessageBox.Show(resultado.Success ? "Curso encontrado." : "Curso no encontrado.", "Búsqueda", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            
             if (!resultado.Success)
                 MessageBox.Show(resultado.Message);
         }
 
         private void btnListar_Click(object sender, EventArgs e)
         {
-            var resultado = this._negocioCursos.ListarCursos();
-
-            this.txtSalida.Text = "--- LISTA DE CURSOS ---\r\n";
-            this.txtSalida.Text += resultado.Message; 
+            dgvCursos.DataSource = null;
+            dgvCursos.DataSource = _negocioCursos.ObtenerListaReal();
         }
 
         private void btnAsignar_Click(object sender, EventArgs e)
@@ -91,7 +90,7 @@
 
         private void MostrarMensaje(string mensaje, bool exito)
         {
-            this.txtSalida.Text = mensaje;
+            MessageBox.Show(mensaje);
             if (!exito)
                 MessageBox.Show(mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else

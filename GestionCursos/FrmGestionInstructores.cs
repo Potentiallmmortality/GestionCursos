@@ -1,5 +1,9 @@
 ﻿namespace UIs
 {
+    using Entidades.Actores;
+    using Negocio.InterfacesNegocio;
+    using Negocio.SerivicioActores;
+    using Negocio.SeriviciosCompuestos;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -9,8 +13,6 @@
     using System.Text;
     using System.Threading.Tasks;
     using System.Windows.Forms;
-    using Entidades.Actores;        
-    using Negocio.InterfacesNegocio; 
 
     public partial class FrmGestionInstructores : Form
     {
@@ -26,21 +28,37 @@
         {
             try
             {
-                string nombre = this.txtNombre.Text;
-                string dni = this.txtDni.Text;
-                string email = this.txtEmail.Text;
+                string nombre = txtNombre.Text;
+                string dni = txtDni.Text;
+                string email = txtEmail.Text;
 
-                if (string.IsNullOrWhiteSpace(nombre) || string.IsNullOrWhiteSpace(dni))
+                if (!Validaciones.EsSoloNumeros(dni))
                 {
-                    MessageBox.Show("El Nombre y el DNI son obligatorios.");
+                    MessageBox.Show("El DNI debe contener exactamente 10 numeros", "Error de formato", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return; 
+                }
+
+                if (!Validaciones.EsEmailValido(email))
+                {
+                    MessageBox.Show("El correo electrónico no tiene un formato válido.", "Error de formato", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                var resultado = this._negocioInstructores.Agregar(nombre, dni, email);
+                if (!Validaciones.EsSoloLetras(nombre))
+                {
+                    MessageBox.Show("El nombre no debe contener números ni símbolos.", "Error de formato", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
-                this.MostrarMensaje(resultado.Message, resultado.Success);
-                if (resultado.Success) 
-                    this.LimpiarCampos();
+
+                var resultado = _negocioInstructores.Agregar(nombre, dni, email);
+                MostrarMensaje(resultado.Message, resultado.Success);
+
+                if (resultado.Success)
+                {
+                    LimpiarCampos();
+                    CargarGrilla(); 
+                }
             }
             catch (Exception ex)
             {
@@ -50,6 +68,7 @@
 
         private void btnEliminar_Click(object sender, EventArgs e)
         {
+            txtDni.Text = textBox1.Text;
             if (string.IsNullOrWhiteSpace(this.txtDni.Text))
             {
                 MessageBox.Show("Ingrese el DNI para eliminar.");
@@ -59,10 +78,12 @@
             var resultado = this._negocioInstructores.Eliminar(this.txtDni.Text);
             this.MostrarMensaje(resultado.Message, resultado.Success);
             if (resultado.Success) this.LimpiarCampos();
+            this.CargarGrilla();    
         }
 
         private void btnBuscar_Click(object sender, EventArgs e)
         {
+            txtDni.Text = textBox2.Text;
             if (string.IsNullOrWhiteSpace(this.txtDni.Text))
             {
                 MessageBox.Show("Ingrese el DNI para buscar.");
@@ -70,19 +91,19 @@
             }
 
             var resultado = this._negocioInstructores.Buscar(this.txtDni.Text);
-            this.txtSalida.Text = resultado.Success ? resultado.Message : "Instructor no encontrado.";
+            MessageBox.Show(resultado.Message, resultado.Success ? "Instructor Encontrado" : "No Encontrado", MessageBoxButtons.OK, resultado.Success ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
+            this.CargarGrilla();
         }
-        
+
         private void btnListar_Click(object sender, EventArgs e)
         {
-            var resultado = this._negocioInstructores.ListarActores();
-            this.txtSalida.Text = "--- LISTA DE INSTRUCTORES ---\r\n";
-            this.txtSalida.Text += resultado.Message;
+            dgvInstructores.DataSource = null;
+            dgvInstructores.DataSource = _negocioInstructores.ObtenerListaReal();
         }
 
         private void MostrarMensaje(string mensaje, bool exito)
         {
-            this.txtSalida.Text = mensaje;
+            //this.txtSalida.Text = mensaje;
             MessageBox.Show(mensaje, exito ? "Éxito" : "Error", MessageBoxButtons.OK, exito ? MessageBoxIcon.Information : MessageBoxIcon.Error);
         }
 
@@ -91,6 +112,12 @@
             this.txtNombre.Clear();
             this.txtDni.Clear();
             this.txtEmail.Clear();
+        }
+
+        private void CargarGrilla()
+        {
+            this.dgvInstructores.DataSource = null;
+            this.dgvInstructores.DataSource = _negocioInstructores.ObtenerListaReal();
         }
 
         private void FrmGestionInstructores_Load(object sender, EventArgs e)

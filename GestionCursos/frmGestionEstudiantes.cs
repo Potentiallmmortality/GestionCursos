@@ -66,6 +66,7 @@
             {
                 MessageBox.Show(resultado.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            this.CargarGrilla();
         }
 
         private void btnEliminar_Click(object sender, EventArgs e)
@@ -94,6 +95,7 @@
                     MessageBox.Show(resultado.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+            this.CargarGrilla();    
         }
 
         private void CargarGrilla()
@@ -107,6 +109,7 @@
             var lista = _servicioEstudiantes.ObtenerListaReal();
             dgvEstudiantes.DataSource = null;
             dgvEstudiantes.DataSource = lista;
+            this.CargarGrilla();
         }
 
         private void LimpiarCampos()

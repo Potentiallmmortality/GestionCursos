@@ -19,5 +19,6 @@ namespace Negocio.InterfacesNegocio
         OperationResult ListarCursos();
 
         OperationResult AsignarInstructor(string dniInstructor, string codigoCurso);
+        List<Entidades.Stock.Curso> ObtenerListaReal();
     }
 }
