@@ -1,5 +1,12 @@
 ﻿namespace UIs
 {
+    using Datos.Clases_Repositorio; 
+    using Datos.Interfaces;
+    using Entidades.Actores;
+    using Negocio;
+    using Negocio.InterfacesNegocio; 
+    using Negocio.SerivicioActores;
+    using Negocio.SeriviciosCompuestos;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -9,12 +16,6 @@
     using System.Text;
     using System.Threading.Tasks;
     using System.Windows.Forms;
-    using Entidades.Actores;
-    using Negocio;
-    using Negocio.SerivicioActores;
-    using Negocio.InterfacesNegocio; 
-    using Datos.Clases_Repositorio; 
-    using Datos.Interfaces;
 
     public partial class frmGestionEstudiantes : Form
     {
@@ -41,32 +42,49 @@
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
-            
-            if (string.IsNullOrWhiteSpace(this.txtDni.Text) || string.IsNullOrWhiteSpace(this.txtNombre.Text))
+
+            try
             {
-                MessageBox.Show("El nombre y el DNI son obligatorios.");
-                return;
+                if (string.IsNullOrWhiteSpace(txtNombre.Text) ||
+                    string.IsNullOrWhiteSpace(txtDni.Text) ||
+                    string.IsNullOrWhiteSpace(txtEmail.Text))
+                {
+                    MessageBox.Show("Todos los campos son obligatorios.");
+                    return;
+                }
+
+                if (!Validaciones.EsSoloNumeros(txtDni.Text))
+                {
+                    MessageBox.Show("El DNI debe contener solo números.");
+                    return;
+                }
+
+                if (!Validaciones.EsSoloLetras(txtNombre.Text))
+                {
+                    MessageBox.Show("El nombre solo debe contener letras.");
+                    return;
+                }
+
+                if (!Validaciones.EsEmailValido(txtEmail.Text))
+                {
+                    MessageBox.Show("El formato del correo no es válido.");
+                    return;
+                }
+
+                var resultado = _servicioEstudiantes.Agregar(txtNombre.Text, txtDni.Text, txtEmail.Text);
+
+                MostrarMensaje(resultado.Message, resultado.Success);
+
+                if (resultado.Success)
+                {
+                    LimpiarCampos();
+                    CargarGrilla(); // Si tienes el método de refresco
+                }
             }
-
-            OperationResult resultado = this._servicioEstudiantes.Agregar(
-                this.txtNombre.Text,
-                this.txtDni.Text,
-                this.txtEmail.Text);
-
-            if (resultado.Success)
+            catch (Exception ex)
             {
-                MessageBox.Show(resultado.Message, "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.LimpiarCampos();
-
-                ((INegocioGeneric)this._servicioEstudiantes).PersistirCambios();
-
-                this.btnListar_Click(sender, e);
+                MessageBox.Show("Error inesperado: " + ex.Message);
             }
-            else
-            {
-                MessageBox.Show(resultado.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            this.CargarGrilla();
         }
 
         private void btnEliminar_Click(object sender, EventArgs e)
@@ -122,6 +140,12 @@
         private void button1_Click(object sender, EventArgs e)
         {
             frmGestionEstudiantes.ActiveForm.Close();
+        }
+
+        private void MostrarMensaje(string mensaje, bool exito)
+        {
+            //this.txtSalida.Text = mensaje;
+            MessageBox.Show(mensaje, exito ? "Éxito" : "Error", MessageBoxButtons.OK, exito ? MessageBoxIcon.Information : MessageBoxIcon.Error);
         }
     }
 }

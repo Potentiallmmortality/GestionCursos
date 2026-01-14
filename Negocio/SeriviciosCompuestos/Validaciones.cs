@@ -21,8 +21,7 @@ namespace Negocio.SeriviciosCompuestos
         public static bool EsSoloNumeros(string texto)
         {
             if (string.IsNullOrWhiteSpace(texto)) return false;
-
-            string patron = @"^\d+$<{10}";
+            string patron = @"^\d+$";
             return Regex.IsMatch(texto, patron);
         }
 
@@ -35,14 +34,18 @@ namespace Negocio.SeriviciosCompuestos
         }
 
         // Regex para CÓDIGO DE CURSO (Ejemplo: C-123 o CUR-099)
-        // Puedes personalizar esto según tu regla de negocio
         public static bool EsCodigoCursoValido(string codigo)
         {
             if (string.IsNullOrWhiteSpace(codigo)) return false;
-
-            // Ejemplo: Letras y números, sin caracteres raros. Minimo 3 caracteres.
             string patron = @"^[a-zA-Z0-9-]{3,}$";
             return Regex.IsMatch(codigo, patron);
+        }
+
+        public static bool EsAlfanumerico(string texto)
+        {
+            if (string.IsNullOrWhiteSpace(texto)) return false;
+            string patron = @"^[a-zA-Z0-9\s]+$";
+            return System.Text.RegularExpressions.Regex.IsMatch(texto, patron);
         }
     }
 }

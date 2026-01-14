@@ -1,5 +1,7 @@
 ﻿namespace UIs
 {
+    using Negocio.InterfacesNegocio;
+    using Negocio.SeriviciosCompuestos;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -9,7 +11,6 @@
     using System.Text;
     using System.Threading.Tasks;
     using System.Windows.Forms;
-    using Negocio.InterfacesNegocio;
 
     public partial class FrmGestionCursos : Form
     {
@@ -23,16 +24,53 @@
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
-            if (!int.TryParse(this.txtCupo.Text, out int cupo))
+            try
             {
-                MessageBox.Show("El cupo debe ser un número entero válido.");
-                return;
+                if (string.IsNullOrWhiteSpace(txtNombre.Text) ||
+                    string.IsNullOrWhiteSpace(txtCodigo.Text) ||
+                    string.IsNullOrWhiteSpace(txtCupo.Text))
+                {
+                    MessageBox.Show("Todos los campos son obligatorios.");
+                    return;
+                }
+
+                if (!Validaciones.EsSoloNumeros(txtCupo.Text))
+                {
+                    MessageBox.Show("El cupo debe ser un número entero.");
+                    return;
+                }
+
+                if (!Validaciones.EsAlfanumerico(txtNombre.Text))
+                {
+                    MessageBox.Show("El nombre del curso no debe contener símbolos extraños.");
+                    return;
+                }
+
+                int cupo = int.Parse(txtCupo.Text);
+
+                if (cupo < 0 || cupo > 24)
+                {
+                    MessageBox.Show("El cupo debe estar entre 0 y 24.");
+                    return;
+                }
+
+                var resultado = _negocioCursos.Agregar(txtNombre.Text, txtCodigo.Text, cupo);
+
+                if (resultado.Success)
+                {
+                    MessageBox.Show(resultado.Message, "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LimpiarCamposCurso();
+                    CargarGrilla();
+                }
+                else
+                {
+                    MessageBox.Show(resultado.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-
-            var resultado = this._negocioCursos.Agregar(this.txtNombre.Text, this.txtCodigo.Text, cupo);
-
-            this.MostrarMensaje(resultado.Message, resultado.Success);
-            if (resultado.Success) this.LimpiarCamposCurso();
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
         }
 
         private void btnEliminar_Click(object sender, EventArgs e)
@@ -86,7 +124,6 @@
             this.MostrarMensaje(resultado.Message, resultado.Success);
         }
 
-        // --- MÉTODOS AUXILIARES ---
 
         private void MostrarMensaje(string mensaje, bool exito)
         {
@@ -108,6 +145,12 @@
         private void button1_Click(object sender, EventArgs e)
         {
            FrmGestionCursos.ActiveForm.Close();
+        }
+
+        private void CargarGrilla()
+        {
+            this.dgvCursos.DataSource = null;
+            this.dgvCursos.DataSource = _negocioCursos.ObtenerListaReal();
         }
     }
 }

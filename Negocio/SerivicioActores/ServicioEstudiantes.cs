@@ -39,7 +39,6 @@ namespace Negocio.SerivicioActores
                 }
                 else
                     return OperationResult.Fail("No se pudo agregar el estudiante \n");
-                
             }
             catch (Exception ex)
             {

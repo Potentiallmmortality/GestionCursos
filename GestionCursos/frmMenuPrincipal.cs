@@ -30,8 +30,8 @@
 
         private void btnGestionCursos_Click(object sender, EventArgs e)
         {
-            string rutaCursos = "cursos.json";
-            string rutaInstructores = "instructores.json";
+            string rutaCursos = "..\\directorioPrueba\\cursos.json";
+            string rutaInstructores = "..\\directorioPrueba\\instructores.json";
             IRepCursos repCursos = new RepCursos(rutaCursos);
             IRepActores<Instructor> repInstructores = new RepInstructores(rutaInstructores);
             INegocioCursos servicioCursos = new ServicioCursos(repCursos, repInstructores);
@@ -41,7 +41,7 @@
 
         private void btnGestionInstructores_Click(object sender, EventArgs e)
         {
-            string rutaInstructores = "instructores.json";
+            string rutaInstructores = "..\\directorioPrueba\\instructores.json";
             IRepActores<Instructor> repInstructores = new RepInstructores(rutaInstructores);
             INegocioActores servicioInstructores = new ServicioInstructores(repInstructores);
             FrmGestionInstructores frm = new FrmGestionInstructores(servicioInstructores);
