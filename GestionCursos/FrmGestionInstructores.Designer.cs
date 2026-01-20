@@ -39,7 +39,6 @@
             btnEliminar = new Button();
             btnBuscar = new Button();
             btnListar = new Button();
-            pictureBox1 = new PictureBox();
             panel1 = new Panel();
             button2 = new Button();
             button1 = new Button();
@@ -49,11 +48,14 @@
             label4 = new Label();
             dgvInstructores = new DataGridView();
             textBox2 = new TextBox();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            pictureBox1 = new PictureBox();
+            pictureBox2 = new PictureBox();
             panel1.SuspendLayout();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvInstructores).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             SuspendLayout();
             // 
             // txtNombre
@@ -143,16 +145,6 @@
             btnListar.Text = "Listar";
             btnListar.UseVisualStyleBackColor = true;
             btnListar.Click += btnListar_Click;
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(-107, -60);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(900, 601);
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox1.TabIndex = 13;
-            pictureBox1.TabStop = false;
             // 
             // panel1
             // 
@@ -254,11 +246,33 @@
             textBox2.TabIndex = 20;
             textBox2.Text = "Dni";
             // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(-18, -33);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(807, 569);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 24;
+            pictureBox1.TabStop = false;
+            // 
+            // pictureBox2
+            // 
+            pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
+            pictureBox2.Location = new Point(652, 410);
+            pictureBox2.Name = "pictureBox2";
+            pictureBox2.Size = new Size(53, 50);
+            pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox2.TabIndex = 25;
+            pictureBox2.TabStop = false;
+            pictureBox2.Click += pictureBox2_Click;
+            // 
             // FrmGestionInstructores
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(750, 488);
+            Controls.Add(pictureBox2);
             Controls.Add(textBox2);
             Controls.Add(dgvInstructores);
             Controls.Add(groupBox2);
@@ -271,13 +285,14 @@
             Name = "FrmGestionInstructores";
             StartPosition = FormStartPosition.CenterScreen;
             Load += FrmGestionInstructores_Load;
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panel1.ResumeLayout(false);
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvInstructores).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -294,7 +309,6 @@
         private Button btnEliminar;
         private Button btnBuscar;
         private Button btnListar;
-        private PictureBox pictureBox1;
         private Panel panel1;
         private Button button2;
         private Button button1;
@@ -304,5 +318,7 @@
         private Label label4;
         private DataGridView dgvInstructores;
         private TextBox textBox2;
+        private PictureBox pictureBox1;
+        private PictureBox pictureBox2;
     }
 }

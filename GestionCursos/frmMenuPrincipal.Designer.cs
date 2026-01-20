@@ -36,6 +36,7 @@
             button2 = new Button();
             button1 = new Button();
             pictureBox1 = new PictureBox();
+            btnMatricular = new Button();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
@@ -43,7 +44,7 @@
             // btnGestionEstudiantes
             // 
             btnGestionEstudiantes.Image = (Image)resources.GetObject("btnGestionEstudiantes.Image");
-            btnGestionEstudiantes.Location = new Point(121, 67);
+            btnGestionEstudiantes.Location = new Point(45, 90);
             btnGestionEstudiantes.Name = "btnGestionEstudiantes";
             btnGestionEstudiantes.Size = new Size(276, 101);
             btnGestionEstudiantes.TabIndex = 0;
@@ -54,7 +55,7 @@
             // btnGestionInstructores
             // 
             btnGestionInstructores.Image = (Image)resources.GetObject("btnGestionInstructores.Image");
-            btnGestionInstructores.Location = new Point(121, 174);
+            btnGestionInstructores.Location = new Point(383, 90);
             btnGestionInstructores.Name = "btnGestionInstructores";
             btnGestionInstructores.Size = new Size(276, 98);
             btnGestionInstructores.TabIndex = 1;
@@ -64,7 +65,7 @@
             // btnGestionCursos
             // 
             btnGestionCursos.Image = (Image)resources.GetObject("btnGestionCursos.Image");
-            btnGestionCursos.Location = new Point(121, 278);
+            btnGestionCursos.Location = new Point(45, 233);
             btnGestionCursos.Name = "btnGestionCursos";
             btnGestionCursos.Size = new Size(276, 99);
             btnGestionCursos.TabIndex = 2;
@@ -78,7 +79,7 @@
             panel1.Controls.Add(button1);
             panel1.Location = new Point(-2, -2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(560, 54);
+            panel1.Size = new Size(726, 54);
             panel1.TabIndex = 6;
             // 
             // button2
@@ -102,7 +103,7 @@
             button1.FlatStyle = FlatStyle.Flat;
             button1.Font = new Font("Showcard Gothic", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             button1.ForeColor = Color.IndianRed;
-            button1.Location = new Point(496, 5);
+            button1.Location = new Point(661, 3);
             button1.Name = "button1";
             button1.Size = new Size(46, 45);
             button1.TabIndex = 0;
@@ -115,16 +116,27 @@
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
             pictureBox1.Location = new Point(-73, -4);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(699, 408);
+            pictureBox1.Size = new Size(831, 421);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 13;
             pictureBox1.TabStop = false;
+            // 
+            // btnMatricular
+            // 
+            btnMatricular.Image = (Image)resources.GetObject("btnMatricular.Image");
+            btnMatricular.Location = new Point(383, 234);
+            btnMatricular.Name = "btnMatricular";
+            btnMatricular.Size = new Size(276, 98);
+            btnMatricular.TabIndex = 14;
+            btnMatricular.UseVisualStyleBackColor = true;
+            btnMatricular.Click += btnMatricular_Click;
             // 
             // frmMenuPrincipal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(552, 401);
+            ClientSize = new Size(717, 372);
+            Controls.Add(btnMatricular);
             Controls.Add(panel1);
             Controls.Add(btnGestionCursos);
             Controls.Add(btnGestionInstructores);
@@ -148,5 +160,6 @@
         private Button button2;
         private Button button1;
         private PictureBox pictureBox1;
+        private Button btnMatricular;
     }
 }

@@ -20,10 +20,14 @@ namespace Negocio.SerivicioActores
         private readonly IRepCursos repCursos;
         private readonly IRepActores<Instructor> repInstructores;
 
-        public ServicioCursos(IRepCursos repCursos, IRepActores<Instructor> repInstructores)
+        private readonly IRepActores<Estudiante> repEstudiantes;
+
+        public ServicioCursos(IRepCursos repCursos, IRepActores<Instructor> repInstructores, IRepActores<Estudiante> repEstudiantes)
         {
             this.repCursos = repCursos;
             this.repInstructores = repInstructores;
+            this.repEstudiantes = repEstudiantes;
+
         }
 
         OperationResult INegocioCursos.Agregar(string nombre, string idUnico, int cupoMaximo)
@@ -159,5 +163,46 @@ namespace Negocio.SerivicioActores
             var (lista, _) = this.repCursos.obtenerTodos();
             return lista;
         }
+
+        public OperationResult MatricularEstudiante(string dniEstudiante, string codigoCurso)
+        {
+            try
+            {
+                var estudiante = this.repEstudiantes.BuscarPorIdentificacion(dniEstudiante);
+                var curso = this.repCursos.BuscarPorIdentificacion(codigoCurso);
+
+                if (estudiante == null) return OperationResult.Fail("Estudiante no encontrado.");
+                if (curso == null) return OperationResult.Fail("Curso no encontrado.");
+
+                if (curso.agregarEstudiante(estudiante))
+                {
+                    this.repCursos.persistirCambios();
+
+                    return OperationResult.Ok($"Estudiante {estudiante.Nombre} matriculado en {curso.Nombre} exitosamente.");
+                }
+                else
+                {
+                    if (curso.CursoCerrado())
+                        return OperationResult.Fail("No se pudo matricular: El curso está CERRADO (Cupo lleno).");
+                    else
+                        return OperationResult.Fail("El estudiante ya está inscrito en este curso o hubo un error.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return OperationResult.Fail("Error al matricular: " + ex.Message);
+            }
+        }
+
+        public List<Entidades.Stock.Curso> ObtenerCursosPorEstudiante(string dniEstudiante)
+        {
+            var (todosLosCursos, _) = this.repCursos.obtenerTodos();
+            var cursosDelEstudiante = todosLosCursos
+                .Where(curso => curso.EstudiantesInscritos.Any(est => est.Dni == dniEstudiante))
+                .ToList();
+
+            return cursosDelEstudiante;
+        }
+
     }
 }

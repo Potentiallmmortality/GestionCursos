@@ -23,6 +23,11 @@ namespace Entidades.Stock
         private EstadoCurso estadoCurso;
         private string datos;
 
+        public Curso()
+        {
+            this.EstudiantesInscritos = new List<Estudiante>();
+        }
+
         public Curso(string nombre, string idUnico, int cupoMaximo)
         {
             if (string.IsNullOrWhiteSpace(nombre) || string.IsNullOrWhiteSpace(idUnico) || cupoMaximo < 0 || cupoMaximo > 24)

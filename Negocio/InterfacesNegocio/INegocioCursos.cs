@@ -19,6 +19,11 @@ namespace Negocio.InterfacesNegocio
         OperationResult ListarCursos();
 
         OperationResult AsignarInstructor(string dniInstructor, string codigoCurso);
+
         List<Entidades.Stock.Curso> ObtenerListaReal();
+
+        OperationResult MatricularEstudiante(string dniEstudiante, string codigoCurso);
+
+        List<Entidades.Stock.Curso> ObtenerCursosPorEstudiante(string dniEstudiante);
     }
 }

@@ -35,7 +35,7 @@
                 if (!Validaciones.EsSoloNumeros(dni))
                 {
                     MessageBox.Show("El DNI debe contener exactamente 10 numeros", "Error de formato", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return; 
+                    return;
                 }
 
                 if (!Validaciones.EsEmailValido(email))
@@ -57,7 +57,7 @@
                 if (resultado.Success)
                 {
                     LimpiarCampos();
-                    CargarGrilla(); 
+                    CargarGrilla();
                 }
             }
             catch (Exception ex)
@@ -78,7 +78,7 @@
             var resultado = this._negocioInstructores.Eliminar(this.txtDni.Text);
             this.MostrarMensaje(resultado.Message, resultado.Success);
             if (resultado.Success) this.LimpiarCampos();
-            this.CargarGrilla();    
+            this.CargarGrilla();
         }
 
         private void btnBuscar_Click(object sender, EventArgs e)
@@ -127,6 +127,11 @@
         private void button1_Click(object sender, EventArgs e)
         {
             FrmGestionInstructores.ActiveForm.Close();
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+            FrmGestionInstructores.ActiveForm.Close();  
         }
     }
 }

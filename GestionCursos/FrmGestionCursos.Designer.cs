@@ -53,12 +53,14 @@
             groupBox3 = new GroupBox();
             dgvCursos = new DataGridView();
             textBox2 = new TextBox();
+            pictureBox2 = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel1.SuspendLayout();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvCursos).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             SuspendLayout();
             // 
             // txtNombre
@@ -141,7 +143,7 @@
             // 
             // btnEliminar
             // 
-            btnEliminar.Location = new Point(50, 69);
+            btnEliminar.Location = new Point(62, 55);
             btnEliminar.Name = "btnEliminar";
             btnEliminar.Size = new Size(75, 23);
             btnEliminar.TabIndex = 9;
@@ -151,7 +153,7 @@
             // 
             // btnBuscar
             // 
-            btnBuscar.Location = new Point(501, 469);
+            btnBuscar.Location = new Point(456, 467);
             btnBuscar.Name = "btnBuscar";
             btnBuscar.Size = new Size(75, 23);
             btnBuscar.TabIndex = 10;
@@ -161,7 +163,7 @@
             // 
             // btnListar
             // 
-            btnListar.Location = new Point(58, 469);
+            btnListar.Location = new Point(29, 467);
             btnListar.Name = "btnListar";
             btnListar.Size = new Size(75, 23);
             btnListar.TabIndex = 11;
@@ -171,7 +173,7 @@
             // 
             // btnAsignar
             // 
-            btnAsignar.Location = new Point(73, 71);
+            btnAsignar.Location = new Point(62, 57);
             btnAsignar.Name = "btnAsignar";
             btnAsignar.Size = new Size(75, 23);
             btnAsignar.TabIndex = 12;
@@ -182,9 +184,9 @@
             // pictureBox1
             // 
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(-97, -41);
+            pictureBox1.Location = new Point(-47, -12);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(983, 659);
+            pictureBox1.Size = new Size(803, 621);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 14;
             pictureBox1.TabStop = false;
@@ -196,7 +198,7 @@
             panel1.Controls.Add(button1);
             panel1.Location = new Point(-3, -2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(851, 54);
+            panel1.Size = new Size(910, 54);
             panel1.TabIndex = 15;
             // 
             // button2
@@ -220,7 +222,7 @@
             button1.FlatStyle = FlatStyle.Flat;
             button1.Font = new Font("Showcard Gothic", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             button1.ForeColor = Color.IndianRed;
-            button1.Location = new Point(783, 0);
+            button1.Location = new Point(578, 6);
             button1.Name = "button1";
             button1.Size = new Size(46, 45);
             button1.TabIndex = 0;
@@ -233,9 +235,9 @@
             groupBox1.Controls.Add(btnAsignar);
             groupBox1.Controls.Add(txtDniInstructor);
             groupBox1.Controls.Add(label1);
-            groupBox1.Location = new Point(556, 109);
+            groupBox1.Location = new Point(374, 190);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(219, 121);
+            groupBox1.Size = new Size(219, 90);
             groupBox1.TabIndex = 16;
             groupBox1.TabStop = false;
             groupBox1.Text = "Asignar instructor a Curso";
@@ -245,16 +247,16 @@
             groupBox2.Controls.Add(textBox1);
             groupBox2.Controls.Add(label4);
             groupBox2.Controls.Add(btnEliminar);
-            groupBox2.Location = new Point(304, 109);
+            groupBox2.Location = new Point(374, 74);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(219, 121);
+            groupBox2.Size = new Size(219, 90);
             groupBox2.TabIndex = 18;
             groupBox2.TabStop = false;
             groupBox2.Text = "Eliminar Curso";
             // 
             // textBox1
             // 
-            textBox1.Location = new Point(70, 31);
+            textBox1.Location = new Point(82, 17);
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(100, 23);
             textBox1.TabIndex = 11;
@@ -262,7 +264,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(20, 34);
+            label4.Location = new Point(32, 20);
             label4.Name = "label4";
             label4.Size = new Size(49, 15);
             label4.TabIndex = 10;
@@ -277,37 +279,49 @@
             groupBox3.Controls.Add(lbl2);
             groupBox3.Controls.Add(lbl3);
             groupBox3.Controls.Add(btnAgregar);
-            groupBox3.Location = new Point(56, 109);
+            groupBox3.Location = new Point(77, 74);
             groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(214, 187);
+            groupBox3.Size = new Size(238, 206);
             groupBox3.TabIndex = 19;
             groupBox3.TabStop = false;
-            groupBox3.Text = "Agregar Cursi";
+            groupBox3.Text = "Agregar Curso";
             // 
             // dgvCursos
             // 
             dgvCursos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvCursos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvCursos.Location = new Point(58, 326);
+            dgvCursos.Location = new Point(29, 313);
             dgvCursos.Name = "dgvCursos";
-            dgvCursos.Size = new Size(717, 128);
+            dgvCursos.Size = new Size(613, 138);
             dgvCursos.TabIndex = 20;
             // 
             // textBox2
             // 
             textBox2.BorderStyle = BorderStyle.FixedSingle;
-            textBox2.Location = new Point(582, 469);
+            textBox2.Location = new Point(542, 467);
             textBox2.Name = "textBox2";
             textBox2.Size = new Size(100, 23);
             textBox2.TabIndex = 21;
             textBox2.Text = "Dni";
             textBox2.TextAlign = HorizontalAlignment.Center;
             // 
+            // pictureBox2
+            // 
+            pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
+            pictureBox2.Location = new Point(650, 493);
+            pictureBox2.Name = "pictureBox2";
+            pictureBox2.Size = new Size(53, 50);
+            pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox2.TabIndex = 22;
+            pictureBox2.TabStop = false;
+            pictureBox2.Click += pictureBox2_Click;
+            // 
             // FrmGestionCursos
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(838, 560);
+            ClientSize = new Size(715, 555);
+            Controls.Add(pictureBox2);
             Controls.Add(textBox2);
             Controls.Add(dgvCursos);
             Controls.Add(groupBox3);
@@ -321,6 +335,7 @@
             Name = "FrmGestionCursos";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "FrmGestionCursos";
+            Load += FrmGestionCursos_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panel1.ResumeLayout(false);
             groupBox1.ResumeLayout(false);
@@ -330,6 +345,7 @@
             groupBox3.ResumeLayout(false);
             groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvCursos).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -360,5 +376,6 @@
         private GroupBox groupBox3;
         private DataGridView dgvCursos;
         private TextBox textBox2;
+        private PictureBox pictureBox2;
     }
 }

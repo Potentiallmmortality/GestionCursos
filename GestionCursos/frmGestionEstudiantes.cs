@@ -21,23 +21,10 @@
     {
         private INegocioActores _servicioEstudiantes;
 
-        public frmGestionEstudiantes()
+        public frmGestionEstudiantes(INegocioActores servicioEstudiantes)
         {
             this.InitializeComponent();
-            this.ConfigurarDependencias();
-        }
-
-        private void ConfigurarDependencias()
-        {
-           
-            string nombreArchivo = "..\\directorioPrueba\\estudiantes.json";
-
-             IRepActores<Estudiante> repositorio = new RepEstudiantes(nombreArchivo);
-
-            this._servicioEstudiantes = new ServicioEstudiantes(repositorio);
-
-            var servicioGenerico = (INegocioGeneric)this._servicioEstudiantes;
-            servicioGenerico.CargarDatos();
+            this._servicioEstudiantes = servicioEstudiantes;
         }
 
         private void btnAgregar_Click(object sender, EventArgs e)
@@ -89,7 +76,7 @@
 
         private void btnEliminar_Click(object sender, EventArgs e)
         {
-            txtDni.Text=textBox1.Text;
+            txtDni.Text = textBox1.Text;
             if (string.IsNullOrWhiteSpace(this.txtDni.Text))
             {
                 MessageBox.Show("Escribe el DNI del estudiante a eliminar.");
@@ -113,7 +100,7 @@
                     MessageBox.Show(resultado.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            this.CargarGrilla();    
+            this.CargarGrilla();
         }
 
         private void CargarGrilla()
@@ -146,6 +133,11 @@
         {
             //this.txtSalida.Text = mensaje;
             MessageBox.Show(mensaje, exito ? "Éxito" : "Error", MessageBoxButtons.OK, exito ? MessageBoxIcon.Information : MessageBoxIcon.Error);
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+            frmGestionEstudiantes.ActiveForm.Close();   
         }
     }
 }

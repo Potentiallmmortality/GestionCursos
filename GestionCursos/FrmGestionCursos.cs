@@ -98,7 +98,7 @@
 
             var resultado = this._negocioCursos.Buscar(this.txtCodigo.Text);
             MessageBox.Show(resultado.Success ? "Curso encontrado." : "Curso no encontrado.", "Búsqueda", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            
+
             if (!resultado.Success)
                 MessageBox.Show(resultado.Message);
         }
@@ -144,7 +144,7 @@
 
         private void button1_Click(object sender, EventArgs e)
         {
-           FrmGestionCursos.ActiveForm.Close();
+            FrmGestionCursos.ActiveForm.Close();
         }
 
         private void CargarGrilla()
@@ -152,5 +152,16 @@
             this.dgvCursos.DataSource = null;
             this.dgvCursos.DataSource = _negocioCursos.ObtenerListaReal();
         }
+
+        private void FrmGestionCursos_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+            FrmGestionCursos.ActiveForm.Close();    
+        }
     }
+
 }

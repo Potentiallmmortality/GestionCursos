@@ -24,17 +24,23 @@
 
         private void btnGestionEstudiantes_Click(object sender, EventArgs e)
         {
-            frmGestionEstudiantes formEst = new frmGestionEstudiantes();
-            formEst.ShowDialog();
+            string rutaEstudiantes = "..\\directorioPrueba\\estudiantes.json";
+            IRepActores<Estudiante> repEstudiantes = new RepEstudiantes(rutaEstudiantes);
+            INegocioActores servicioEstudiantes = new ServicioEstudiantes(repEstudiantes);
+            frmGestionEstudiantes frm = new frmGestionEstudiantes(servicioEstudiantes);
+            frm.ShowDialog();
         }
 
         private void btnGestionCursos_Click(object sender, EventArgs e)
         {
             string rutaCursos = "..\\directorioPrueba\\cursos.json";
             string rutaInstructores = "..\\directorioPrueba\\instructores.json";
+            string rutaEstudiantes = "..\\directorioPrueba\\estudiantes.json";
             IRepCursos repCursos = new RepCursos(rutaCursos);
             IRepActores<Instructor> repInstructores = new RepInstructores(rutaInstructores);
-            INegocioCursos servicioCursos = new ServicioCursos(repCursos, repInstructores);
+            IRepActores<Estudiante> repEstudiantes = new RepEstudiantes(rutaEstudiantes);
+            INegocioCursos servicioCursos = new ServicioCursos(repCursos, repInstructores, repEstudiantes);
+            INegocioActores servicioEstudiantes = new ServicioEstudiantes(repEstudiantes);
             FrmGestionCursos frm = new FrmGestionCursos(servicioCursos);
             frm.ShowDialog();
         }
@@ -55,7 +61,27 @@
 
         private void button1_Click(object sender, EventArgs e)
         {
-            frmMenuPrincipal.ActiveForm.Close();   
+            frmMenuPrincipal.ActiveForm.Close();
+        }
+
+        private void btnMatricular_Click(object sender, EventArgs e)
+        {
+
+            string rutaCursos = "..\\directorioPrueba\\cursos.json";
+            string rutaInstructores = "..\\directorioPrueba\\instructores.json";
+            string rutaEstudiantes = "..\\directorioPrueba\\estudiantes.json"; 
+
+            IRepCursos repCursos = new RepCursos(rutaCursos);
+            IRepActores<Instructor> repInstructores = new RepInstructores(rutaInstructores);
+            IRepActores<Estudiante> repEstudiantes = new RepEstudiantes(rutaEstudiantes);
+
+            INegocioCursos servicioCursos = new ServicioCursos(repCursos, repInstructores, repEstudiantes);
+
+            INegocioActores servicioEstudiantes = new ServicioEstudiantes(repEstudiantes);
+        
+            frmMatricula frm = new frmMatricula(servicioCursos, servicioEstudiantes);
+            frm.ShowDialog();
+
         }
     }
 }

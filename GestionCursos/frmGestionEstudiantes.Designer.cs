@@ -46,10 +46,12 @@
             textBox1 = new TextBox();
             label4 = new Label();
             dgvEstudiantes = new DataGridView();
+            pictureBox2 = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel1.SuspendLayout();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvEstudiantes).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             SuspendLayout();
             // 
             // txtNombre
@@ -122,7 +124,7 @@
             // 
             // btnListar
             // 
-            btnListar.Location = new Point(512, 414);
+            btnListar.Location = new Point(338, 401);
             btnListar.Name = "btnListar";
             btnListar.Size = new Size(75, 23);
             btnListar.TabIndex = 10;
@@ -216,11 +218,23 @@
             dgvEstudiantes.Size = new Size(406, 285);
             dgvEstudiantes.TabIndex = 18;
             // 
+            // pictureBox2
+            // 
+            pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
+            pictureBox2.Location = new Point(691, 401);
+            pictureBox2.Name = "pictureBox2";
+            pictureBox2.Size = new Size(53, 50);
+            pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox2.TabIndex = 19;
+            pictureBox2.TabStop = false;
+            pictureBox2.Click += pictureBox2_Click;
+            // 
             // frmGestionEstudiantes
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(793, 481);
+            Controls.Add(pictureBox2);
             Controls.Add(dgvEstudiantes);
             Controls.Add(groupBox1);
             Controls.Add(panel1);
@@ -242,6 +256,7 @@
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvEstudiantes).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -265,5 +280,6 @@
         private TextBox textBox1;
         private Label label4;
         private DataGridView dgvEstudiantes;
+        private PictureBox pictureBox2;
     }
 }
