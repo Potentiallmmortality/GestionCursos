@@ -4,7 +4,9 @@ using System.Windows.Forms;
 using Negocio.InterfacesNegocio;
 using Entidades.Stock;
 using Entidades.Actores;
-using System.Linq;//importanteeeeee
+using System.Linq;
+using Datos.Interfaces;
+using Negocio.SerivicioActores;//importanteeeeee
 
 namespace UIs 
 {
@@ -12,17 +14,21 @@ namespace UIs
     {
         private readonly INegocioCursos _negocioCursos;
         private readonly INegocioActores _negocioEstudiantes;
+        private readonly IRepActores<Estudiante> _repEstudiantes;
+        private readonly IRepCursos _repCursos;
 
         public frmMatricula()
         {
             InitializeComponent();
         }
 
-        public frmMatricula(INegocioCursos negocioCursos, INegocioActores negocioEstudiantes)
+        public frmMatricula(INegocioCursos negocioCursos, INegocioActores negocioEstudiantes, IRepActores<Estudiante> repEstudiantes, IRepCursos repCursos)
         {
             InitializeComponent();
             this._negocioCursos = negocioCursos;
             this._negocioEstudiantes = negocioEstudiantes;
+            this._repEstudiantes = repEstudiantes;
+            this._repCursos = repCursos;
         }
 
         private void btnMatricular_Click(object sender, EventArgs e)
@@ -38,8 +44,12 @@ namespace UIs
                 string dniEstudiante = cmbEstudiantes.SelectedValue.ToString();
                 string codigoCurso = cmbCursos.SelectedValue.ToString();
                 var resultado = _negocioCursos.MatricularEstudiante(dniEstudiante, codigoCurso);
+                var estudiante = _repEstudiantes.BuscarPorIdentificacion(dniEstudiante);
+                var curso = _repCursos.BuscarPorIdentificacion(codigoCurso);
+
                 if (resultado.Success)
                 {
+                    estudiante.agregarCurso(curso);
                     MessageBox.Show(resultado.Message, "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     LimpiarCampos();
                     ActualizarGrilla();

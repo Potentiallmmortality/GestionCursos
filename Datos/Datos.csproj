@@ -9,14 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Entidades\Entidades.csproj" />
+    <Compile Remove="Archivos_Repositorio\**" />
+    <EmbeddedResource Remove="Archivos_Repositorio\**" />
+    <None Remove="Archivos_Repositorio\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Archivos_Repositorio\Estudiantes\" />
-    <Folder Include="Archivos_Repositorio\Instructores\" />
-    <Folder Include="Archivos_Repositorio\Logs\" />
-    <Folder Include="Archivos_Repositorio\Reservas\" />
+    <ProjectReference Include="..\Entidades\Entidades.csproj" />
   </ItemGroup>
 
   <ItemGroup>

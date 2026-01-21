@@ -17,7 +17,7 @@ namespace Entidades.Actores
         private string nombre;
         private string dni;
         private string email;
-        
+
         private List<string> codigosCursos;
 
         public Persona(string nombre, string dni, string email)
@@ -27,7 +27,7 @@ namespace Entidades.Actores
             this.nombre = nombre;
             this.dni = dni;
             this.email = email;
-            
+
             this.fechaRegistro = DateTime.Now;
             this.codigosCursos = new List<string>();
         }

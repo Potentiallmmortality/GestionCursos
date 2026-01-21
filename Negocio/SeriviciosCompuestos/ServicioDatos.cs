@@ -32,7 +32,7 @@ namespace Negocio.SeriviciosCompuestos
 
         public void CargarRepositorios()
         {
-            this.repReservas.cargarDatos();
+            //this.repReservas.cargarDatos();
             this.repCursos.cargarDatos();
             this.repEstudiantes.cargarDatos();
             this.ReconstuirRelaciones();
@@ -42,20 +42,40 @@ namespace Negocio.SeriviciosCompuestos
         {
             this.Reconstruir_Estudiante_Cursos();
             this.Reconstruir_Instructor_Cursos();
-            this.Reconstruir_Reservas();
+            //this.Reconstruir_Reservas();
         }
 
         private void Reconstruir_Estudiante_Cursos()
         {
-            foreach (var estudiante in this.repEstudiantes.obtenerTodos().Item1)
+            // foreach (var estudiante in this.repEstudiantes.obtenerTodos().Item1)
+            // {
+            //    var idsCursos = estudiante.Datos;
+            //    foreach (var idCurso in idsCursos)
+            //    {
+            //        if (this.repCursos.obtenerTodos().Item2.TryGetValue(idCurso, out Curso? curso))
+            //        {
+            //            estudiante.agregarCurso(curso);
+            //            curso.agregarEstudiante(estudiante);
+            //        }
+            //    }
+            // }
+
+            // debug
             {
-                var idsCursos = estudiante.Datos;
-                foreach (var idCurso in idsCursos)
+                var (listaCursos, _) = this.repCursos.obtenerTodos();
+                var (_, dicEstudiantes) = this.repEstudiantes.obtenerTodos();
+
+                foreach (var curso in listaCursos)
                 {
-                    if (this.repCursos.obtenerTodos().Item2.TryGetValue(idCurso, out Curso? curso))
+                    // curso.Dni_Estudiantes es List<string> con DNIs
+                    foreach (var dniEst in curso.Dni_Estudiantes)
                     {
-                        estudiante.agregarCurso(curso);
-                        curso.agregarEstudiante(estudiante);
+                        if (dicEstudiantes.TryGetValue(dniEst, out Estudiante? estudiante))
+                        {
+                            // Relación bidireccional completa
+                            estudiante.agregarCurso(curso);      // Estudiante → Curso
+                            curso.agregarEstudiante(estudiante); // Curso → Estudiante
+                        }
                     }
                 }
             }

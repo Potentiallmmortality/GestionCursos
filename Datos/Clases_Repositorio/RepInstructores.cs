@@ -75,7 +75,6 @@ namespace Datos.Clases_Repositorio
                     FechaRegistro = instructor.FechaRegistro,
                     IdsUnicosCursos = instructor.Cursos.Select(c => c.CodigoUnico).ToList(),
                     Identifier = instructor.Identifier,
-                    
                 });
             }
 

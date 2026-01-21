@@ -22,6 +22,7 @@ namespace Entidades.Stock
         private List<Estudiante> estudiantesInscritos;
         private EstadoCurso estadoCurso;
         private string datos;
+        private List<string> dni_Estudiantes;
 
         public Curso()
         {
@@ -42,6 +43,7 @@ namespace Entidades.Stock
             this.identifier = $"CLASS-{DateTime.Now:yyyyMMddHHfff}-{_contador.ToString("D3")}";
             this.estadoCurso = EstadoCurso.Abierto;
             this.datos = string.Empty;
+            this.dni_Estudiantes = new List<string>();
         }
 
         public string Nombre
@@ -90,6 +92,12 @@ namespace Entidades.Stock
         {
             get { return this.datos; }
             set { this.datos = value ?? this.datos; }
+        }
+
+        public List<string> Dni_Estudiantes
+        {
+            get { return this.dni_Estudiantes; }
+            set { this.dni_Estudiantes = value ?? this.dni_Estudiantes; }
         }
 
         public bool agregarEstudiante(Estudiante estudiante)
