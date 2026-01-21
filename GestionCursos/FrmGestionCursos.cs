@@ -40,7 +40,7 @@
                     return;
                 }
 
-                if (!Validaciones.EsAlfanumerico(txtNombre.Text))
+                if (!Validaciones.EsCodigoCursoValido(txtNombre.Text))
                 {
                     MessageBox.Show("El nombre del curso no debe contener símbolos extraños.");
                     return;

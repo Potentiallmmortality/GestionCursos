@@ -32,7 +32,7 @@
                 string dni = txtDni.Text;
                 string email = txtEmail.Text;
 
-                if (!Validaciones.EsSoloNumeros(dni))
+                if (!Validaciones.EsDniValido(dni))
                 {
                     MessageBox.Show("El DNI debe contener exactamente 10 numeros", "Error de formato", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
@@ -44,7 +44,7 @@
                     return;
                 }
 
-                if (!Validaciones.EsSoloLetras(nombre))
+                if (!Validaciones.EsNombreValido(nombre))
                 {
                     MessageBox.Show("El nombre no debe contener números ni símbolos.", "Error de formato", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;

@@ -45,22 +45,22 @@
 
         private void btnGestionEstudiantes_Click(object sender, EventArgs e)
         {
-            INegocioActores servicioEstudiantes = new ServicioEstudiantes(repEstudiantes);
+            INegocioActores servicioEstudiantes = new ServicioEstudiantes(repEstudiantes, this.eventLogger);
             frmGestionEstudiantes frm = new frmGestionEstudiantes(servicioEstudiantes);
             frm.ShowDialog();
         }
 
         private void btnGestionCursos_Click(object sender, EventArgs e)
         {
-            INegocioCursos servicioCursos = new ServicioCursos(repCursos, repInstructores, repEstudiantes);
-            INegocioActores servicioEstudiantes = new ServicioEstudiantes(repEstudiantes);
+            INegocioCursos servicioCursos = new ServicioCursos(repCursos, repInstructores, repEstudiantes, this.eventLogger);
+            INegocioActores servicioEstudiantes = new ServicioEstudiantes(repEstudiantes, this.eventLogger);
             FrmGestionCursos frm = new FrmGestionCursos(servicioCursos);
             frm.ShowDialog();
         }
 
         private void btnGestionInstructores_Click(object sender, EventArgs e)
         {
-            INegocioActores servicioInstructores = new ServicioInstructores(repInstructores);
+            INegocioActores servicioInstructores = new ServicioInstructores(repInstructores, this.eventLogger);
             FrmGestionInstructores frm = new FrmGestionInstructores(servicioInstructores);
             frm.ShowDialog();
         }
@@ -77,9 +77,9 @@
 
         private void btnMatricular_Click(object sender, EventArgs e)
         {
-            INegocioCursos servicioCursos = new ServicioCursos(repCursos, repInstructores, repEstudiantes);
+            INegocioCursos servicioCursos = new ServicioCursos(repCursos, repInstructores, repEstudiantes, this.eventLogger);
 
-            INegocioActores servicioEstudiantes = new ServicioEstudiantes(repEstudiantes);
+            INegocioActores servicioEstudiantes = new ServicioEstudiantes(repEstudiantes, this.eventLogger);
         
             frmMatricula frm = new frmMatricula(servicioCursos, servicioEstudiantes, this.repEstudiantes, this.repCursos);
             frm.ShowDialog();

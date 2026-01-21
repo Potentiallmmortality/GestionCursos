@@ -206,9 +206,6 @@
         #endregion
 
         private GroupBox groupBox1;
-        private TextBox txtEmail;
-        private TextBox txtNombre;
-        private TextBox txtDni;
         private Label label1;
         private Label label2;
         private Label label3;

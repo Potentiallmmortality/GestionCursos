@@ -40,13 +40,13 @@
                     return;
                 }
 
-                if (!Validaciones.EsSoloNumeros(txtDni.Text))
+                if (!Validaciones.EsDniValido(txtDni.Text))
                 {
                     MessageBox.Show("El DNI debe contener solo números.");
                     return;
                 }
 
-                if (!Validaciones.EsSoloLetras(txtNombre.Text))
+                if (!Validaciones.EsNombreValido(txtNombre.Text))
                 {
                     MessageBox.Show("El nombre solo debe contener letras.");
                     return;
