@@ -36,8 +36,10 @@ namespace Negocio.SerivicioActores
             try
             {
                 if (this.Existe(idUnico))
+                {
                     _logger.logEvent(Event.Error($"El curso {nombre} ya está registrado"));
-                return OperationResult.Fail("El curso ya está registrado \n");
+                    return OperationResult.Fail("El curso ya está registrado \n");
+                }
 
                 if (this.repCursos.guardarCurso(new Curso(nombre, idUnico, cupoMaximo)))
                 {
@@ -61,8 +63,10 @@ namespace Negocio.SerivicioActores
             try
             {
                 if (!this.Existe(idUnico))
+                {
                     _logger.logEvent(Event.Error($"El curso a eliminar no se encuentra en el Sistema"));
-                return OperationResult.Fail("El curso a eliminar no se encuentra en el Sistema");
+                    return OperationResult.Fail("El curso a eliminar no se encuentra en el Sistema");
+                }
 
                 if (this.repCursos.eliminarCurso(this.repCursos.BuscarPorIdentificacion(idUnico)))
 
@@ -104,8 +108,10 @@ namespace Negocio.SerivicioActores
                     curso.Instructor = instructor;
                 }
                 else
+                {
                     _logger.logEvent(Event.Error($"El instructor ya está asignado a este curso"));
-                return OperationResult.Fail("El instructor ya está asignado a este curso \n");
+                    return OperationResult.Fail("El instructor ya está asignado a este curso \n");
+                }
 
                 this.repInstructores.persistirCambios();
                 this.repCursos.persistirCambios();

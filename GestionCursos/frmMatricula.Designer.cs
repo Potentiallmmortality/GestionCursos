@@ -115,7 +115,7 @@
             panel1.Controls.Add(button1);
             panel1.Location = new Point(-13, -2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(770, 57);
+            panel1.Size = new Size(1287, 57);
             panel1.TabIndex = 24;
             // 
             // button2
@@ -139,7 +139,7 @@
             button1.FlatStyle = FlatStyle.Flat;
             button1.Font = new Font("Showcard Gothic", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             button1.ForeColor = Color.IndianRed;
-            button1.Location = new Point(524, 5);
+            button1.Location = new Point(1092, 5);
             button1.Name = "button1";
             button1.Size = new Size(46, 45);
             button1.TabIndex = 0;
@@ -152,7 +152,7 @@
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
             pictureBox1.Location = new Point(-10, 4);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(704, 560);
+            pictureBox1.Size = new Size(1218, 560);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 23;
             pictureBox1.TabStop = false;
@@ -161,17 +161,17 @@
             // 
             dgvMatriculas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvMatriculas.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvMatriculas.Location = new Point(40, 304);
+            dgvMatriculas.Location = new Point(443, 82);
             dgvMatriculas.Name = "dgvMatriculas";
             dgvMatriculas.ReadOnly = true;
             dgvMatriculas.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvMatriculas.Size = new Size(440, 150);
+            dgvMatriculas.Size = new Size(648, 166);
             dgvMatriculas.TabIndex = 26;
             // 
             // pictureBox2
             // 
             pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
-            pictureBox2.Location = new Point(511, 404);
+            pictureBox2.Location = new Point(1038, 280);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(53, 50);
             pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -183,7 +183,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(578, 493);
+            ClientSize = new Size(1150, 373);
             Controls.Add(pictureBox2);
             Controls.Add(dgvMatriculas);
             Controls.Add(groupBox1);

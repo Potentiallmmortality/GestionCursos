@@ -7,8 +7,8 @@ namespace Negocio.SerivicioActores
     using Datos.Clases_Repositorio;
     using Datos.Interfaces;
     using Entidades.Actores;
-    using Negocio.InterfacesNegocio;
     using Entidades.Report;
+    using Negocio.InterfacesNegocio;
 
     public class ServicioInstructores : INegocioActores
     {
@@ -19,8 +19,6 @@ namespace Negocio.SerivicioActores
         {
             this.repInstructores = repInstructores;
             this._logger = logger;
-
-            // .. / Datos.Archivos_Repositorio / Instructores / instructores.json
         }
 
         OperationResult INegocioActores.Agregar(string nombre, string dni, string email)
@@ -28,8 +26,10 @@ namespace Negocio.SerivicioActores
             try
             {
                 if (this.InstructorExiste(dni, email))
+                {
                     _logger.logEvent(Event.Error("El instructor ya se encuentra registrado"));
-                return OperationResult.Fail(" El instructor ya se enuentra agregado \n");
+                    return OperationResult.Fail(" El instructor ya se enuentra agregado \n");
+                }
 
                 if (this.repInstructores.guardarPersonaje(new Instructor(nombre, dni, email)))
                 {
@@ -39,8 +39,10 @@ namespace Negocio.SerivicioActores
                     return OperationResult.Ok("Instructor agregado con éxito \n");
                 }
                 else
+                {
                     _logger.logEvent(Event.Error("No se pudo agregar el instructor"));
-                return OperationResult.Fail("No se pudo agregar el instructor \n");
+                    return OperationResult.Fail("No se pudo agregar el instructor \n");
+                }
             }
             catch (Exception ex)
             {
@@ -54,12 +56,12 @@ namespace Negocio.SerivicioActores
             try
             {
                 if (!this.InstructorExiste(dni))
-                return OperationResult.Fail(" El instructor no se encuentra registrado \n");
+                    return OperationResult.Fail(" El instructor no se encuentra registrado \n");
 
                 if (this.repInstructores.eliminarPersonaje(this.repInstructores.BuscarPorIdentificacion(dni)))
-                return OperationResult.Ok("Instructor eliminado con éxito \n");
+                    return OperationResult.Ok("Instructor eliminado con éxito \n");
                 else
-                return OperationResult.Fail("No se pudo eliminar el instructor \n");
+                    return OperationResult.Fail("No se pudo eliminar el instructor \n");
             }
             catch (Exception ex)
             {

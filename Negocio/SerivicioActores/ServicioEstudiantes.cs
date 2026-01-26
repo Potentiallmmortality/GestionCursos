@@ -13,9 +13,9 @@ namespace Negocio.SerivicioActores
     using Datos.Clases_Repositorio;
     using Datos.Interfaces;
     using Entidades.Actores;
+    using Entidades.Report;
     using Entidades.Stock;
     using Negocio.InterfacesNegocio;
-    using Entidades.Report;
 
     public class ServicioEstudiantes : INegocioActores
     {
@@ -33,7 +33,7 @@ namespace Negocio.SerivicioActores
             try
             {
                 if (this.EstudianteExiste(dni, email))
-                return OperationResult.Fail("El estudiante ya se encuentre registrado \n");
+                    return OperationResult.Fail("El estudiante ya se encuentre registrado \n");
 
                 if (this.repEstudiantes.guardarPersonaje(new Estudiante(nombre, dni, email)))
                 {
@@ -42,8 +42,10 @@ namespace Negocio.SerivicioActores
                     return OperationResult.Ok("Estudiante agregado con éxito \n");
                 }
                 else
+                {
                     _logger.logEvent(Event.Error("No se pudo agregar el estudiante"));
-                return OperationResult.Fail("No se pudo agregar el estudiante \n");
+                    return OperationResult.Fail("No se pudo agregar el estudiante \n");
+                }
             }
             catch (Exception ex)
             {
@@ -57,14 +59,19 @@ namespace Negocio.SerivicioActores
             try
             {
                 if (!this.EstudianteExiste(dni))
+                {
                     _logger.logEvent(Event.Error("El estudiante a eliminar no se encuentra en el Sistema"));
-                return OperationResult.Fail("El estudiante a eliminar no se encuentra en el Sistema");
+                    return OperationResult.Fail("El estudiante a eliminar no se encuentra en el Sistema");
+                }
 
                 if (this.repEstudiantes.eliminarPersonaje(this.repEstudiantes.BuscarPorIdentificacion(dni)))
                     return OperationResult.Ok("Estudiante eliminado con éxito \n");
                 else
+                {
                     _logger.logEvent(Event.Error("No se pudo eliminar el estudiante"));
-                return OperationResult.Fail("No se pudo eliminar el estudiante \n");
+                    return OperationResult.Fail("No se pudo eliminar el estudiante \n");
+                }
+
             }
             catch (Exception ex)
             {
